@@ -1,23 +1,25 @@
 #include "ltabssettings.h"
 
 
-QMap<QString, QString> LTabs::defaultSettings() {
+QMap<QString, QString> LTabsSettings::defaultSettings() {
     QMap<QString, QString> settings;
     settings["MainWindow/Width"] = "250";
-    settings["MainWindow/Dock"] = "right";
-    settings["PluginsDir"] = "./plugins";
+    settings["MainWindow/DockEdge"] = "right";
+    settings["Application/PluginsDir"] = "./plugins";
+    settings["ControlButtons/Size"] = "40";
     //...
+    //return copy of default settings
     return settings;
 }
 
 LTabsSettings::LTabsSettings(QObject *pobj):
-    m_dbSettings(&(QSqlDatabase::addDatabase("QSQLITE"))),
+    m_dbSettings(new QSqlDatabase((QSqlDatabase::addDatabase("QSQLITE")))),
     m_localSettings(new QMap<QString, QString>) {
 
     if (!openDbConnection())
         qDebug() << "Unknown error";
 
-    qDebug() << "Existing tables in database: " << m_dbSettings->tables();
+    //qDebug() << "Existing tables in database: " << m_dbSettings->tables();
 
     if (!(m_dbSettings->tables().size())) {
        Q_ASSERT(createDatabase());
@@ -39,8 +41,7 @@ LTabsSettings::~LTabsSettings() {
 
 void LTabsSettings::readSettings() {
      QSqlQuery query;
-     QString selectString = "SELECT setting_key, setting_value"
-             "FROM app_settings";
+     QString selectString = "SELECT * FROM app_settings";
      if (!query.exec(selectString)) {
          qDebug() << "Cannot execute query";
      }
@@ -104,8 +105,8 @@ bool LTabsSettings::createDatabase() {
     }
 
     QString insertString = "INSERT INTO app_settings"
-            "(id, setting_key, setting_value, default_value)"
-            "VALUES(%1, '%2', '%3', '%4');";
+            "(id, setting_key, setting_value)"
+            "VALUES(%1, '%2', '%3');";
     QString insertRecord;
 
     int record = 0;
@@ -116,7 +117,7 @@ bool LTabsSettings::createDatabase() {
 
 
         if( !query.exec(insertRecord) ) {
-            qDebug() << "Unable to write data to settings table";
+            qDebug() << "Unable to write data to settings table " << record;
             return false;
         }
     }

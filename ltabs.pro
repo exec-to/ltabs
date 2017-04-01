@@ -17,9 +17,13 @@ SOURCES += main.cpp\
     mainboardwidget.cpp \
     ltabsapplication.cpp \
     desktoputils.cpp \
-    ltabssettings.cpp
+    ltabssettings.cpp \
+    ltabssettingsdialog.cpp \
+    controlbarlayout.cpp
 
 HEADERS  += mainboardwidget.h \
     ltabsapplication.h \
     desktoputils.h \
-    ltabssettings.h
+    ltabssettings.h \
+    ltabssettingsdialog.h \
+    controlbarlayout.h

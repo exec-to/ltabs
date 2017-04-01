@@ -2,22 +2,25 @@
 
 #include <QtWidgets>
 #include "ltabsapplication.h"
+#include "desktoputils.h"
+#include "controlbarlayout.h"
 
 class MainBoardWidget : public QWidget
 {
     Q_OBJECT
 
 private:
-    QTabBar* m_tabBar;
-    QGridLayout* bottomLayout;
     LTabsApplication* ltabsApp;
 
-    QRect getTopLayoutGeometry(QRect screen);
-    QRect getBottomLayoutGeometry(QRect screen);
-
+    QPushButton* createControlButton(QString name, int size);
 
 public:
     MainBoardWidget(QWidget *parent = 0);
     ~MainBoardWidget();
+
+
+
+public slots:
+    void configureApplicationDialog();
 };
 
