@@ -2,8 +2,12 @@
 #include "ltabsapplication.h"
 #include <QtWidgets>
 #include "desktoputils.h"
-#include "ltabssettingsdialog.h"
+#include "settings/settingsdialog.h"
+#include "settings/settingslistitem.h"
+#include "settings/settingslistmodel.h"
 #include "controlbarlayout.h"
+#include "ltabssettingsgeneralpage.h"
+#include "pluginmanager.h"
 
 MainBoardWidget::MainBoardWidget(QWidget *parent)
     : QWidget(parent),
@@ -50,6 +54,12 @@ MainBoardWidget::MainBoardWidget(QWidget *parent)
         mapper->setMapping(btn, w);
     }
 
+    //setup settings dialog
+    LTabsSettingsGeneralPage* generalSettings = new LTabsSettingsGeneralPage();
+    PluginManager::settingPages.append(generalSettings);
+
+    //
+
     QPushButton* pbtn = createControlButton("stngs", btnSize);
     connect( pbtn, SIGNAL(clicked()), SLOT(configureApplicationDialog()) );
     bottomLayout->addWidget(pbtn);
@@ -83,13 +93,10 @@ QPushButton* MainBoardWidget::createControlButton(QString name, int size) {
 
 
 void MainBoardWidget::configureApplicationDialog() {
-    LTabsSettingsDialog* pConfigureDialog = new LTabsSettingsDialog();
 
-    if (pConfigureDialog->exec() == QDialog::Accepted) {
+    SettingsDialog* pConfigureDialog = SettingsDialog::getSettingsDialog(this);
+    pConfigureDialog->show();
 
-    }
-
-    delete pConfigureDialog;
 }
 
 

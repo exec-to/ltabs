@@ -18,12 +18,24 @@ SOURCES += main.cpp\
     ltabsapplication.cpp \
     desktoputils.cpp \
     ltabssettings.cpp \
-    ltabssettingsdialog.cpp \
-    controlbarlayout.cpp
+    controlbarlayout.cpp \
+    settings/settingsdialog.cpp \
+    settings/settingslistitem.cpp \
+    settings/settingslistmodel.cpp \
+    settings/isettingspage.cpp \
+    settings/settingslistwidget.cpp \
+    ltabssettingsgeneralpage.cpp \
+    pluginmanager.cpp
 
 HEADERS  += mainboardwidget.h \
     ltabsapplication.h \
     desktoputils.h \
     ltabssettings.h \
-    ltabssettingsdialog.h \
-    controlbarlayout.h
+    controlbarlayout.h \
+    settings/settingsdialog.h \
+    settings/settingslistitem.h \
+    settings/settingslistmodel.h \
+    settings/isettingspage.h \
+    settings/settingslistwidget.h \
+    ltabssettingsgeneralpage.h \
+    pluginmanager.h
