@@ -25,6 +25,9 @@ QVariant SettingsListModel::data(const QModelIndex& index, int role) const
                        icon = m_emptyIcon;
                    return icon;
                }
+        case UserRoles::TabWidgetRole: {
+                    return index.row();
+               }
     }
     return QVariant();
 }
@@ -43,5 +46,4 @@ void SettingsListModel::setPages(QList<ISettingsPage*> pages)
         SettingsListItem* item = new SettingsListItem(page);
         m_list.append(item);
     }
-
 }

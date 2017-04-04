@@ -1,7 +1,9 @@
 #include "settings/settingsdialog.h"
 #include "pluginmanager.h"
+#include "settings/isettingspage.h"
+#include "ltabssettingsgeneralpage.h"
 
-static QPointer<SettingsDialog> m_instance = 0;
+static SettingsDialog* m_instance = 0;
 
 SettingsDialog::SettingsDialog(QWidget* parent):
     QDialog(parent),
@@ -9,7 +11,15 @@ SettingsDialog::SettingsDialog(QWidget* parent):
     m_settingsList(new SettingsListWidget(this)),
     m_stackedLayout(new QStackedLayout())
 {
-    m_stackedLayout->addWidget(PluginManager::settingPages.at(0)->page());
+    createDefaultSettingsItems();
+
+    //need to find by index
+    ISettingsPage* generalPage = PluginManager::settingPages.at(0);
+    QWidget* gpage = generalPage->page(this);
+
+    ISettingsPage* advancedPage = PluginManager::settingPages.at(1);
+    QWidget* apage = advancedPage->page(this);
+
     m_model->setPages(PluginManager::settingPages);
     m_settingsList->setModel(m_model);
 
@@ -17,16 +27,30 @@ SettingsDialog::SettingsDialog(QWidget* parent):
                 this, &SettingsDialog::currentChanged);
 
     setupLayout();
+
+    m_stackedLayout->addWidget(gpage);
+    m_stackedLayout->addWidget(apage);
 }
 
 void SettingsDialog::currentChanged(const QModelIndex &current)
 {
-    /*if (current.isValid()) {
-        showCategory(m_proxyModel->mapToSource(current).row());
-    } else {*/
+
+    if (current.isValid()) {
+        int i = current.data(UserRoles::TabWidgetRole).toInt();
+        m_stackedLayout->setCurrentIndex(i);
+    } else {
         m_stackedLayout->setCurrentIndex(0);
-        /*m_headerLabel->clear();*/
-    //}
+        //m_headerLabel->clear();
+    }
+}
+
+void SettingsDialog::createDefaultSettingsItems() {
+
+    LTabsSettingsGeneralPage* generalSettings = new LTabsSettingsGeneralPage();
+    PluginManager::settingPages.append(generalSettings);
+    LTabsSettingsGeneralPage* advancedSettings = new LTabsSettingsGeneralPage();
+    PluginManager::settingPages.append(advancedSettings);
+
 }
 
 SettingsDialog* SettingsDialog::getSettingsDialog(QWidget *parent) {

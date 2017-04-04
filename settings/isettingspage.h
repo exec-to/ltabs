@@ -10,9 +10,10 @@ class ISettingsPage : public QObject
 protected:
     QString m_displayName;
 
+
 public:
     explicit ISettingsPage(QObject *parent = 0);
-    virtual QWidget* page() = 0;
+    virtual QWidget* page(QWidget* parent = 0) = 0;
     QString displayName() const;
     QIcon icon;
 };

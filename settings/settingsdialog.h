@@ -17,9 +17,10 @@ private:
     QStackedLayout* m_stackedLayout;
     void setupLayout();
     void currentChanged(const QModelIndex &current);
+    void createDefaultSettingsItems();
 
 
 public:
-    static SettingsDialog* getSettingsDialog(QWidget *parent);
+    static SettingsDialog* getSettingsDialog(QWidget *parent = 0);
 
 };

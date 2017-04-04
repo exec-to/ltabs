@@ -6,6 +6,14 @@
 #include "settings/settingslistwidget.h"
 #include "pluginmanager.h"
 
+
+namespace UserRoles {
+
+enum UserRoles {TabWidgetRole = Qt::UserRole+1};
+
+}
+
+
 class SettingsListModel : public QAbstractListModel
 {
     Q_OBJECT
@@ -16,6 +24,6 @@ public:
     SettingsListModel(QObject* pobj = 0);
     QVariant data(const QModelIndex& index, int role) const;
     int rowCount(const QModelIndex& parent = QModelIndex()) const;
-    void setPages(QList<ISettingsPage*> pages);
+    void setPages(QList<ISettingsPage *> pages);
 
 };

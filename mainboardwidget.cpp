@@ -41,11 +41,13 @@ MainBoardWidget::MainBoardWidget(QWidget *parent)
 
     //setup top layout
     m_tabWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+
     for (int ix = 0; ix < 5; ++ix) { //load plugins here
         QWidget* w = new QWidget();
         m_tabWidget->addTab(w, "tab" + QString::number(ix+1));
 
-        QPushButton* btn = createControlButton("tab" + QString::number(ix+1), btnSize);
+        QPushButton* btn = ControlBarLayout::createControlButton("tab" + QString::number(ix+1), btnSize);
         bottomLayout->addWidget(btn);
 
         QSignalMapper* mapper = new QSignalMapper(this);
@@ -53,20 +55,6 @@ MainBoardWidget::MainBoardWidget(QWidget *parent)
         connect(btn, SIGNAL(clicked()), mapper, SLOT(map()));
         mapper->setMapping(btn, w);
     }
-
-    //setup settings dialog
-    LTabsSettingsGeneralPage* generalSettings = new LTabsSettingsGeneralPage();
-    PluginManager::settingPages.append(generalSettings);
-
-    //
-
-    QPushButton* pbtn = createControlButton("stngs", btnSize);
-    connect( pbtn, SIGNAL(clicked()), SLOT(configureApplicationDialog()) );
-    bottomLayout->addWidget(pbtn);
-    pbtn = createControlButton("exit", btnSize);
-    connect( pbtn, SIGNAL(clicked()), LTabsApplication::instance(), SLOT(quit()) );
-    bottomLayout->addWidget(pbtn);
-
 
     QVBoxLayout* topLayout = new QVBoxLayout();
     topLayout->addWidget(m_tabWidget);
@@ -83,21 +71,6 @@ MainBoardWidget::MainBoardWidget(QWidget *parent)
                                       freeArea.x, freeArea.y);
 }
 
-
-QPushButton* MainBoardWidget::createControlButton(QString name, int size) {
-    QPushButton* btn = new QPushButton(name);
-    btn->setFixedHeight(size);
-    btn->setFixedWidth(size);
-    return btn;
-}
-
-
-void MainBoardWidget::configureApplicationDialog() {
-
-    SettingsDialog* pConfigureDialog = SettingsDialog::getSettingsDialog(this);
-    pConfigureDialog->show();
-
-}
 
 
 MainBoardWidget::~MainBoardWidget() {

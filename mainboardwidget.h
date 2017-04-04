@@ -12,15 +12,10 @@ class MainBoardWidget : public QWidget
 private:
     LTabsApplication* ltabsApp;
 
-    QPushButton* createControlButton(QString name, int size);
 
 public:
     MainBoardWidget(QWidget *parent = 0);
     ~MainBoardWidget();
 
-
-
-public slots:
-    void configureApplicationDialog();
 };
 

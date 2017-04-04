@@ -1,15 +1,20 @@
 #include "ltabssettingsgeneralpage.h"
 
-LTabsSettingsGeneralPage::LTabsSettingsGeneralPage()
+int LTabsSettingsGeneralPage::count = 0;
+
+LTabsSettingsGeneralPage::LTabsSettingsGeneralPage():
+    ISettingsPage(),
+    m_page(nullptr)
 {
-    m_displayName = "General";
+
+    m_displayName = "General " + QString::number(++count);
 }
 
-QWidget* LTabsSettingsGeneralPage::page() {
-    if (m_page) {
-        return m_page;
+QWidget* LTabsSettingsGeneralPage::page( QWidget* parent) {
+    if (!m_page) {
+        m_page = new QLabel("Holla yoba! " + QString::number(++count));
     }
 
-    m_page = new QLabel("Hello");
     return m_page;
 }
+

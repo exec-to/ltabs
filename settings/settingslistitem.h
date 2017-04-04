@@ -11,11 +11,11 @@ class SettingsListItem : public QObject
 private:
     ISettingsPage* m_page;
     QString m_displayName;
-    QTabWidget *m_tabWidget;
+    QWidget *m_Widget;
 
 public:
     explicit SettingsListItem(ISettingsPage* page, QObject *parent = 0);
     QString displayName() const;
-    QTabWidget* widget() const;
+    QWidget* widget() const;
     QIcon icon;
 };
