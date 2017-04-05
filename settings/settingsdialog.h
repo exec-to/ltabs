@@ -17,7 +17,9 @@ private:
     QStackedLayout* m_stackedLayout;
     void setupLayout();
     void currentChanged(const QModelIndex &current);
-    void createDefaultSettingsItems();
+    void accept();
+    void reject();
+    void apply();
 
 
 public:

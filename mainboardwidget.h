@@ -10,7 +10,7 @@ class MainBoardWidget : public QWidget
     Q_OBJECT
 
 private:
-    LTabsApplication* ltabsApp;
+    LTabsApplication* m_app;
 
 
 public:

@@ -6,14 +6,13 @@
 #include "settings/settingslistitem.h"
 #include "settings/settingslistmodel.h"
 #include "controlbarlayout.h"
-#include "ltabssettingsgeneralpage.h"
 #include "pluginmanager.h"
 
 MainBoardWidget::MainBoardWidget(QWidget *parent)
     : QWidget(parent),
-      ltabsApp(qobject_cast<LTabsApplication*>(LTabsApplication::instance()))
+      m_app(qobject_cast<LTabsApplication*>(LTabsApplication::instance()))
 {
-    int appWidth = ltabsApp->readSetting("MainWindow/Width").toInt();
+    int appWidth = m_app->readSetting("MainWindow/Width").toInt();
 
     //setup main window geometry, position, behavior;
     QRect screen = LTabsApplication::desktop()->geometry();
@@ -24,7 +23,7 @@ MainBoardWidget::MainBoardWidget(QWidget *parent)
     setWindowFlags(Qt::Window | Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint);
 
     this->resize(appWidth, freeArea.height);
-    this->move(((ltabsApp->readSetting("MainWindow/DockEdge") == "left") ?
+    this->move(((m_app->readSetting("MainWindow/DockEdge") == "left") ?
                     screen.left() + freeArea.x :
                     freeArea.width - appWidth),
                     freeArea.y);
@@ -34,7 +33,7 @@ MainBoardWidget::MainBoardWidget(QWidget *parent)
     //setup bottom layout
     QWidget *bottomWidget = new QWidget;
     bottomWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
-    int btnSize = ltabsApp->readSetting("ControlButtons/Size").toInt();
+    int btnSize = m_app->readSetting("ControlButtons/Size").toInt();
 
     QTabWidget* m_tabWidget = new QTabWidget();
     ControlBarLayout* bottomLayout = new ControlBarLayout(btnSize, appWidth, bottomWidget);
@@ -42,19 +41,9 @@ MainBoardWidget::MainBoardWidget(QWidget *parent)
     //setup top layout
     m_tabWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
+    PluginManager::LoadPlugins(m_tabWidget, bottomLayout);
 
-    for (int ix = 0; ix < 5; ++ix) { //load plugins here
-        QWidget* w = new QWidget();
-        m_tabWidget->addTab(w, "tab" + QString::number(ix+1));
-
-        QPushButton* btn = ControlBarLayout::createControlButton("tab" + QString::number(ix+1), btnSize);
-        bottomLayout->addWidget(btn);
-
-        QSignalMapper* mapper = new QSignalMapper(this);
-        connect(mapper, SIGNAL(mapped(QWidget*)), m_tabWidget, SLOT(setCurrentWidget(QWidget*)));
-        connect(btn, SIGNAL(clicked()), mapper, SLOT(map()));
-        mapper->setMapping(btn, w);
-    }
+    bottomLayout->createDefaultButtons();
 
     QVBoxLayout* topLayout = new QVBoxLayout();
     topLayout->addWidget(m_tabWidget);

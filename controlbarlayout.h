@@ -12,14 +12,15 @@ private:
     int m_ncolls;
     int m_btnCount;
     int m_buttonSize;
-    void createDefaultButtons();
+
 
 
 public:
     ControlBarLayout(int btnSize, int appWidth, QWidget* pobj = 0);
     void addWidget(QWidget* pwgt);
-    static QPushButton* createControlButton(QString name, int size);
+    QToolButton *createControlButton(const QPixmap icon);
 
 public slots:
     void showSettingsDialog();
+    void createDefaultButtons();
 };

@@ -1,7 +1,6 @@
 #include "settings/settingsdialog.h"
 #include "pluginmanager.h"
 #include "settings/isettingspage.h"
-#include "ltabssettingsgeneralpage.h"
 
 static SettingsDialog* m_instance = 0;
 
@@ -11,14 +10,13 @@ SettingsDialog::SettingsDialog(QWidget* parent):
     m_settingsList(new SettingsListWidget(this)),
     m_stackedLayout(new QStackedLayout())
 {
-    createDefaultSettingsItems();
+    setupLayout();
 
     //need to find by index
-    ISettingsPage* generalPage = PluginManager::settingPages.at(0);
-    QWidget* gpage = generalPage->page(this);
+    ISettingsPage* generalPage = PluginManager::settingPages.first();
+    QWidget* gpage = generalPage->page();
 
-    ISettingsPage* advancedPage = PluginManager::settingPages.at(1);
-    QWidget* apage = advancedPage->page(this);
+    //add plugins settings here
 
     m_model->setPages(PluginManager::settingPages);
     m_settingsList->setModel(m_model);
@@ -26,32 +24,24 @@ SettingsDialog::SettingsDialog(QWidget* parent):
     connect(m_settingsList->selectionModel(), &QItemSelectionModel::currentRowChanged,
                 this, &SettingsDialog::currentChanged);
 
-    setupLayout();
+    //return index of added page
+    int index = m_stackedLayout->addWidget(gpage);
 
-    m_stackedLayout->addWidget(gpage);
-    m_stackedLayout->addWidget(apage);
 }
 
 void SettingsDialog::currentChanged(const QModelIndex &current)
 {
 
     if (current.isValid()) {
-        int i = current.data(UserRoles::TabWidgetRole).toInt();
-        m_stackedLayout->setCurrentIndex(i);
+        int index = current.data(UserRoles::TabWidgetRole).toInt();
+        m_stackedLayout->setCurrentIndex(index);
     } else {
         m_stackedLayout->setCurrentIndex(0);
         //m_headerLabel->clear();
     }
 }
 
-void SettingsDialog::createDefaultSettingsItems() {
 
-    LTabsSettingsGeneralPage* generalSettings = new LTabsSettingsGeneralPage();
-    PluginManager::settingPages.append(generalSettings);
-    LTabsSettingsGeneralPage* advancedSettings = new LTabsSettingsGeneralPage();
-    PluginManager::settingPages.append(advancedSettings);
-
-}
 
 SettingsDialog* SettingsDialog::getSettingsDialog(QWidget *parent) {
     if (!m_instance)
@@ -64,8 +54,67 @@ void SettingsDialog::setupLayout() {
     this->resize(600, 400);
 
     QGridLayout* gridLayout = new QGridLayout();
-    gridLayout->addWidget(m_settingsList, 0, 0);
-    gridLayout->addLayout(m_stackedLayout,0, 1);
+    gridLayout->addWidget(m_settingsList, 0, 0, 1, 1);
+    gridLayout->addLayout(m_stackedLayout,0, 1, 1, 1);
+
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(
+                QDialogButtonBox::Ok |
+                QDialogButtonBox::Apply |
+                QDialogButtonBox::Cancel);
+
+    connect(buttonBox->button(QDialogButtonBox::Apply),
+            &QAbstractButton::clicked,
+            this, &SettingsDialog::apply);
+
+    connect(buttonBox, &QDialogButtonBox::accepted, this, &SettingsDialog::accept);
+    connect(buttonBox, &QDialogButtonBox::rejected, this, &SettingsDialog::reject);
+
+
+    gridLayout->addWidget(buttonBox, 1,0,1,2);
 
     this->setLayout(gridLayout);
+
+    buttonBox->button(QDialogButtonBox::Ok)->setDefault(true);
 }
+
+void SettingsDialog::accept() {
+
+}
+
+void SettingsDialog::apply() {
+
+}
+
+void SettingsDialog::reject() {
+    this->hide();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -7,15 +7,15 @@ ControlBarLayout::ControlBarLayout(int btnSize, int appWidth, QWidget *pobj): QG
     setColumnStretch(0,0);
     setColumnStretch(1,0);
     setAlignment(Qt::AlignRight| Qt::AlignTop);
-    setSpacing(0);
-    setMargin(0);
+    setSpacing(1);
+    setMargin(1);
 
     m_btnCount = 0;
     m_nrows = 0;
     m_buttonSize = btnSize;
     m_ncolls = static_cast<int>(appWidth / btnSize);
 
-    createDefaultButtons();
+
 
 }
 
@@ -30,12 +30,13 @@ void ControlBarLayout::addWidget(QWidget* pwgt) {
 
 
 void ControlBarLayout::createDefaultButtons() {
-    QPushButton* pbtn = createControlButton("stngs", m_buttonSize);
+    QToolButton* pbtn = createControlButton(QPixmap(":settings.png"));
+
     connect( pbtn, SIGNAL(clicked()), this, SLOT(showSettingsDialog()) );
-    this->addWidget(pbtn);
-    pbtn = createControlButton("exit", m_buttonSize);
+
+    pbtn = createControlButton(QPixmap(":leave.png"));
+
     connect( pbtn, SIGNAL(clicked()), LTabsApplication::instance(), SLOT(quit()) );
-    this->addWidget(pbtn);
 }
 
 
@@ -46,9 +47,19 @@ void ControlBarLayout::showSettingsDialog() {
 
 }
 
-QPushButton* ControlBarLayout::createControlButton(QString name, int size) {
-    QPushButton* btn = new QPushButton(name);
-    btn->setFixedHeight(size);
-    btn->setFixedWidth(size);
+QToolButton* ControlBarLayout::createControlButton(const QPixmap icon) {
+    QToolButton* btn = new QToolButton();
+
+    btn->setFixedHeight(m_buttonSize);
+    btn->setFixedWidth(m_buttonSize);
+    btn->setAutoRaise(true);
+
+    btn->setIcon(icon);
+    btn->setIconSize(QSize(m_buttonSize-8,m_buttonSize-8));
+
+    btn->setStyleSheet("QToolButton:hover {background-color:lightblue} QToolButton:!hover {background-color:lightgray}");
+
+    this->addWidget(btn);
+
     return btn;
 }

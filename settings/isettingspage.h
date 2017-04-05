@@ -7,14 +7,9 @@ class ISettingsPage : public QObject
 {
     Q_OBJECT
 
-protected:
-    QString m_displayName;
-
-
 public:
-    explicit ISettingsPage(QObject *parent = 0);
-    virtual QWidget* page(QWidget* parent = 0) = 0;
-    QString displayName() const;
-    QIcon icon;
+    virtual ~ISettingsPage() { }
+    virtual QWidget* page() = 0;
+    virtual QString displayName() const = 0;
 };
 
