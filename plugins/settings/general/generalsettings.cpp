@@ -1,6 +1,11 @@
 #include "generalsettings.h"
 
 //------------------------ GeneralSettings --------------------------------//
+GeneralSettings::GeneralSettings():
+    m_settingPage(nullptr) {
+    setUuid(QUuid("db507711-94ad-4f54-bffd-1a7789882839"));
+}
+
 ISettingsPage* GeneralSettings::getSettingsPage() {
     if (!m_settingPage) {
         m_settingPage = new GeneralSettingsPage();

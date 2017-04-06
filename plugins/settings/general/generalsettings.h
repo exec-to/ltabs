@@ -24,7 +24,7 @@ protected:
     //IWidgetPage* m_widgetPage;
 
 public:
-    GeneralSettings(): m_settingPage(nullptr) {  } // !important! initialize class members
+    GeneralSettings(); // !important! initialize class members
     virtual ~GeneralSettings() {  }
     virtual ISettingsPage* getSettingsPage();
     //virtual IWidgetPage* getWidgetPage();

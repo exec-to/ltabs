@@ -11,7 +11,7 @@ class SettingsListItem : public QObject
 private:
     ISettingsPage* m_page;
     QString m_displayName;
-    QWidget *m_Widget;
+    QWidget *m_widget;
 
 public:
     explicit SettingsListItem(ISettingsPage* page, QObject *parent = 0);

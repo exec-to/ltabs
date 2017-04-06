@@ -3,10 +3,10 @@
 SettingsListItem::SettingsListItem(ISettingsPage* page, QObject *parent) :
     QObject(parent)
     , m_page(page)
-    , m_Widget(nullptr)
+    , m_widget(nullptr)
 {
     m_displayName = m_page->displayName();
-    m_Widget = m_page->page();
+    m_widget = m_page->page();
 }
 
 QString SettingsListItem::displayName() const {
@@ -14,5 +14,5 @@ QString SettingsListItem::displayName() const {
 }
 
 QWidget* SettingsListItem::widget() const {
-    return m_Widget;
+    return m_widget;
 }

@@ -14,3 +14,7 @@ LTabsApplication::~LTabsApplication() {
 QString LTabsApplication::readSetting(QString key) const {
     return m_appSettings->getSettingValue(key);
 }
+
+QList<PluginHelper *> LTabsApplication::getPluginsList() {
+    return m_appSettings->getPluginsList();
+}

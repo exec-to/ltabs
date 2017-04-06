@@ -27,6 +27,7 @@ QVariant SettingsListModel::data(const QModelIndex& index, int role) const
                }
         case UserRoles::TabWidgetRole: {
                     return index.row();
+                    //return  m_list.at(index.row())->widget();
                }
     }
     return QVariant();
@@ -37,6 +38,15 @@ int SettingsListModel::rowCount(const QModelIndex& parent) const
 {
     return m_list.size();
 }
+
+
+QWidget* SettingsListModel::getPageByIndex(const QModelIndex& index) const {
+    if (!index.isValid()) {
+        return m_list.at(index.row())->widget();
+    }
+    return new QWidget();
+}
+
 
 void SettingsListModel::setPages(QList<ISettingsPage*> pages)
 {

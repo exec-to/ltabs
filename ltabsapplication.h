@@ -3,6 +3,7 @@
 #include <QObject>
 #include <QApplication>
 #include "ltabssettings.h"
+#include "plugins/pluginhelper.h"
 
 class LTabsApplication : public QApplication
 {
@@ -16,5 +17,6 @@ public:
     LTabsApplication(int &argc, char** argv);
     ~LTabsApplication();
     QString readSetting(QString key) const;
+    QList<PluginHelper *> getPluginsList();
 };
 

@@ -24,23 +24,22 @@ SettingsDialog::SettingsDialog(QWidget* parent):
     connect(m_settingsList->selectionModel(), &QItemSelectionModel::currentRowChanged,
                 this, &SettingsDialog::currentChanged);
 
-    //return index of added page
-    int index = m_stackedLayout->addWidget(gpage);
+    m_stackedLayout->addWidget(gpage);
 
 }
 
 void SettingsDialog::currentChanged(const QModelIndex &current)
 {
-
     if (current.isValid()) {
-        int index = current.data(UserRoles::TabWidgetRole).toInt();
-        m_stackedLayout->setCurrentIndex(index);
+        QWidget *page = m_model->getPageByIndex(current);
+        if (page->parent() == m_stackedLayout) {
+            m_stackedLayout->setCurrentWidget(page);
+        }
     } else {
         m_stackedLayout->setCurrentIndex(0);
         //m_headerLabel->clear();
     }
 }
-
 
 
 SettingsDialog* SettingsDialog::getSettingsDialog(QWidget *parent) {

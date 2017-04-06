@@ -1,6 +1,7 @@
 #pragma once
 #include <QMap>
 #include <QtSql>
+#include "plugins/pluginhelper.h"
 
 class LTabsSettings: QObject
 {
@@ -9,6 +10,7 @@ class LTabsSettings: QObject
 private:
     QMap<QString, QString>* m_localSettings;
     QSqlDatabase* m_dbSettings;
+    QList<PluginHelper *> m_pluginsList;
 
     //DDL
     bool createDatabase();
@@ -22,5 +24,6 @@ public:
     static QMap<QString, QString> defaultSettings();
     QString getSettingValue(QString &key) const;
     void addSettingKey(QString key, QString value);
+    QList<PluginHelper *> getPluginsList();
 };
 
