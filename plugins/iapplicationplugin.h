@@ -16,7 +16,7 @@ public:
 
     virtual ~IApplicationPlugin() {  }
     virtual ISettingsPage* getSettingsPage() = 0;
-    //virtual IWidgetPage* getWidgetPage() = 0;
+    virtual IWidgetPage* getWidgetPage() = 0;
 };
 
 Q_DECLARE_INTERFACE(IApplicationPlugin, "ru.ltabs.plugins.IApplicationPlugin")

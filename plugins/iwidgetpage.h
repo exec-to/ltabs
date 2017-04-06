@@ -1,17 +1,13 @@
-#ifndef IWIDGETPAGE_H
-#define IWIDGETPAGE_H
+#pragma once
 
 #include <QObject>
+#include <QtWidgets>
 
 class IWidgetPage : public QObject
 {
     Q_OBJECT
+
 public:
-    explicit IWidgetPage(QObject *parent = 0);
-
-signals:
-
-public slots:
+    virtual ~IWidgetPage() {  }
+    virtual QWidget* page() = 0;
 };
-
-#endif // IWIDGETPAGE_H

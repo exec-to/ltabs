@@ -1,9 +1,4 @@
 #include "pluginmanager.h"
-#include "plugins/iapplicationplugin.h"
-//#include "plugins/iwidgetpage.h"
-#include "settings/isettingspage.h"
-#include "ltabsapplication.h"
-#include "plugins/pluginhelper.h"
 
 QList<IApplicationPlugin *> PluginManager::pluginList;
 QList<ISettingsPage*> PluginManager::settingPages;
@@ -23,38 +18,28 @@ void PluginManager::LoadPlugins(QTabWidget *tabWidget, ControlBarLayout *control
         QObject *pluginObject = loader.instance();
         IApplicationPlugin* plugin = qobject_cast<IApplicationPlugin*>(pluginObject);
 
-        /*if (plugin->getUuid() != pluginToLoad->uuid) {
+        if (plugin->getUuid() != pluginToLoad->uuid) {
             qDebug() << "bad plugin identification!";
             continue;
-        }*/
+        }
 
-        if (plugin->getSettingsPage() != nullptr)
+        ISettingsPage* settingsPage = plugin->getSettingsPage();
+        if (settingsPage)
             settingPages.append(plugin->getSettingsPage());
 
-        //if (plugin->getWidgetPage()) {
-        /*
+        IWidgetPage* widgetPage = plugin->getWidgetPage();
+        if (widgetPage) {
+            QWidget* w = widgetPage->page();
+            tabWidget->addTab(w, "tab1");
 
-        QWidget* w = new QWidget(); //plugin widget
-        QPixmap icon(":" + iconFile); //plugin->icon;
-        tabWidget->addTab(w, "tab" + QString::number(++x));
+            QPixmap icon(":1.png"); //plugin->icon;
+            QToolButton* btn = controlLayout->createControlButton(icon); //buttom for plugin widget
+            QSignalMapper* mapper = new QSignalMapper();
+            connect(mapper, SIGNAL(mapped(QWidget*)), tabWidget, SLOT(setCurrentWidget(QWidget*)));
+            connect(btn, SIGNAL(clicked()), mapper, SLOT(map()));
+            mapper->setMapping(btn, w);
+        }
 
-        QToolButton* btn = controlLayout->createControlButton(icon); //buttom for plugin widget
-
-        QSignalMapper* mapper = new QSignalMapper();
-        connect(mapper, SIGNAL(mapped(QWidget*)), tabWidget, SLOT(setCurrentWidget(QWidget*)));
-        connect(btn, SIGNAL(clicked()), mapper, SLOT(map()));
-        mapper->setMapping(btn, w);
-
-        */
-        //}
-
+        pluginList.append(plugin);
     }
-
-
-
-    /*lstIcons << "1.png" << "2.png" << "3.png" << "4.png" << "5.png";
-    for (auto &iconFile: lstIcons) { //load plugins here
-        static int x = 0;
-
-    }*/
 }

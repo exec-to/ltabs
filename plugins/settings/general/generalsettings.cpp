@@ -2,20 +2,24 @@
 
 //------------------------ GeneralSettings --------------------------------//
 GeneralSettings::GeneralSettings():
-    m_settingPage(nullptr) {
+    m_settingPage(nullptr),
+    m_widgetPage(nullptr)
+{
     setUuid(QUuid("db507711-94ad-4f54-bffd-1a7789882839"));
 }
 
-ISettingsPage* GeneralSettings::getSettingsPage() {
+ISettingsPage* GeneralSettings::getSettingsPage()
+{
     if (!m_settingPage) {
         m_settingPage = new GeneralSettingsPage();
     }
     return m_settingPage;
 }
-/*
-IWidgetPage* GeneralSettings::getWidgetPage() {
+
+IWidgetPage* GeneralSettings::getWidgetPage()
+{
     return nullptr; //no implement for this
-}*/
+}
 //------------------------ GeneralSettings --------------------------------//
 //------------------------  ISettingsPage  --------------------------------//
 GeneralSettingsPage::GeneralSettingsPage():
@@ -25,12 +29,12 @@ GeneralSettingsPage::GeneralSettingsPage():
 
 }
 
-QWidget* GeneralSettingsPage::page() {
-    /*if (!m_page) {
+QWidget* GeneralSettingsPage::page()
+{
+    if (!m_page) {
         m_page = new QLabel("Hello QT!");
     }
-    return m_page;*/
-    return new QLabel("Hello!");
+    return m_page;
 }
 
 QString GeneralSettingsPage::displayName() const {

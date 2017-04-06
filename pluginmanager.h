@@ -6,6 +6,10 @@
 #include "settings/isettingspage.h"
 #include <QPluginLoader>
 #include "plugins/iapplicationplugin.h"
+#include "plugins/iwidgetpage.h"
+#include "ltabsapplication.h"
+#include "plugins/pluginhelper.h"
+
 
 class PluginManager : public QObject
 {

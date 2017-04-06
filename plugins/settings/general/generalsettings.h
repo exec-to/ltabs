@@ -9,8 +9,6 @@
 
 class QString;
 class QWidget;
-//class GeneralSettingsPage;
-
 
 //------------------------ GeneralSettings --------------------------------//
 class GeneralSettings : public QObject, public IApplicationPlugin
@@ -21,13 +19,13 @@ class GeneralSettings : public QObject, public IApplicationPlugin
 
 protected:
     ISettingsPage* m_settingPage;
-    //IWidgetPage* m_widgetPage;
+    IWidgetPage* m_widgetPage;
 
 public:
     GeneralSettings(); // !important! initialize class members
     virtual ~GeneralSettings() {  }
     virtual ISettingsPage* getSettingsPage();
-    //virtual IWidgetPage* getWidgetPage();
+    virtual IWidgetPage* getWidgetPage();
 
 };
 //------------------------ GeneralSettings --------------------------------//
