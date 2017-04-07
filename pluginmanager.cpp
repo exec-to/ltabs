@@ -7,7 +7,7 @@ QList<ISettingsPage*> PluginManager::settingPages;
 void PluginManager::LoadPlugins(QTabWidget *tabWidget, ControlBarLayout *controlLayout) {
     
     LTabsApplication* app = qobject_cast<LTabsApplication*>(LTabsApplication::instance());
-    QString pluginsDirectory = app->readSetting("Application/PluginsDir");
+    QString pluginsDirectory = app->readSetting(app->getUuid(), "Application/PluginsDir");
     QDir dir;
     dir.cd(pluginsDirectory);
 
@@ -22,6 +22,10 @@ void PluginManager::LoadPlugins(QTabWidget *tabWidget, ControlBarLayout *control
             qDebug() << "bad plugin identification!";
             continue;
         }
+
+        //read setting from database for this plugin by plugin uuid
+        QMap<QString, QString> *settings = app->readSettings(app->getUuid());
+        plugin->pushSettings(settings);
 
         ISettingsPage* settingsPage = plugin->getSettingsPage();
         if (settingsPage)

@@ -1,7 +1,5 @@
 #include "ltabssettings.h"
 
-QString generalSettingsUuid = "db507711-94ad-4f54-bffd-1a7789882839";
-
 QMap<QString, QString> LTabsSettings::defaultSettings() {
     QMap<QString, QString> settings;
     settings["MainWindow/Width"] = "250";
@@ -13,14 +11,18 @@ QMap<QString, QString> LTabsSettings::defaultSettings() {
     return settings;
 }
 
+ QUuid LTabsSettings::getUuid() const {
+    return m_appUuid;
+ }
+
+
 LTabsSettings::LTabsSettings(QObject *pobj):
+    m_appUuid(QUuid("db507711-94ad-4f54-bffd-1a7789882839")),
     m_dbSettings(new QSqlDatabase((QSqlDatabase::addDatabase("QSQLITE")))),
-    m_localSettings(new QMap<QString, QString>) {
+    m_localSettings(new QList<LocalSettingsKey>()) {
 
     if (!openDbConnection())
         qDebug() << "Unknown error";
-
-    //qDebug() << "Existing tables in database: " << m_dbSettings->tables();
 
     if (!(m_dbSettings->tables().size())) {
        //Q_ASSERT(createDatabase());
@@ -34,9 +36,6 @@ QList<PluginHelper *> LTabsSettings::getPluginsList() {
     return m_pluginsList;
 }
 
-QString LTabsSettings::getSettingValue(QString &key) const {
-    return (*m_localSettings)[key];
-}
 
 LTabsSettings::~LTabsSettings() {
     m_dbSettings->close();
@@ -46,6 +45,7 @@ LTabsSettings::~LTabsSettings() {
 }
 
 void LTabsSettings::readSettings() {
+
      QSqlQuery query;
      QString selectString = "SELECT * FROM app_settings";
      if (!query.exec(selectString)) {
@@ -53,14 +53,20 @@ void LTabsSettings::readSettings() {
      }
 
      QSqlRecord record = query.record();
+     int uuid_index = record.indexOf("uuid");
      int key_index = record.indexOf("setting_key");
      int value_index = record.indexOf("setting_value");
 
+
      while(query.next()) {
+         QUuid uuid = QUuid(query.value(uuid_index).toString());
          QString key = query.value(key_index).toString();
          QString value = query.value(value_index).toString();
-         (*m_localSettings)[key] = value;
+         m_localSettings->append(LocalSettingsKey(uuid,key,value));
+         //(*m_localSettings)[key] = value;
      }
+
+     LocalSettingsRepository::writeSettings(*m_localSettings);
 
      selectString = "SELECT * FROM plugins";
      if (!query.exec(selectString)) {
@@ -141,7 +147,7 @@ bool LTabsSettings::createDatabase() {
     int record = 0;
     for( auto &param: defaultSettings().toStdMap() ) {
         insertRecord = insertString.arg(++record)
-                .arg(generalSettingsUuid) //general settings uuid
+                .arg(m_appUuid.toString()) //general settings uuid
                 .arg(param.first)
                 .arg(param.second);
 
@@ -171,7 +177,7 @@ bool LTabsSettings::createDatabase() {
                 "VALUES(%1, '%2', %3, %4, '%5');";
 
     insertRecord = insertString.arg(1)
-            .arg(generalSettingsUuid)
+            .arg(m_appUuid.toString())
             .arg(1)
             .arg(1)
             .arg("libgeneralsetting.so");

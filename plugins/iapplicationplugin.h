@@ -15,6 +15,7 @@ public:
     QUuid getUuid() { return m_uuid; }
 
     virtual ~IApplicationPlugin() {  }
+    virtual void pushSettings(QMap<QString,QString> *settings) = 0;
     virtual ISettingsPage* getSettingsPage() = 0;
     virtual IWidgetPage* getWidgetPage() = 0;
 };

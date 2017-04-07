@@ -5,7 +5,7 @@
 
 #include "../../../plugins/iapplicationplugin.h"
 #include "../../../settings/isettingspage.h"
-//#include "../../../plugins/iwidgetpage.h"
+#include "../../../plugins/iwidgetpage.h"
 
 class QString;
 class QWidget;
@@ -20,9 +20,11 @@ class GeneralSettings : public QObject, public IApplicationPlugin
 protected:
     ISettingsPage* m_settingPage;
     IWidgetPage* m_widgetPage;
+    QMap<QString,QString> *m_settings;
 
 public:
     GeneralSettings(); // !important! initialize class members
+    virtual void pushSettings(QMap<QString,QString> *settings);
     virtual ~GeneralSettings() {  }
     virtual ISettingsPage* getSettingsPage();
     virtual IWidgetPage* getWidgetPage();
@@ -36,9 +38,10 @@ class GeneralSettingsPage: public ISettingsPage {
 private:
     QWidget* m_page;
     QString m_displayName;
+    QMap<QString, QString> *m_settings;
 
 public:
-    GeneralSettingsPage();
+    GeneralSettingsPage(QMap<QString, QString> *settings);
     virtual ~GeneralSettingsPage() {  }
     virtual QWidget* page();
     virtual QString displayName() const;

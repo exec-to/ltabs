@@ -16,7 +16,9 @@ private:
 public:
     LTabsApplication(int &argc, char** argv);
     ~LTabsApplication();
-    QString readSetting(QString key) const;
+    QString readSetting(QUuid uuid, QString key) const;
+    QMap<QString, QString> *readSettings(QUuid uuid) const;
     QList<PluginHelper *> getPluginsList();
+    QUuid getUuid();
 };
 

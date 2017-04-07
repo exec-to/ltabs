@@ -12,7 +12,9 @@ MainBoardWidget::MainBoardWidget(QWidget *parent)
     : QWidget(parent),
       m_app(qobject_cast<LTabsApplication*>(LTabsApplication::instance()))
 {
-    int appWidth = m_app->readSetting("MainWindow/Width").toInt();
+    QUuid appUuid = m_app->getUuid();
+
+    int appWidth = m_app->readSetting(appUuid, "MainWindow/Width").toInt();
 
     //setup main window geometry, position, behavior;
     QRect screen = LTabsApplication::desktop()->geometry();
@@ -23,7 +25,7 @@ MainBoardWidget::MainBoardWidget(QWidget *parent)
     setWindowFlags(Qt::Window | Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint);
 
     this->resize(appWidth, freeArea.height);
-    this->move(((m_app->readSetting("MainWindow/DockEdge") == "left") ?
+    this->move(((m_app->readSetting(appUuid, "MainWindow/DockEdge") == "left") ?
                     screen.left() + freeArea.x :
                     freeArea.width - appWidth),
                     freeArea.y);
@@ -33,7 +35,7 @@ MainBoardWidget::MainBoardWidget(QWidget *parent)
     //setup bottom layout
     QWidget *bottomWidget = new QWidget;
     bottomWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
-    int btnSize = m_app->readSetting("ControlButtons/Size").toInt();
+    int btnSize = m_app->readSetting(appUuid, "ControlButtons/Size").toInt();
 
     QTabWidget* m_tabWidget = new QTabWidget();
     ControlBarLayout* bottomLayout = new ControlBarLayout(btnSize, appWidth, bottomWidget);

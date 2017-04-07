@@ -24,7 +24,8 @@ SOURCES += main.cpp\
     settings/settingslistmodel.cpp \
     settings/isettingspage.cpp \
     settings/settingslistwidget.cpp \
-    pluginmanager.cpp
+    pluginmanager.cpp \
+    settings/settingskey.cpp
 
 HEADERS  += mainboardwidget.h \
     ltabsapplication.h \
@@ -39,7 +40,8 @@ HEADERS  += mainboardwidget.h \
     pluginmanager.h \
     plugins/iapplicationplugin.h \
     plugins/iwidgetpage.h \
-    plugins/pluginhelper.h
+    plugins/pluginhelper.h \
+    settings/settingskey.h
 
 RESOURCES += \
     assets/icons.qrc
