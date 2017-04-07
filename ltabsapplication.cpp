@@ -24,6 +24,10 @@ QMap<QString, QString> *LTabsApplication::readSettings(QUuid uuid) const
     return LocalSettingsRepository::readSettingsKeys(uuid);
 }
 
+void LTabsApplication::saveSettings(QMap<QString, QString> &tmpSettings) {
+    m_appSettings->saveSettings(tmpSettings);
+}
+
 QUuid LTabsApplication::getUuid() {
     //return QUuid("db507711-94ad-4f54-bffd-1a7789882839");
     m_appSettings->getUuid();

@@ -25,9 +25,10 @@ protected:
 public:
     GeneralSettings(); // !important! initialize class members
     virtual void pushSettings(QMap<QString,QString> *settings);
+    //virtual QMap<QString,QString> getSettings();
     virtual ~GeneralSettings() {  }
-    virtual ISettingsPage* getSettingsPage();
-    virtual IWidgetPage* getWidgetPage();
+    virtual ISettingsPage *getSettingsPage();
+    virtual IWidgetPage *getWidgetPage();
 
 };
 //------------------------ GeneralSettings --------------------------------//
@@ -45,6 +46,10 @@ public:
     virtual ~GeneralSettingsPage() {  }
     virtual QWidget* page();
     virtual QString displayName() const;
+    virtual QMap<QString, QString> getChangedSettings();
+
+public slots:
+    void commitChanges(const QString &data);
 
 };
 //------------------------  ISettingsPage  --------------------------------//

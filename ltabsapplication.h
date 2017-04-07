@@ -18,6 +18,7 @@ public:
     ~LTabsApplication();
     QString readSetting(QUuid uuid, QString key) const;
     QMap<QString, QString> *readSettings(QUuid uuid) const;
+    void saveSettings(QMap<QString, QString> &tmpSettings);
     QList<PluginHelper *> getPluginsList();
     QUuid getUuid();
 };

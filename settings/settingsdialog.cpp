@@ -82,6 +82,9 @@ void SettingsDialog::accept() {
 
 void SettingsDialog::apply() {
 
+    QMap<QString, QString> settings =
+            PluginManager::settingPages.first()->getChangedSettings();
+    ((LTabsApplication*)LTabsApplication::instance())->saveSettings(settings);
 }
 
 void SettingsDialog::reject() {

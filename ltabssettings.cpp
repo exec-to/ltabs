@@ -93,14 +93,15 @@ void LTabsSettings::saveSettings(QMap<QString, QString> &tmpSettings) {
     QSqlQuery query;
     //check for exist setting params (exec select count rows => update or insert)
 
-    QString updateString = "UPDATE app_settings"
+    QString updateString = "UPDATE app_settings "
             "SET setting_value = '%2'"
             "WHERE setting_key = '%1'";
 
     QString updateRecord;
 
     for( auto &param: tmpSettings.toStdMap() ) {
-        updateRecord = updateString.arg(param.first)
+        updateRecord = updateString
+                .arg(param.first)
                 .arg(param.second);
 
         if( !query.exec(updateRecord) ) {
