@@ -17,20 +17,16 @@ SOURCES += main.cpp\
     mainboardwidget.cpp \
     ltabsapplication.cpp \
     desktoputils.cpp \
-    ltabssettings.cpp \
     controlbarlayout.cpp \
     settings/settingsdialog.cpp \
     settings/settingslistitem.cpp \
     settings/settingslistmodel.cpp \
-    settings/isettingspage.cpp \
     settings/settingslistwidget.cpp \
-    pluginmanager.cpp \
-    settings/settingskey.cpp
+    pluginmanager.cpp
 
 HEADERS  += mainboardwidget.h \
     ltabsapplication.h \
     desktoputils.h \
-    ltabssettings.h \
     controlbarlayout.h \
     settings/settingsdialog.h \
     settings/settingslistitem.h \
@@ -40,8 +36,7 @@ HEADERS  += mainboardwidget.h \
     pluginmanager.h \
     plugins/iapplicationplugin.h \
     plugins/iwidgetpage.h \
-    plugins/pluginhelper.h \
-    settings/settingskey.h
+    plugins/pluginhelper.h
 
 RESOURCES += \
     assets/icons.qrc

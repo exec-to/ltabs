@@ -19,7 +19,7 @@ ControlBarLayout::ControlBarLayout(int btnSize, int appWidth, QWidget *parent): 
 void ControlBarLayout::addWidget(QWidget* pwgt) {
     ++m_btnCount; //calculate button position on grid layout
     int row = ((m_btnCount % m_ncolls) == 0) ? m_nrows++ : m_nrows;
-    int col = ((m_btnCount % m_ncolls) == 0) ? m_ncolls : ((m_btnCount % m_ncolls) - 1);
+    int col = ((m_btnCount % m_ncolls) == 0) ? m_ncolls  : ((m_btnCount % m_ncolls) - 1);
 
     QGridLayout::addWidget(pwgt, row, col);
 }

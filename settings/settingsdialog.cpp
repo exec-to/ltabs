@@ -77,18 +77,25 @@ void SettingsDialog::setupLayout() {
 }
 
 void SettingsDialog::accept() {
-
+    //QMap<QString, QString> settings =
+     //       PluginManager::settingPages.first()->getChangedSettings();
+    //((LTabsApplication*)LTabsApplication::instance())->saveSettings(settings);
+    PluginManager::settingPages.first()->apply();
+    this->hide();
 }
 
 void SettingsDialog::apply() {
 
-    QMap<QString, QString> settings =
-            PluginManager::settingPages.first()->getChangedSettings();
-    ((LTabsApplication*)LTabsApplication::instance())->saveSettings(settings);
+    //QMap<QString, QString> settings =
+            //PluginManager::settingPages.first()->getChangedSettings();
+    //((LTabsApplication*)LTabsApplication::instance())->saveSettings(settings);
+
+    PluginManager::settingPages.first()->apply();
 }
 
 void SettingsDialog::reject() {
     this->hide();
+    emit PluginManager::settingPages.first()->reject();
 }
 
 

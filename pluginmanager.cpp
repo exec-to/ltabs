@@ -5,13 +5,21 @@ QList<ISettingsPage*> PluginManager::settingPages;
 
 
 void PluginManager::LoadPlugins(QTabWidget *tabWidget, ControlBarLayout *controlLayout) {
-    
-    LTabsApplication* app = qobject_cast<LTabsApplication*>(LTabsApplication::instance());
-    QString pluginsDirectory = app->readSetting(app->getUuid(), "Application/PluginsDir");
+    QSettings settings;
+    QString pluginsDirectory = settings.value("Application/PluginsDir", "./plugins").toString();
     QDir dir;
     dir.cd(pluginsDirectory);
 
-    QList<PluginHelper *> pluginsToLoad = app->getPluginsList();
+    QList<PluginHelper *> pluginsToLoad;
+
+    //from qsettings;
+    PluginHelper* ph = new PluginHelper();
+    ph->uuid = QUuid("db507711-94ad-4f54-bffd-1a7789882839");
+    ph->isActive = true;
+    ph->isPrivate = true;
+    ph->fileName = "libgeneralsetting.so";
+    pluginsToLoad.append(ph);
+
 
     for (auto &pluginToLoad: pluginsToLoad) {
         QPluginLoader loader(dir.absoluteFilePath(pluginToLoad->fileName));
@@ -22,10 +30,6 @@ void PluginManager::LoadPlugins(QTabWidget *tabWidget, ControlBarLayout *control
             qDebug() << "bad plugin identification!";
             continue;
         }
-
-        //read setting from database for this plugin by plugin uuid
-        QMap<QString, QString> *settings = app->readSettings(app->getUuid());
-        plugin->pushSettings(settings);
 
         ISettingsPage* settingsPage = plugin->getSettingsPage();
         if (settingsPage)
