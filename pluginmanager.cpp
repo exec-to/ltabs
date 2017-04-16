@@ -1,10 +1,11 @@
 #include "pluginmanager.h"
 
-QList<IApplicationPlugin *> PluginManager::pluginList;
-QList<ISettingsPage*> PluginManager::settingPages;
+QList<IApplicationPlugin *> PluginManager::pluginsList;
+//QList<ISettingsPage*> PluginManager::settingPages;
+//QList<IWidgetPage*> PluginManager::widgetPages;
 
 
-void PluginManager::LoadPlugins(QTabWidget *tabWidget, ControlBarLayout *controlLayout) {
+void PluginManager::loadPlugins() {
     QSettings settings;
     QString pluginsDirectory = settings.value("Application/PluginsDir", "./plugins").toString();
     QDir dir;
@@ -31,23 +32,6 @@ void PluginManager::LoadPlugins(QTabWidget *tabWidget, ControlBarLayout *control
             continue;
         }
 
-        ISettingsPage* settingsPage = plugin->getSettingsPage();
-        if (settingsPage)
-            settingPages.append(plugin->getSettingsPage());
-
-        IWidgetPage* widgetPage = plugin->getWidgetPage();
-        if (widgetPage) {
-            QWidget* w = widgetPage->page();
-            tabWidget->addTab(w, "tab1");
-
-            QPixmap icon(":1.png"); //plugin->icon;
-            QToolButton* btn = controlLayout->createControlButton(icon); //buttom for plugin widget
-            QSignalMapper* mapper = new QSignalMapper();
-            connect(mapper, SIGNAL(mapped(QWidget*)), tabWidget, SLOT(setCurrentWidget(QWidget*)));
-            connect(btn, SIGNAL(clicked()), mapper, SLOT(map()));
-            mapper->setMapping(btn, w);
-        }
-
-        pluginList.append(plugin);
+        pluginsList.append(plugin);
     }
 }

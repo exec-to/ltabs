@@ -15,7 +15,6 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
     mainboardwidget.cpp \
-    ltabsapplication.cpp \
     desktoputils.cpp \
     controlbarlayout.cpp \
     settings/settingsdialog.cpp \
@@ -25,7 +24,6 @@ SOURCES += main.cpp\
     pluginmanager.cpp
 
 HEADERS  += mainboardwidget.h \
-    ltabsapplication.h \
     desktoputils.h \
     controlbarlayout.h \
     settings/settingsdialog.h \

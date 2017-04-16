@@ -1,5 +1,4 @@
 #include "controlbarlayout.h"
-#include "ltabsapplication.h"
 #include "settings/settingsdialog.h"
 
 ControlBarLayout::ControlBarLayout(int btnSize, int appWidth, QWidget *parent): QGridLayout(parent)
@@ -27,10 +26,11 @@ void ControlBarLayout::addWidget(QWidget* pwgt) {
 
 void ControlBarLayout::createDefaultButtons() {
     QToolButton* pbtn = createControlButton(QPixmap(":settings.png"));
+    //change slot to &SettingsDialog::show()
     connect( pbtn, SIGNAL(clicked()), this, SLOT(showSettingsDialog()) );
 
     pbtn = createControlButton(QPixmap(":leave.png"));
-    connect( pbtn, SIGNAL(clicked()), LTabsApplication::instance(), SLOT(quit()) );
+    connect( pbtn, SIGNAL(clicked()), QApplication::instance(), SLOT(quit()) );
 }
 
 

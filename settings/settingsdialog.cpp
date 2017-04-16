@@ -13,12 +13,12 @@ SettingsDialog::SettingsDialog(QWidget* parent):
     setupLayout();
 
     //need to find by index
-    ISettingsPage* generalPage = PluginManager::settingPages.first();
+    ISettingsPage* generalPage = PluginManager::pluginsList.first()->getSettingsPage();
     QWidget* gpage = generalPage->page();
 
     //add plugins settings here
 
-    m_model->setPages(PluginManager::settingPages);
+    m_model->setPages(QList<ISettingsPage*>() << PluginManager::pluginsList.first()->getSettingsPage());
     m_settingsList->setModel(m_model);
 
     connect(m_settingsList->selectionModel(), &QItemSelectionModel::currentRowChanged,
@@ -77,25 +77,18 @@ void SettingsDialog::setupLayout() {
 }
 
 void SettingsDialog::accept() {
-    //QMap<QString, QString> settings =
-     //       PluginManager::settingPages.first()->getChangedSettings();
-    //((LTabsApplication*)LTabsApplication::instance())->saveSettings(settings);
-    PluginManager::settingPages.first()->apply();
+    PluginManager::pluginsList.first()->getSettingsPage()->apply();
     this->hide();
 }
 
 void SettingsDialog::apply() {
 
-    //QMap<QString, QString> settings =
-            //PluginManager::settingPages.first()->getChangedSettings();
-    //((LTabsApplication*)LTabsApplication::instance())->saveSettings(settings);
-
-    PluginManager::settingPages.first()->apply();
+    PluginManager::pluginsList.first()->getSettingsPage()->apply();
 }
 
 void SettingsDialog::reject() {
     this->hide();
-    emit PluginManager::settingPages.first()->reject();
+    emit PluginManager::pluginsList.first()->getSettingsPage()->reject();
 }
 
 

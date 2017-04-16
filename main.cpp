@@ -1,5 +1,5 @@
 #include "mainboardwidget.h"
-#include "ltabsapplication.h"
+
 
 int main(int argc, char *argv[])
 {
@@ -7,8 +7,9 @@ int main(int argc, char *argv[])
     QCoreApplication::setOrganizationDomain("ltabs.ru");
     QCoreApplication::setApplicationName("ltabs");
 
-    LTabsApplication app(argc, argv);
+    QApplication app(argc, argv);
     MainBoardWidget w;
+    w.show();
 
     return app.exec();
 }
