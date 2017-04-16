@@ -1,14 +1,15 @@
-#include "mainboardwidget.h"
+#include "mainwindow.h"
+#include "application.h"
 
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication::setOrganizationName("home");
-    QCoreApplication::setOrganizationDomain("ltabs.ru");
+    QCoreApplication::setOrganizationName("hprog.ru");
+    QCoreApplication::setOrganizationDomain("hprog.ru");
     QCoreApplication::setApplicationName("ltabs");
 
-    QApplication app(argc, argv);
-    MainBoardWidget w;
+    Application app(argc, argv);
+    MainWindow w;
     w.show();
 
     return app.exec();

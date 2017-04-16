@@ -1,12 +1,13 @@
 #pragma once
 
 #include <QtWidgets>
-#include "desktoputils.h"
+#include "x11utils.h"
 #include "controlbarlayout.h"
-#include "desktoputils.h"
+#include "x11utils.h"
 #include "pluginmanager.h"
+#include "settings/settingsdialog.h"
 
-class MainBoardWidget : public QWidget
+class MainWindow : public QWidget
 {
     Q_OBJECT
 
@@ -16,10 +17,10 @@ private:
     _net_workarea m_desktopGeometry;
 
 public:
-    MainBoardWidget(QWidget *parent = 0);
-    ~MainBoardWidget();
+    MainWindow(QWidget *parent = 0);
+    ~MainWindow();
     void installPluginWidgets(QList<IApplicationPlugin*> &plugins);
+    void createDefaultButtons();
     void show();
-
 };
 

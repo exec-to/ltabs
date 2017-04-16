@@ -1,4 +1,4 @@
-#include "desktoputils.h"
+#include "x11utils.h"
 
 _net_workarea::_net_workarea(unsigned int dx, unsigned int dy, unsigned int w,  unsigned int h):
     x(dx), y(dy), width(w), height(h) {  }
@@ -6,9 +6,9 @@ _net_workarea::_net_workarea(unsigned int dx, unsigned int dy, unsigned int w,  
 _net_workarea::_net_workarea():
     x(0), y(0), width(0), height(0) {  }
 
-DesktopUtils::DesktopUtils() {   }
+X11Utils::X11Utils() {   }
 
-int DesktopUtils::getDesktopFreeAreaSize(Display* display, int screen, _net_workarea* wa)
+int X11Utils::getDesktopFreeAreaSize(Display* display, int screen, _net_workarea* wa)
 {
   /* _NET_WORKAREA, x, y, width, height CARDINAL[][4]/32 */
   static Atom workarea = 0;
@@ -38,13 +38,13 @@ int DesktopUtils::getDesktopFreeAreaSize(Display* display, int screen, _net_work
   return 1;
 }
 
-_net_workarea DesktopUtils::initDesktopFreeAreaSize() {
+_net_workarea X11Utils::initDesktopFreeAreaSize() {
     _net_workarea wa;
     getDesktopFreeAreaSize(QX11Info::display(),0, &wa);
     return wa;
 }
 
-void DesktopUtils::reserveDesktopSpace(Window winid, int height, int width, unsigned int start_x, unsigned int start_y, QString dockEdge) {
+void X11Utils::prepareDesktop(Window winid, int height, int width, unsigned int start_x, unsigned int start_y, QString dockEdge) {
     Display *display  = QX11Info::display();
 
     int right_start_y = start_y;

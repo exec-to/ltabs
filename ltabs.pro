@@ -14,17 +14,17 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-    mainboardwidget.cpp \
-    desktoputils.cpp \
     controlbarlayout.cpp \
     settings/settingsdialog.cpp \
     settings/settingslistitem.cpp \
     settings/settingslistmodel.cpp \
     settings/settingslistwidget.cpp \
-    pluginmanager.cpp
+    pluginmanager.cpp \
+    x11utils.cpp \
+    application.cpp \
+    mainwindow.cpp
 
-HEADERS  += mainboardwidget.h \
-    desktoputils.h \
+HEADERS  += \
     controlbarlayout.h \
     settings/settingsdialog.h \
     settings/settingslistitem.h \
@@ -34,7 +34,10 @@ HEADERS  += mainboardwidget.h \
     pluginmanager.h \
     plugins/iapplicationplugin.h \
     plugins/iwidgetpage.h \
-    plugins/pluginhelper.h
+    plugins/pluginhelper.h \
+    x11utils.h \
+    application.h \
+    mainwindow.h
 
 RESOURCES += \
     assets/icons.qrc

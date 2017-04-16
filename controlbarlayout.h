@@ -20,7 +20,4 @@ public:
     void addWidget(QWidget* pwgt);
     QToolButton *createControlButton(const QPixmap icon);
 
-public slots:
-    void showSettingsDialog();
-    void createDefaultButtons();
 };

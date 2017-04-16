@@ -1,9 +1,6 @@
 #include "pluginmanager.h"
 
 QList<IApplicationPlugin *> PluginManager::pluginsList;
-//QList<ISettingsPage*> PluginManager::settingPages;
-//QList<IWidgetPage*> PluginManager::widgetPages;
-
 
 void PluginManager::loadPlugins() {
     QSettings settings;

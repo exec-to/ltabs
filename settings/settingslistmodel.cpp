@@ -1,13 +1,13 @@
 #include "settingslistmodel.h"
 
-SettingsListModel::SettingsListModel(QObject* pobj):
+SettingsListModel::SettingsListModel(QObject *pobj):
     QAbstractListModel(pobj)
 {
 
 }
 
 
-QVariant SettingsListModel::data(const QModelIndex& index, int role) const
+QVariant SettingsListModel::data(const QModelIndex &index, int role) const
 {
     QIcon m_emptyIcon;
 
@@ -34,13 +34,13 @@ QVariant SettingsListModel::data(const QModelIndex& index, int role) const
 }
 
 
-int SettingsListModel::rowCount(const QModelIndex& parent) const
+int SettingsListModel::rowCount(const QModelIndex &parent) const
 {
     return m_list.size();
 }
 
 
-QWidget* SettingsListModel::getPageByIndex(const QModelIndex& index) const {
+QWidget* SettingsListModel::getPageByIndex(const QModelIndex &index) const {
     if (!index.isValid()) {
         return m_list.at(index.row())->widget();
     }
@@ -48,12 +48,12 @@ QWidget* SettingsListModel::getPageByIndex(const QModelIndex& index) const {
 }
 
 
-void SettingsListModel::setPages(QList<ISettingsPage*> pages)
+void SettingsListModel::setPages(QList<IApplicationPlugin*> &plugins)
 {
     m_list.clear();
 
-    for(auto &page : pages) {
-        SettingsListItem* item = new SettingsListItem(page);
+    for(auto &plugin : plugins) {
+        SettingsListItem* item = new SettingsListItem(plugin->getSettingsPage());
         m_list.append(item);
     }
 }

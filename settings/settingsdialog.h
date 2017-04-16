@@ -11,7 +11,8 @@ class SettingsDialog : public QDialog
     Q_OBJECT
 
 private:
-    SettingsDialog(QWidget *parent);
+    static SettingsDialog* m_instance;
+    SettingsDialog(QWidget *parent = 0);
     SettingsListModel* m_model;
     SettingsListWidget* m_settingsList;
     QStackedLayout* m_stackedLayout;
@@ -21,8 +22,7 @@ private:
     void reject();
     void apply();
 
-
 public:
-    static SettingsDialog* getSettingsDialog(QWidget *parent = 0);
+    static void showDialog();
 
 };

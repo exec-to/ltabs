@@ -1,5 +1,4 @@
 #include "controlbarlayout.h"
-#include "settings/settingsdialog.h"
 
 ControlBarLayout::ControlBarLayout(int btnSize, int appWidth, QWidget *parent): QGridLayout(parent)
 {
@@ -21,22 +20,6 @@ void ControlBarLayout::addWidget(QWidget* pwgt) {
     int col = ((m_btnCount % m_ncolls) == 0) ? m_ncolls  : ((m_btnCount % m_ncolls) - 1);
 
     QGridLayout::addWidget(pwgt, row, col);
-}
-
-
-void ControlBarLayout::createDefaultButtons() {
-    QToolButton* pbtn = createControlButton(QPixmap(":settings.png"));
-    //change slot to &SettingsDialog::show()
-    connect( pbtn, SIGNAL(clicked()), this, SLOT(showSettingsDialog()) );
-
-    pbtn = createControlButton(QPixmap(":leave.png"));
-    connect( pbtn, SIGNAL(clicked()), QApplication::instance(), SLOT(quit()) );
-}
-
-
-void ControlBarLayout::showSettingsDialog() {
-    SettingsDialog* pConfigureDialog = SettingsDialog::getSettingsDialog();
-    pConfigureDialog->show();
 }
 
 QToolButton* ControlBarLayout::createControlButton(const QPixmap icon) {

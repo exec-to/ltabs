@@ -1,8 +1,7 @@
 #include "settings/settingsdialog.h"
 #include "pluginmanager.h"
-#include "settings/isettingspage.h"
 
-static SettingsDialog* m_instance = 0;
+SettingsDialog* SettingsDialog::m_instance = 0;
 
 SettingsDialog::SettingsDialog(QWidget* parent):
     QDialog(parent),
@@ -13,19 +12,24 @@ SettingsDialog::SettingsDialog(QWidget* parent):
     setupLayout();
 
     //need to find by index
-    ISettingsPage* generalPage = PluginManager::pluginsList.first()->getSettingsPage();
-    QWidget* gpage = generalPage->page();
+    //ISettingsPage* generalPage = PluginManager::pluginsList.first()->getSettingsPage();
+    //QWidget* gpage = generalPage->page();
 
     //add plugins settings here
 
-    m_model->setPages(QList<ISettingsPage*>() << PluginManager::pluginsList.first()->getSettingsPage());
+    m_model->setPages(PluginManager::pluginsList);
     m_settingsList->setModel(m_model);
 
     connect(m_settingsList->selectionModel(), &QItemSelectionModel::currentRowChanged,
                 this, &SettingsDialog::currentChanged);
 
-    m_stackedLayout->addWidget(gpage);
-
+    for (IApplicationPlugin* &plugin: PluginManager::pluginsList) {
+        ISettingsPage* settings = plugin->getSettingsPage();
+        if (settings) {
+            QWidget* page = settings->page();
+            m_stackedLayout->addWidget(page);
+        }
+    }
 }
 
 void SettingsDialog::currentChanged(const QModelIndex &current)
@@ -41,13 +45,13 @@ void SettingsDialog::currentChanged(const QModelIndex &current)
     }
 }
 
-
-SettingsDialog* SettingsDialog::getSettingsDialog(QWidget *parent) {
+void SettingsDialog::showDialog() {
     if (!m_instance)
-        m_instance = new SettingsDialog(parent);
+        m_instance = new SettingsDialog();
 
-    return m_instance;
+    m_instance->show();
 }
+
 
 void SettingsDialog::setupLayout() {
     this->resize(600, 400);

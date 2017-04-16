@@ -17,16 +17,16 @@ public:
     unsigned int height;
 };
 
-class DesktopUtils
+class X11Utils
 {
 
 private:
-    DesktopUtils();
+    X11Utils();
     static int getDesktopFreeAreaSize(Display* display, int screen, _net_workarea *wa);
 
 public:
     static _net_workarea initDesktopFreeAreaSize();
-    static void reserveDesktopSpace(Window winid, int height, int width, unsigned int start_x, unsigned int start_y, QString dockEdge = "right");
+    static void prepareDesktop(Window winid, int height, int width, unsigned int start_x, unsigned int start_y, QString dockEdge = "right");
 
 
 };
