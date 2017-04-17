@@ -16,4 +16,4 @@ CONFIG += plugin
 SOURCES +=\
         generalsettings.cpp
 
-HEADERS  += generalsettings.h ../../../settings/isettingspage.h ../../../plugins/iapplicationplugin.h ../../../plugins/iwidgetpage.h
+HEADERS  += generalsettings.h ../../src/plugins/isettingspage.h ../../src/plugins/iapplicationplugin.h ../../src/plugins/iwidgetpage.h

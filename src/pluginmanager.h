@@ -3,7 +3,7 @@
 #include <QObject>
 #include <QtWidgets>
 #include "controlbarlayout.h"
-#include "settings/isettingspage.h"
+#include "plugins/isettingspage.h"
 #include <QPluginLoader>
 #include "plugins/iapplicationplugin.h"
 #include "plugins/iwidgetpage.h"

@@ -13,31 +13,32 @@ TARGET = ../build/ltabs
 TEMPLATE = app
 
 
-SOURCES += main.cpp\
-    controlbarlayout.cpp \
-    settings/settingsdialog.cpp \
-    settings/settingslistitem.cpp \
-    settings/settingslistmodel.cpp \
-    settings/settingslistwidget.cpp \
-    pluginmanager.cpp \
-    x11utils.cpp \
-    application.cpp \
-    mainwindow.cpp
+SOURCES +=\
+    src/application.cpp \
+    src/controlbarlayout.cpp \
+    src/main.cpp \
+    src/mainwindow.cpp \
+    src/pluginmanager.cpp \
+    src/x11utils.cpp \
+    src/settings/settingsdialog.cpp \
+    src/settings/settingslistitem.cpp \
+    src/settings/settingslistmodel.cpp \
+    src/settings/settingslistwidget.cpp
 
 HEADERS  += \
-    controlbarlayout.h \
-    settings/settingsdialog.h \
-    settings/settingslistitem.h \
-    settings/settingslistmodel.h \
-    settings/isettingspage.h \
-    settings/settingslistwidget.h \
-    pluginmanager.h \
-    plugins/iapplicationplugin.h \
-    plugins/iwidgetpage.h \
-    plugins/pluginhelper.h \
-    x11utils.h \
-    application.h \
-    mainwindow.h
+    src/settings/settingsdialog.h \
+    src/settings/settingslistitem.h \
+    src/settings/settingslistmodel.h \
+    src/settings/settingslistwidget.h \
+    src/plugins/iapplicationplugin.h \
+    src/plugins/iwidgetpage.h \
+    src/plugins/pluginhelper.h \
+    src/application.h \
+    src/controlbarlayout.h \
+    src/mainwindow.h \
+    src/pluginmanager.h \
+    src/x11utils.h \
+    src/plugins/isettingspage.h
 
 RESOURCES += \
     assets/icons.qrc

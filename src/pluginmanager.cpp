@@ -4,7 +4,7 @@ QList<IApplicationPlugin *> PluginManager::pluginsList;
 
 void PluginManager::loadPlugins() {
     QSettings settings;
-    QString pluginsDirectory = settings.value("Application/PluginsDir", "./plugins").toString();
+    QString pluginsDirectory = settings.value("Application/PluginsDir").toString();
     QDir dir;
     dir.cd(pluginsDirectory);
 

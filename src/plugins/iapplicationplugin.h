@@ -3,7 +3,7 @@
 #include <QObject>
 #include <QtPlugin>
 #include "iwidgetpage.h"
-#include "../settings/isettingspage.h"
+#include "isettingspage.h"
 
 class IApplicationPlugin
 {

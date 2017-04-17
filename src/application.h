@@ -4,6 +4,9 @@
 
 class Application : public QApplication
 {
+private:
+    void initializeSettings();
+
 public:
     Application(int &argc, char **argv);
 };

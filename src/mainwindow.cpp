@@ -6,6 +6,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     QSettings settings;
 
+
+
     //setup main window geometry, position, behavior;
     QRect screen = QApplication::desktop()->geometry();
     //get desktop work area size
@@ -14,9 +16,9 @@ MainWindow::MainWindow(QWidget *parent)
     setAttribute(Qt::WA_X11NetWmWindowTypeDock);
     setWindowFlags(Qt::Window | Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint);
 
-    int appWidth = settings.value("MainWindow/width", 250).toInt();
+    int appWidth = settings.value("MainWindow/width").toInt();
     this->resize(appWidth, m_desktopGeometry.height);
-    this->move(((settings.value("MainWindow/DockEdge", "Right").toString() == "Left") ?
+    this->move(((settings.value("MainWindow/DockEdge").toString() == "Left") ?
                     screen.left() + m_desktopGeometry.x :
                     m_desktopGeometry.width - appWidth),
                     m_desktopGeometry.y);
@@ -43,7 +45,6 @@ MainWindow::MainWindow(QWidget *parent)
     this->setLayout(mainLayout);
     this->setFixedSize(this->size());
 }
-
 
 void MainWindow::createDefaultButtons() {
     QToolButton* btn = m_bottomLayout->createControlButton(QPixmap(":settings.png"));

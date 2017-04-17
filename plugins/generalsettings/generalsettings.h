@@ -3,7 +3,7 @@
 #include <QObject>
 #include <QtWidgets>
 
-#include "../../../plugins/iapplicationplugin.h"
+#include "../../src/plugins/iapplicationplugin.h"
 
 class QString;
 class QWidget;

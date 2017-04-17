@@ -1,5 +1,5 @@
-#include "settings/settingsdialog.h"
-#include "pluginmanager.h"
+#include "settingsdialog.h"
+#include "../pluginmanager.h"
 
 SettingsDialog* SettingsDialog::m_instance = 0;
 

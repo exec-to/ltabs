@@ -10,10 +10,10 @@ ControlBarLayout::ControlBarLayout(QWidget *parent): QGridLayout(parent)
     setSpacing(1);
     setMargin(1);
 
-    int appWidth = settings.value("MainWindow/width", 250).toInt();
+    int appWidth = settings.value("MainWindow/width").toInt();
     m_btnCount = 0;
     m_nrows = 0;
-    m_buttonSize = settings.value("ControlButtons/Size", 40).toInt();
+    m_buttonSize = settings.value("ControlButtons/Size").toInt();
     m_ncolls = static_cast<int>(appWidth / m_buttonSize);
 }
 

@@ -2,9 +2,9 @@
 
 #include <QObject>
 #include <QtWidgets>
-#include "settings/isettingspage.h"
-#include "settings/settingslistmodel.h"
-#include "settings/settingslistwidget.h"
+#include "../plugins/isettingspage.h"
+#include "settingslistmodel.h"
+#include "settingslistwidget.h"
 
 class SettingsDialog : public QDialog
 {

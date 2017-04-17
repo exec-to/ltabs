@@ -2,9 +2,9 @@
 
 #include <QObject>
 #include <QtWidgets>
-#include "settings/settingslistitem.h"
-#include "settings/settingslistwidget.h"
-#include "pluginmanager.h"
+#include "settingslistitem.h"
+#include "settingslistwidget.h"
+#include "../pluginmanager.h"
 
 
 class SettingsListModel : public QAbstractListModel

@@ -2,7 +2,7 @@
 
 #include <QObject>
 #include <QtWidgets>
-#include "settings/isettingspage.h"
+#include "../plugins/isettingspage.h"
 
 class SettingsListItem : public QObject
 {
