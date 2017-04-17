@@ -9,7 +9,7 @@ LIBS     += -lX11
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = ltabs
+TARGET = ../build/ltabs
 TEMPLATE = app
 
 

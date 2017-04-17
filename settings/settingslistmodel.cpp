@@ -25,10 +25,10 @@ QVariant SettingsListModel::data(const QModelIndex &index, int role) const
                        icon = m_emptyIcon;
                    return icon;
                }
-        case UserRoles::TabWidgetRole: {
+        /*case UserRoles::TabWidgetRole: {
                     return index.row();
                     //return  m_list.at(index.row())->widget();
-               }
+               }*/
     }
     return QVariant();
 }
@@ -41,7 +41,7 @@ int SettingsListModel::rowCount(const QModelIndex &parent) const
 
 
 QWidget* SettingsListModel::getPageByIndex(const QModelIndex &index) const {
-    if (!index.isValid()) {
+    if (index.isValid()) {
         return m_list.at(index.row())->widget();
     }
     return new QWidget();

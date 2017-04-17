@@ -11,39 +11,32 @@ SettingsDialog::SettingsDialog(QWidget* parent):
 {
     setupLayout();
 
-    //need to find by index
-    //ISettingsPage* generalPage = PluginManager::pluginsList.first()->getSettingsPage();
-    //QWidget* gpage = generalPage->page();
-
-    //add plugins settings here
-
     m_model->setPages(PluginManager::pluginsList);
     m_settingsList->setModel(m_model);
 
     connect(m_settingsList->selectionModel(), &QItemSelectionModel::currentRowChanged,
                 this, &SettingsDialog::currentChanged);
 
-    for (IApplicationPlugin* &plugin: PluginManager::pluginsList) {
-        ISettingsPage* settings = plugin->getSettingsPage();
-        if (settings) {
-            QWidget* page = settings->page();
-            m_stackedLayout->addWidget(page);
-        }
-    }
 }
+
 
 void SettingsDialog::currentChanged(const QModelIndex &current)
 {
     if (current.isValid()) {
         QWidget *page = m_model->getPageByIndex(current);
-        if (page->parent() == m_stackedLayout) {
-            m_stackedLayout->setCurrentWidget(page);
+
+        if (page->parent() != m_stackedLayout) {
+            m_stackedLayout->addWidget(page);
         }
+
+        m_stackedLayout->setCurrentWidget(page);
+
     } else {
         m_stackedLayout->setCurrentIndex(0);
         //m_headerLabel->clear();
     }
 }
+
 
 void SettingsDialog::showDialog() {
     if (!m_instance)
@@ -80,19 +73,34 @@ void SettingsDialog::setupLayout() {
     buttonBox->button(QDialogButtonBox::Ok)->setDefault(true);
 }
 
+
+template<typename Fnct>
+void for_method(Fnct doAction) {
+    for (auto &plugin: PluginManager::pluginsList) {
+        ISettingsPage* settings = plugin->getSettingsPage();
+        if (settings)
+            doAction(settings);
+    }
+}
+
+
 void SettingsDialog::accept() {
-    PluginManager::pluginsList.first()->getSettingsPage()->apply();
+
+    for_method([](ISettingsPage* settings) { settings->apply(); });
     this->hide();
 }
+
 
 void SettingsDialog::apply() {
 
-    PluginManager::pluginsList.first()->getSettingsPage()->apply();
+    for_method([](ISettingsPage* settings) { settings->apply(); });
 }
 
+
 void SettingsDialog::reject() {
+
     this->hide();
-    emit PluginManager::pluginsList.first()->getSettingsPage()->reject();
+    for_method([](ISettingsPage* settings) { settings->reject(); });
 }
 
 
