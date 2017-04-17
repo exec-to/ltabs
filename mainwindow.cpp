@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     int appWidth = settings.value("MainWindow/width", 250).toInt();
     this->resize(appWidth, m_desktopGeometry.height);
-    this->move(((settings.value("MainWindow/DockEdge", "right").toString() == "left") ?
+    this->move(((settings.value("MainWindow/DockEdge", "Right").toString() == "Left") ?
                     screen.left() + m_desktopGeometry.x :
                     m_desktopGeometry.width - appWidth),
                     m_desktopGeometry.y);
@@ -24,8 +24,7 @@ MainWindow::MainWindow(QWidget *parent)
     //setup bottom layout
     QWidget *bottomWidget = new QWidget;
     bottomWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
-    int btnSize = settings.value("ControlButtons/Size", 40).toInt();
-    m_bottomLayout = new ControlBarLayout(btnSize, appWidth, bottomWidget);
+    m_bottomLayout = new ControlBarLayout(bottomWidget);
 
     //setup top layout
     m_tabWidget = new QTabWidget();
@@ -84,7 +83,7 @@ void MainWindow::installPluginWidgets(QList<IApplicationPlugin*> &plugins) {
             m_tabWidget->addTab(w, "tab1");
 
             QPixmap icon(":1.png"); //plugin->icon;
-            QToolButton* btn = m_bottomLayout->createControlButton(icon); //buttom for plugin widget
+            QToolButton* btn = m_bottomLayout->createControlButton(icon); //button for plugin widget
             connect(btn, &QPushButton::clicked, [=]() {
                 m_tabWidget->setCurrentWidget(w);
             });

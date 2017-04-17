@@ -16,6 +16,6 @@ public:
     //virtual void restoreChanges() = 0;
 
 signals:
-    void changesRestored();
+    void restoreSettings();
 };
 

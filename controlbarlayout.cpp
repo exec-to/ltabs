@@ -1,17 +1,20 @@
 #include "controlbarlayout.h"
 
-ControlBarLayout::ControlBarLayout(int btnSize, int appWidth, QWidget *parent): QGridLayout(parent)
+ControlBarLayout::ControlBarLayout(QWidget *parent): QGridLayout(parent)
 {
+    QSettings settings;
+
     setColumnStretch(0,0);
     setColumnStretch(1,0);
     setAlignment(Qt::AlignRight| Qt::AlignTop);
     setSpacing(1);
     setMargin(1);
 
+    int appWidth = settings.value("MainWindow/width", 250).toInt();
     m_btnCount = 0;
     m_nrows = 0;
-    m_buttonSize = btnSize;
-    m_ncolls = static_cast<int>(appWidth / btnSize);
+    m_buttonSize = settings.value("ControlButtons/Size", 40).toInt();
+    m_ncolls = static_cast<int>(appWidth / m_buttonSize);
 }
 
 void ControlBarLayout::addWidget(QWidget* pwgt) {

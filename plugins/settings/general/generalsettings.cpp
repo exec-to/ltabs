@@ -34,25 +34,39 @@ GeneralSettingsPage::GeneralSettingsPage():
 QMap<QString, QString> tempSettings;
 QSettings settings;
 
+
+template<typename T, typename Signal/*, typename ParamType*/>
+T* createWidget( GeneralSettingsPage* _page, Signal _signal, const char* _prop, QString _param, QString _default) {
+    T* w = new T(); //sub of QWidget
+    //w.setProperty(_prop, settings.value(_param, _default).toString());
+    QObject::connect(w, _signal, [=](QString val) {
+        tempSettings[_param] = static_cast<QString>(val);
+    } );
+
+    QObject::connect(_page, &GeneralSettingsPage::restoreSettings, [=]() {
+        w->setProperty(_prop, settings.value(_param, _default));
+    });
+
+    return w;
+    //qobject_cast<>();
+}
+
 QWidget* GeneralSettingsPage::page()
 {
+
+
     if (!m_page) {
-        QWidget *parent = new QWidget();
-        //QLineEdit *txt_app_width = new QLineEdit();
-        QSpinBox *mwWidth= new QSpinBox();
+        m_page = new QWidget();
+        QLineEdit *lineWidthParam = createWidget<QLineEdit>(this, &QLineEdit::textChanged, "text", QString("MainWindow/width"), QString("250"));
+        //----------------- Main window width ---------------------------
+        /*QSpinBox *mwWidth= new QSpinBox();
         mwWidth->setRange(160,320);
         mwWidth->setValue(settings.value("MainWindow/width", 250).toInt());
-
-        QLabel *lbl_app_width = new QLabel("Ширина главного окна");
-
         connect(mwWidth,
-                //&QLineEdit::textEdited,
                 static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged),
                 //&QSpinBox::valueChanged,
                 [=](int val) {
-            //if (txt_app_width) {
                 tempSettings["MainWindow/width"] = QString::number(val);
-             //}
         });
 
         connect(this,
@@ -61,13 +75,56 @@ QWidget* GeneralSettingsPage::page()
             mwWidth->blockSignals(true);
             mwWidth->setValue(settings.value("MainWindow/width", 250).toInt());
             mwWidth->blockSignals(false);
+        });*/
+        //----------------- Main window width ---------------------------
+
+        //----------------- Main window position ------------------------
+        QComboBox *mwPosition = new QComboBox();
+        mwPosition->addItems(QStringList() << "Left" << "Right");
+        //mwPosition->setCurrentText(settings.value("MainWindow/DockEdge", "Right").toString());
+
+        connect(mwPosition,
+                &QComboBox::currentTextChanged,
+                [=](QString val) {
+                tempSettings["MainWindow/DockEdge"] = val;
         });
 
-        QHBoxLayout *vblayout = new QHBoxLayout();
-        vblayout->addWidget(lbl_app_width);
-        vblayout->addWidget(mwWidth);
-        parent->setLayout(vblayout);
-        m_page = parent;
+        connect(this,
+                &GeneralSettingsPage::restoreSettings, [=]()
+        {
+            mwPosition->blockSignals(true);
+            mwPosition->setCurrentText((settings.value("MainWindow/DockEdge", "Right").toString()));
+            mwPosition->blockSignals(false);
+        });
+        //----------------- Main window position ------------------------
+
+
+        //----------------- Control buttons size ------------------------
+        /*QSpinBox *mwWidth= new QSpinBox();
+        mwWidth->setRange(160,320);
+        mwWidth->setValue(settings.value("MainWindow/width", 250).toInt());
+        connect(mwWidth,
+                static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged),
+                //&QSpinBox::valueChanged,
+                [=](int val) {
+                tempSettings["MainWindow/width"] = QString::number(val);
+        });
+
+        connect(this,
+                &GeneralSettingsPage::changesRestored, [=]()
+        {
+            mwWidth->blockSignals(true);
+            mwWidth->setValue(settings.value("MainWindow/width", 250).toInt());
+            mwWidth->blockSignals(false);
+        });*/
+        //----------------- Control buttons size ------------------------
+
+        QFormLayout *formLayout = new QFormLayout;
+        //formLayout->addRow(tr("&Ширина главного окна:"), mwWidth);
+        formLayout->addRow(tr("&Ширина главного окна:"), lineWidthParam);
+        formLayout->addRow(tr("&Позиция окна:"), mwPosition);
+
+        m_page->setLayout(formLayout);
     }
     return m_page;
 }
@@ -84,7 +141,7 @@ void GeneralSettingsPage::apply()
 }
 
 void GeneralSettingsPage::reject() {
-    emit changesRestored();
+    emit restoreSettings();
     tempSettings.clear();
 }
 

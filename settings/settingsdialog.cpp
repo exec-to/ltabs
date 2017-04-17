@@ -38,10 +38,21 @@ void SettingsDialog::currentChanged(const QModelIndex &current)
 }
 
 
+template<typename Fnct>
+void plugins_for(Fnct doAction) {
+    for (auto &plugin: PluginManager::pluginsList) {
+        ISettingsPage* settings = plugin->getSettingsPage();
+        if (settings)
+            doAction(settings);
+    }
+}
+
+
 void SettingsDialog::showDialog() {
     if (!m_instance)
         m_instance = new SettingsDialog();
 
+    plugins_for([](ISettingsPage* settings) { emit settings->restoreSettings(); });
     m_instance->show();
 }
 
@@ -74,33 +85,23 @@ void SettingsDialog::setupLayout() {
 }
 
 
-template<typename Fnct>
-void for_method(Fnct doAction) {
-    for (auto &plugin: PluginManager::pluginsList) {
-        ISettingsPage* settings = plugin->getSettingsPage();
-        if (settings)
-            doAction(settings);
-    }
-}
-
-
 void SettingsDialog::accept() {
 
-    for_method([](ISettingsPage* settings) { settings->apply(); });
+    plugins_for([](ISettingsPage* settings) { settings->apply(); });
     this->hide();
 }
 
 
 void SettingsDialog::apply() {
 
-    for_method([](ISettingsPage* settings) { settings->apply(); });
+    plugins_for([](ISettingsPage* settings) { settings->apply(); });
 }
 
 
 void SettingsDialog::reject() {
 
     this->hide();
-    for_method([](ISettingsPage* settings) { settings->reject(); });
+    plugins_for([](ISettingsPage* settings) { settings->reject(); });
 }
 
 

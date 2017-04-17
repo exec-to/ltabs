@@ -16,7 +16,7 @@ private:
 
 
 public:
-    ControlBarLayout(int btnSize, int appWidth, QWidget* parent);
+    ControlBarLayout(QWidget* parent);
     void addWidget(QWidget* pwgt);
     QToolButton *createControlButton(const QPixmap icon);
 

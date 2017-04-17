@@ -6,12 +6,6 @@
 #include "settings/settingslistwidget.h"
 #include "pluginmanager.h"
 
-/*namespace UserRoles {
-
-enum UserRoles {TabWidgetRole = Qt::UserRole+1};
-
-}*/
-
 
 class SettingsListModel : public QAbstractListModel
 {

@@ -16,19 +16,15 @@ QVariant SettingsListModel::data(const QModelIndex &index, int role) const
     }
     switch (role) {
         case Qt::DisplayRole: {
-        return m_list.at(index.row())->displayName();
-    }
+            return m_list.at(index.row())->displayName();
+        }
 
         case Qt::DecorationRole: {
-                   QIcon icon = m_list.at(index.row())->icon;
-                   if (icon.isNull())
-                       icon = m_emptyIcon;
-                   return icon;
-               }
-        /*case UserRoles::TabWidgetRole: {
-                    return index.row();
-                    //return  m_list.at(index.row())->widget();
-               }*/
+           QIcon icon = m_list.at(index.row())->icon;
+           if (icon.isNull())
+               icon = m_emptyIcon;
+           return icon;
+        }
     }
     return QVariant();
 }
@@ -44,7 +40,7 @@ QWidget* SettingsListModel::getPageByIndex(const QModelIndex &index) const {
     if (index.isValid()) {
         return m_list.at(index.row())->widget();
     }
-    return new QWidget();
+    return new QLabel("Ничего не найдено.");
 }
 
 
