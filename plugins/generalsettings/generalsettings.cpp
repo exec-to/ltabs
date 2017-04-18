@@ -39,7 +39,7 @@ QSettings settings;
 template<typename T, typename ParamType, typename Signal>
 T* createSingleWidget( ISettingsPage* _page, Signal _signal, const char* _prop, QString _param, QVariant _default) {
     T* w = new T(); //sub of QWidget
-    //w->setProperty(_prop, settings.value(_param, _default));
+    w->setProperty(_prop, settings.value(_param, _default));
     QObject::connect(w, _signal, [=](ParamType val) {
         tempSettings[_param] = QVariant::fromValue(val);
     } );
@@ -92,10 +92,42 @@ QWidget* GeneralSettingsPage::page()
             );
         bsParam->setRange(24, 64);
 
+        QCheckBox* dsEnableParam = createSingleWidget<QCheckBox,int>
+            (
+                this,
+                &QCheckBox::stateChanged,
+                "state",
+                QString("Application/showDesktops"),
+                QVariant::fromValue(2)
+            );
+
+
+        QComboBox *dsDefaultParam = createSingleWidget<QComboBox,QString>
+            (
+                this,
+                &QComboBox::currentTextChanged,
+                "currentText",
+                QString("Environment/DefaultDesktop"),
+                QVariant::fromValue<QString>("0")
+            );
+
+        int ndesktops = settings.value("Environment/Desktops").toInt();
+        QStringList nitems;
+        for (int i = 0; i < ndesktops; i++) {
+            nitems << QString::number(i);
+        }
+        dsDefaultParam->addItems(nitems);
+
+        connect(dsEnableParam, &QCheckBox::stateChanged, [=](int state) {
+            dsDefaultParam->setEnabled(!state);
+        });
+
         QFormLayout *formLayout = new QFormLayout;
         formLayout->addRow(tr("&Ширина главного окна:"), mwWidthParam);
         formLayout->addRow(tr("&Позиция окна:"), mwPositionParam);
         formLayout->addRow(tr("&Размер кнопок нижней панели:"), bsParam);
+        formLayout->addRow(tr("&На всех раб. столах:"), dsEnableParam);
+        formLayout->addRow(tr("&Отображать на раб.столе:"), dsDefaultParam);
 
         m_page->setLayout(formLayout);
     }

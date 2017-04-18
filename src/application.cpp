@@ -30,4 +30,13 @@ void Application::initializeSettings() {
     if (!settings.contains("Application/PluginsDir"))
         settings.setValue("Application/PluginsDir", "./plugins");
 
+
+    if (!settings.contains("Application/showDesktops"))
+        settings.setValue("Application/showDesktops", 2);
+
+    if (!settings.contains("Environment/DefaultDesktop"))
+        settings.setValue("Environment/DefaultDesktop", 0);
+
+    if (!settings.contains("Environment/Desktops"))
+        settings.setValue("Environment/Desktops", 1);
 }

@@ -23,8 +23,11 @@ class X11Utils
 private:
     X11Utils();
     static int getDesktopFreeAreaSize(Display* display, int screen, _net_workarea *wa);
+    static void* property(Window win, Atom prop, Atom type, int &nitems);
 
 public:
     static _net_workarea initDesktopFreeAreaSize();
     static void setStrut(Window winid, int height, int width, unsigned int start_x, unsigned int start_y, QString dockEdge);
+    static unsigned long getDesktopCount();
+    static void setOnDesktops(Window winid, int all, unsigned int d);
 };

@@ -8,6 +8,10 @@ MainWindow::MainWindow(QWidget *parent)
 {
     QSettings settings;
     //setup main window geometry, position, behavior;
+
+    int desktops = X11Utils::getDesktopCount();
+    settings.setValue("Environment/Desktops", desktops);
+
     QRect screen = QApplication::desktop()->geometry();
     //get desktop work area size
     m_desktopGeometry = X11Utils::initDesktopFreeAreaSize();
@@ -70,6 +74,16 @@ void MainWindow::show() {
         m_desktopGeometry.x,
         m_desktopGeometry.y,
         settings.value("MainWindow/DockEdge", "Right").toString()
+    );
+
+    int on_all_desktops = settings.value("Application/showDesktops").toInt();
+    int defaultDesktop = settings.value("Environment/DefaultDesktop").toInt();
+
+    X11Utils::setOnDesktops
+    (
+        this->winId(),
+        on_all_desktops,
+        defaultDesktop
     );
 
     QWidget::show();
