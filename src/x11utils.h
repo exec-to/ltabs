@@ -26,7 +26,5 @@ private:
 
 public:
     static _net_workarea initDesktopFreeAreaSize();
-    static void prepareDesktop(Window winid, int height, int width, unsigned int start_x, unsigned int start_y, QString dockEdge = "right");
-
-
+    static void setStrut(Window winid, int height, int width, unsigned int start_x, unsigned int start_y, QString dockEdge);
 };

@@ -1,13 +1,12 @@
 #include "mainwindow.h"
 #include <QtWidgets>
 
+
+
 MainWindow::MainWindow(QWidget *parent)
     : QWidget(parent)
 {
     QSettings settings;
-
-
-
     //setup main window geometry, position, behavior;
     QRect screen = QApplication::desktop()->geometry();
     //get desktop work area size
@@ -61,14 +60,16 @@ void MainWindow::createDefaultButtons() {
 
 
 void MainWindow::show() {
+    QSettings settings;
 
-    X11Utils::prepareDesktop
+    X11Utils::setStrut
     (
         this->winId(),
         this->height(),
         this->width(),
         m_desktopGeometry.x,
-        m_desktopGeometry.y
+        m_desktopGeometry.y,
+        settings.value("MainWindow/DockEdge", "Right").toString()
     );
 
     QWidget::show();

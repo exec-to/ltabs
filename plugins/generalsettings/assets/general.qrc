@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="general.png">icons/light/appbar.list.gear.png</file>
+    </qresource>
+</RCC>

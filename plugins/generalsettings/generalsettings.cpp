@@ -26,7 +26,8 @@ IWidgetPage* GeneralSettings::getWidgetPage()
 //------------------------  ISettingsPage  --------------------------------//
 GeneralSettingsPage::GeneralSettingsPage():
     m_page(nullptr),
-    m_displayName("General")
+    m_displayName("General"),
+    m_icon(nullptr)
 {
 
 }
@@ -38,7 +39,7 @@ QSettings settings;
 template<typename T, typename ParamType, typename Signal>
 T* createSingleWidget( ISettingsPage* _page, Signal _signal, const char* _prop, QString _param, QVariant _default) {
     T* w = new T(); //sub of QWidget
-    w->setProperty(_prop, settings.value(_param, _default));
+    //w->setProperty(_prop, settings.value(_param, _default));
     QObject::connect(w, _signal, [=](ParamType val) {
         tempSettings[_param] = QVariant::fromValue(val);
     } );
@@ -120,6 +121,13 @@ void GeneralSettingsPage::reject() {
 
 QString GeneralSettingsPage::displayName() const {
     return m_displayName;
+}
+
+QPixmap *GeneralSettingsPage::displayIcon() {
+    if (!m_icon) {
+        m_icon = new QPixmap(":general.png");
+    }
+    return m_icon;
 }
 //------------------------  ISettingsPage  --------------------------------//
 //------------------------   IWidgetPage   --------------------------------//

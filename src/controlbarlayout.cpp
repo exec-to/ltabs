@@ -31,7 +31,7 @@ QToolButton* ControlBarLayout::createControlButton(const QPixmap icon) {
     btn->setFixedWidth(m_buttonSize);
     btn->setAutoRaise(true);
     btn->setIcon(icon);
-    btn->setIconSize(QSize(m_buttonSize-8,m_buttonSize-8));
+    btn->setIconSize(QSize(m_buttonSize-2,m_buttonSize-2));
     btn->setStyleSheet("QToolButton:hover {background-color:lightblue} QToolButton:!hover {background-color:lightgray}");
     this->addWidget(btn);
     return btn;

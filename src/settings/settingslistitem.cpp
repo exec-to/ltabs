@@ -7,6 +7,7 @@ SettingsListItem::SettingsListItem(ISettingsPage* page, QObject *parent) :
 {
     m_displayName = m_page->displayName();
     m_widget = m_page->page();
+    m_icon = QIcon(*(m_page->displayIcon()));
 }
 
 QString SettingsListItem::displayName() const {
@@ -15,4 +16,8 @@ QString SettingsListItem::displayName() const {
 
 QWidget* SettingsListItem::widget() const {
     return m_widget;
+}
+
+QIcon SettingsListItem::icon() {
+    return m_icon;
 }

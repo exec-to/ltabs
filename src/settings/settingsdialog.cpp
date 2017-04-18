@@ -58,6 +58,7 @@ void SettingsDialog::showDialog() {
 
 
 void SettingsDialog::setupLayout() {
+    setWindowTitle(tr("Параметры"));
     this->resize(600, 400);
 
     QGridLayout* gridLayout = new QGridLayout();

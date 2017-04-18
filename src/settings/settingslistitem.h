@@ -12,10 +12,12 @@ private:
     ISettingsPage* m_page;
     QString m_displayName;
     QWidget *m_widget;
+    QIcon m_icon;
+
 
 public:
     explicit SettingsListItem(ISettingsPage* page, QObject *parent = 0);
     QString displayName() const;
     QWidget* widget() const;
-    QIcon icon;
+    QIcon icon();
 };

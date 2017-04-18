@@ -44,13 +44,23 @@ _net_workarea X11Utils::initDesktopFreeAreaSize() {
     return wa;
 }
 
-void X11Utils::prepareDesktop(Window winid, int height, int width, unsigned int start_x, unsigned int start_y, QString dockEdge) {
+void X11Utils::setStrut(Window winid, int height, int width, unsigned int start_x, unsigned int start_y, QString dockEdge) {
     Display *display  = QX11Info::display();
+
 
     int right_start_y = start_y;
     int right_end_y = height;
     int right = width+2;
+    int left = width+2;
     long int insets[12] = {0, right, 0, 0, 0, 0, right_start_y, right_end_y, 0, 0, 0, 0};
+
+    if (dockEdge != "Right") {
+        insets[0] = left;
+        insets[1] = 0;
+        insets[5] = left;
+        insets[6] = 0;
+        insets[7] = 0;
+    }
 
     XChangeProperty(display,
                   winid,
@@ -59,21 +69,47 @@ void X11Utils::prepareDesktop(Window winid, int height, int width, unsigned int 
                  32,
                  PropModeReplace,
                  (unsigned char *)&insets, 12);
- /*
-    XChangeProperty(display,
-                 winId(),
-                 XInternAtom(QX11Info::display(), "_NET_WM_STRUT", False),
-                 XA_CARDINAL ,
-                 32,
-                 PropModeReplace,
-                 (unsigned char *)&insets, 4);*/
 
-    Atom tmp = XInternAtom(display, "_NET_WM_WINDOW_TYPE_DOCK", False);
+
+    //---->если нужно на всех рабочих столах, то делаем док
+    /*Atom tmp = XInternAtom(display, "_NET_WM_WINDOW_TYPE_DOCK", False);
     XChangeProperty(display,
                     winid,
                     XInternAtom(display, "_NET_WM_WINDOW_TYPE", False),
                     XA_ATOM ,
                     32,
                     PropModeReplace,
-                    (unsigned char *)&tmp, 1);
+                    (unsigned char *)&tmp, 1);*/
+
+
+    //------>иначе задаём номер рабочего стола
+    unsigned int val = 0;
+
+    XChangeProperty(display,
+                    winid,
+                    XInternAtom(display, "_NET_WM_DESKTOP", False),
+                    XA_CARDINAL,
+                    32,
+                    PropModeReplace,
+                    (unsigned char *)&val, 1);
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
