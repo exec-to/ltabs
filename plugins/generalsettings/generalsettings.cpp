@@ -39,7 +39,7 @@ QSettings settings;
 template<typename T, typename ParamType, typename Signal>
 T* createSingleWidget( ISettingsPage* _page, Signal _signal, const char* _prop, QString _param, QVariant _default) {
     T* w = new T(); //sub of QWidget
-    w->setProperty(_prop, settings.value(_param, _default));
+    //w->setProperty(_prop, settings.value(_param, _default));
     QObject::connect(w, _signal, [=](ParamType val) {
         tempSettings[_param] = QVariant::fromValue(val);
     } );
@@ -96,7 +96,7 @@ QWidget* GeneralSettingsPage::page()
             (
                 this,
                 &QCheckBox::stateChanged,
-                "state",
+                "checked",
                 QString("Application/showDesktops"),
                 QVariant::fromValue(2)
             );
