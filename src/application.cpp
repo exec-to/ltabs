@@ -5,7 +5,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 {
     initializeSettings();
     //load plugins
-    PluginManager::loadPlugins();
+    PluginLoader::load();
 
     //set application theme
     //get information about OS etc

@@ -1,8 +1,12 @@
 #include "pluginmanager.h"
 
-QList<IApplicationPlugin *> PluginManager::pluginsList;
+QList<IApplicationPlugin *> PluginLoader::plugins;
 
-void PluginManager::loadPlugins() {
+QList<IApplicationPlugin *> PluginLoader::pluginsList() {
+    return PluginLoader::plugins;
+}
+
+void PluginLoader::load() {
     QSettings settings;
     QString pluginsDirectory = settings.value("Application/PluginsDir").toString();
     QDir dir;
@@ -18,6 +22,15 @@ void PluginManager::loadPlugins() {
     ph->fileName = "libgeneralsetting.so";
     pluginsToLoad.append(ph);
 
+    //from qsettings;
+    PluginHelper* ph2 = new PluginHelper();
+    ph2->uuid = QUuid("5dc916d6-fa0f-4ee6-bae9-065b393a6a69");
+    ph2->isActive = true;
+    ph2->isPrivate = true;
+    ph2->fileName = "libpluginsettings.so";
+    pluginsToLoad.append(ph2);
+
+
 
     for (auto &pluginToLoad: pluginsToLoad) {
         QPluginLoader loader(dir.absoluteFilePath(pluginToLoad->fileName));
@@ -29,6 +42,6 @@ void PluginManager::loadPlugins() {
             continue;
         }
 
-        pluginsList.append(plugin);
+        plugins.append(plugin);
     }
 }

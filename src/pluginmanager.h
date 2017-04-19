@@ -10,16 +10,14 @@
 #include "plugins/pluginhelper.h"
 
 
-class PluginManager : public QObject
+class PluginLoader : public QObject
 {
     Q_OBJECT
 private:
-    explicit PluginManager(QObject *parent = 0) {  }
+    explicit PluginLoader(QObject *parent = 0) {  }
+    static QList<IApplicationPlugin *> plugins;
 public:
-    static QList<IApplicationPlugin *> pluginsList;
-    //static QList<ISettingsPage *> settingPages;
-    //static QList<IWidgetPage*> widgetPages;
-    static void loadPlugins();
+    static QList<IApplicationPlugin *> pluginsList();
+    static void load();
 
 };
-

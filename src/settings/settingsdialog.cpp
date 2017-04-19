@@ -11,7 +11,7 @@ SettingsDialog::SettingsDialog(QWidget* parent):
 {
     setupLayout();
 
-    m_model->setPages(PluginManager::pluginsList);
+    m_model->setPages(PluginLoader::pluginsList());
     m_settingsList->setModel(m_model);
 
     connect(m_settingsList->selectionModel(), &QItemSelectionModel::currentRowChanged,
@@ -40,7 +40,7 @@ void SettingsDialog::currentChanged(const QModelIndex &current)
 
 template<typename Fnct>
 void plugins_for(Fnct doAction) {
-    for (auto &plugin: PluginManager::pluginsList) {
+    for (auto &plugin: PluginLoader::pluginsList()) {
         ISettingsPage* settings = plugin->getSettingsPage();
         if (settings)
             doAction(settings);

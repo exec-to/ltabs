@@ -31,15 +31,13 @@ MainWindow::MainWindow(QWidget *parent)
     bottomWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
     m_bottomLayout = new ControlBarLayout(bottomWidget);
 
-    //setup top layout
-    m_tabWidget = new QTabWidget();
-    m_tabWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    installPluginWidgets(PluginManager::pluginsList);
+    installPluginWidgets(PluginLoader::pluginsList());
     createDefaultButtons();
 
-    QVBoxLayout* topLayout = new QVBoxLayout();
-    topLayout->addWidget(m_tabWidget);
+    QVBoxLayout *topLayout = new QVBoxLayout();
+    m_tabLayout = new QStackedLayout();
+    topLayout->addLayout(m_tabLayout);
 
     //setup main layout
     QVBoxLayout* mainLayout = new QVBoxLayout();
@@ -73,7 +71,7 @@ void MainWindow::show() {
         this->width(),
         m_desktopGeometry.x,
         m_desktopGeometry.y,
-        settings.value("MainWindow/DockEdge", "Right").toString()
+        settings.value("MainWindow/DockEdge").toString()
     );
 
     int on_all_desktops = settings.value("Application/showDesktops").toInt();
@@ -90,18 +88,18 @@ void MainWindow::show() {
 }
 
 
-void MainWindow::installPluginWidgets(QList<IApplicationPlugin*> &plugins) {
+void MainWindow::installPluginWidgets(QList<IApplicationPlugin*> plugins) {
     for (auto &plugin: plugins) {
 
         IWidgetPage* widgetPage = plugin->getWidgetPage();
         if (widgetPage) {
             QWidget* w = widgetPage->page();
-            m_tabWidget->addTab(w, "tab1");
+            m_tabLayout->addWidget(w);
 
             QPixmap icon(":1.png"); //plugin->icon;
             QToolButton* btn = m_bottomLayout->createControlButton(icon); //button for plugin widget
             connect(btn, &QPushButton::clicked, [=]() {
-                m_tabWidget->setCurrentWidget(w);
+                m_tabLayout->setCurrentWidget(w);
             });
         }
     }

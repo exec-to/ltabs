@@ -13,13 +13,13 @@ class MainWindow : public QWidget
 
 private:
     ControlBarLayout* m_bottomLayout;
-    QTabWidget* m_tabWidget;
+     QStackedLayout *m_tabLayout;
     _net_workarea m_desktopGeometry;
 
 public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    void installPluginWidgets(QList<IApplicationPlugin*> &plugins);
+    void installPluginWidgets(QList<IApplicationPlugin *> plugins);
     void createDefaultButtons();
     void show();
 };

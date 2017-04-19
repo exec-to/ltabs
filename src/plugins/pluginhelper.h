@@ -1,6 +1,7 @@
 #pragma once
 
-#include <QtWidgets>
+#include <QUuid>
+#include <QString>
 
 class PluginHelper
 {

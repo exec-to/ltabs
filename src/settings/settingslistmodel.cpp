@@ -44,7 +44,7 @@ QWidget* SettingsListModel::getPageByIndex(const QModelIndex &index) const {
 }
 
 
-void SettingsListModel::setPages(QList<IApplicationPlugin*> &plugins)
+void SettingsListModel::setPages(QList<IApplicationPlugin*> plugins)
 {
     m_list.clear();
 
