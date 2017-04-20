@@ -23,11 +23,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
-    pluginsettings.cpp
+    pluginsettings.cpp \
+    pluginhelperlistmodel.cpp
 
 HEADERS  += ../../src/plugins/isettingspage.h ../../src/plugins/iapplicationplugin.h ../../src/plugins/iwidgetpage.h \
     pluginsettings.h \
-    ../../src/plugins/pluginhelper.h
+    ../../src/plugins/pluginhelper.h \
+    pluginhelperlistmodel.h
 
 RESOURCES += \
     assets/plugin.qrc

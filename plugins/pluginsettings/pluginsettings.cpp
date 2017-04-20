@@ -53,25 +53,38 @@ T* createSingleWidget( ISettingsPage* _page, Signal _signal, const char* _prop, 
 
 QWidget* PluginSettingsPage::page()
 {
+
     if (!m_page) {
         m_page = new QWidget();
 
         QFormLayout *formLayout = new QFormLayout;
-        formLayout->addRow(tr("&Загрузка плагинов:"), new QPushButton("Выбрать..."));
-        QListWidget* plugins = new QListWidget();
-        /*QList<PluginHelper> *plist = loadList();
-
-        for (PluginHelper &item: plist) {
-            plugins->addItem(item.fileName);
-        }*/
-
+        QPushButton *addButton = new QPushButton("Выбрать...");
+        formLayout->addRow(tr("&Загрузка плагинов:"), addButton);
+        QListView *plugins = new QListView();
+        PluginHelperListModel *model = new PluginHelperListModel();
+        model->load();
+        plugins->setModel(model);
         formLayout->addWidget(plugins);
 
-        QPushButton* b1 = new QPushButton("Удалить");
+        connect(addButton, &QPushButton::clicked, [=]() {
+            QString pluginsDirectory = settings.value("Application/PluginsDir").toString();
+            QDir dir;
+            dir.cd(pluginsDirectory);
+            QString filename = QFileDialog::getOpenFileName(m_page,
+                                                    QString("Добавить плагин"),
+                                                    dir.absolutePath());
+            model->add(filename);
+        });
+
+        QPushButton* removeButton = new QPushButton("Удалить");
+        connect(removeButton, &QPushButton::clicked, [=]() {
+            //model->remove(plugins->selectedIndexes().constFirst());
+        });
+
         QPushButton* b2 = new QPushButton("Вверх");
         QPushButton* b3 = new QPushButton("Вниз");
         QHBoxLayout* hbl = new QHBoxLayout();
-        hbl->addWidget(b1);
+        hbl->addWidget(removeButton);
         hbl->addWidget(b2);
         hbl->addWidget(b3);
         QWidget *wgt = new QWidget();
@@ -83,22 +96,6 @@ QWidget* PluginSettingsPage::page()
 }
 
 //model->load();
-/*QList<PluginHelper> *loadList() {
-    QList<PluginHelper> *list = new QList<PluginHelper>();
-    int size = settings.beginReadArray("enabled_plugins");
-    for (int i = 0; i < size; ++i) {
-        settings.setArrayIndex(i);
-        PluginHelper plugin;
-        plugin.uuid = QUuid(settings.value("uuid").toString());
-        plugin.fileName = settings.value("fileName").toString();
-        plugin.isActive = settings.value("isActive").toBool();
-        plugin.isPrivate = settings.value("isPrivate").toBool();
-        list->append(plugin);
-    }
-    settings.endArray();
-    return list;
-}*/
-
 
 void PluginSettingsPage::apply()
 {

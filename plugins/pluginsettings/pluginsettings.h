@@ -5,6 +5,8 @@
 
 #include "../../src/plugins/iapplicationplugin.h"
 #include "../../src/plugins/pluginhelper.h";
+#include "pluginhelperlistmodel.h"
+#include <QFileDialog>
 
 class QString;
 class QWidget;
