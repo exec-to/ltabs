@@ -81,6 +81,8 @@ QWidget* PluginSettingsPage::page()
             //model->remove(plugins->selectedIndexes().constFirst());
         });
 
+        connect(this, &PluginSettingsPage::modelChanged, model, &PluginHelperListModel::save);
+
         QPushButton* b2 = new QPushButton("Вверх");
         QPushButton* b3 = new QPushButton("Вниз");
         QHBoxLayout* hbl = new QHBoxLayout();
@@ -106,6 +108,8 @@ void PluginSettingsPage::apply()
 
     settings.sync();
     tempSettings.clear();
+
+    emit modelChanged();
 }
 
 void PluginSettingsPage::reject() {

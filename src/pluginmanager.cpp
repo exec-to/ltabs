@@ -28,6 +28,19 @@ void PluginLoader::load() {
     ph2->fileName = "libpluginsettings.so";
     pluginsToLoad.append(ph2);
 
+    int size = settings.beginReadArray("EnabledPlugins");
+    for (int i = 0; i < size; ++i) {
+        settings.setArrayIndex(i);
+        if (settings.value("isActive").toBool()) {
+            PluginHelper *helper = new PluginHelper();
+            helper->uuid = QUuid(settings.value("uuid").toString());
+            helper->fileName = settings.value("fileName").toString();
+            helper->isActive = true;
+            pluginsToLoad.append(helper);
+        }
+    }
+    settings.endArray();
+
     for (auto &pluginToLoad: pluginsToLoad) {
         QPluginLoader loader(dir.absoluteFilePath(pluginToLoad->fileName));
         QObject *pluginObject = loader.instance();

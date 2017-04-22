@@ -18,9 +18,8 @@ QVariant PluginHelperListModel::data(const QModelIndex &index, int nRole) const 
 
     switch (nRole) {
         case Qt::DisplayRole: {
-            return m_list.at(index.row()).fileName;
+            return (m_list.at(index.row()).isActive) ? m_list.at(index.row()).fileName : QVariant();
         }
-
     }
     return QVariant();
 }
@@ -35,53 +34,69 @@ void PluginHelperListModel::add(QString &filename) {
     if (filename.isEmpty() || filename.isNull())
         return;
 
+
     QPluginLoader loader(filename);
     QObject *pluginObject = loader.instance(); //todo: check erros
     IApplicationPlugin* plugin = qobject_cast<IApplicationPlugin*>(pluginObject);
 
     PluginHelper helper;
-    helper.fileName = filename; //todo: only filename without path
+    helper.fileName = QFileInfo(filename).fileName(); //todo: only filename without path
     helper.uuid = plugin->getUuid();
     helper.isActive = true;
-    this->insertRow(this->rowCount());
-    QModelIndex index = this->index(this->rowCount()-1);
-    this->setData(index, QVariant::fromValue(helper));
-
-    int debug = 0;
-
+    int nrow = this->rowCount();
+    if (this->insertRow(nrow)) {
+        QModelIndex index = this->index(nrow);
+        this->setData(index, QVariant::fromValue(helper));
+    }
 }
 
+
+bool PluginHelperListModel::insertRows(int row, int count, const QModelIndex &parent) {
+
+    beginInsertRows(parent,row, row+count - 1);
+    m_list.append(PluginHelper());
+    endInsertRows();
+
+    return true;
+}
+
+
 bool PluginHelperListModel::setData(const QModelIndex &index, const QVariant &value, int role) {
-    //if (index.isValid() && role == Qt::EditRole)  {
-        m_list.append(value.value<PluginHelper>());
+
+    if (index.isValid() && role == Qt::EditRole)  {
+        PluginHelper *helper = &m_list[index.row()];
+        helper->fileName = value.value<PluginHelper>().fileName;
+        helper->uuid = value.value<PluginHelper>().uuid;
+        helper->isActive = true;
         emit dataChanged(index,index);
         return true;
-    //}
-    //return false;
+    }
+    return false;
 }
 
 
 //[remove method]
 void PluginHelperListModel::remove(QModelIndex &index) {
-     if (!index.isValid())  {
+     /*if (!index.isValid())  {
          return;
      }
-
-    this->removeRow(index.row());
+    this->removeRow(index.row());*/
 }
 
 
 void PluginHelperListModel::load() {
     QSettings settings;
-    int size = settings.beginReadArray("enabled_plugins");
+    int size = settings.beginReadArray("EnabledPlugins");
     m_list.clear();
     for (int i = 0; i < size; ++i) {
         settings.setArrayIndex(i);
-        PluginHelper plugin;
-        plugin.uuid = QUuid(settings.value("uuid").toString());
-        plugin.fileName = settings.value("fileName").toString();
-        plugin.isActive = settings.value("isActive").toBool();
-        m_list.append(plugin);
+        if (settings.value("isActive").toBool()) {
+            PluginHelper plugin;
+            plugin.uuid = QUuid(settings.value("uuid").toString());
+            plugin.fileName = settings.value("fileName").toString();
+            plugin.isActive = settings.value("isActive").toBool();
+            m_list.append(plugin);
+        }
     }
     settings.endArray();
 }
@@ -89,7 +104,7 @@ void PluginHelperListModel::load() {
 
 void PluginHelperListModel::save() {
     QSettings settings;
-    settings.beginWriteArray("enabled_plugins");
+    settings.beginWriteArray("EnabledPlugins");
     for (int i = 0; i < m_list.size(); ++i) {
         settings.setArrayIndex(i);
         settings.setValue("uuid", m_list.at(i).uuid.toString());
