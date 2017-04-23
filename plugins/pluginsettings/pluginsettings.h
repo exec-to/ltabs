@@ -38,6 +38,7 @@ private:
     QWidget *m_page;
     QString m_displayName;
     QPixmap *m_icon;
+    QString getPluginFileName();
 
 public:
     PluginSettingsPage();
@@ -47,9 +48,6 @@ public:
     virtual QPixmap *displayIcon();
     virtual void apply();
     virtual void reject();
-
-signals:
-    void modelChanged();
 
 };
 //------------------------  ISettingsPage  --------------------------------//

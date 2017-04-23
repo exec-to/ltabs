@@ -17,27 +17,22 @@ void PluginLoader::load() {
     //static plugin 1
     PluginHelper* ph = new PluginHelper();
     ph->uuid = QUuid("db507711-94ad-4f54-bffd-1a7789882839");
-    ph->isActive = true;
     ph->fileName = "libgeneralsetting.so";
     pluginsToLoad.append(ph);
 
     //static plugin 2
     PluginHelper* ph2 = new PluginHelper();
     ph2->uuid = QUuid("5dc916d6-fa0f-4ee6-bae9-065b393a6a69");
-    ph2->isActive = true;
     ph2->fileName = "libpluginsettings.so";
     pluginsToLoad.append(ph2);
 
-    int size = settings.beginReadArray("EnabledPlugins");
+    int size = settings.beginReadArray("Plugins");
     for (int i = 0; i < size; ++i) {
         settings.setArrayIndex(i);
-        if (settings.value("isActive").toBool()) {
-            PluginHelper *helper = new PluginHelper();
-            helper->uuid = QUuid(settings.value("uuid").toString());
-            helper->fileName = settings.value("fileName").toString();
-            helper->isActive = true;
-            pluginsToLoad.append(helper);
-        }
+        PluginHelper *helper = new PluginHelper();
+        helper->uuid = QUuid(settings.value("uuid").toString());
+        helper->fileName = settings.value("fileName").toString();
+        pluginsToLoad.append(helper);
     }
     settings.endArray();
 

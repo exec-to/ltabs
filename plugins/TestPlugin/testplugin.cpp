@@ -18,7 +18,10 @@ ISettingsPage* TestPlugin::getSettingsPage()
 
 IWidgetPage* TestPlugin::getWidgetPage()
 {
-    return nullptr; //no implement for this
+    if (!m_widgetPage) {
+        m_widgetPage = new TestPluginWidgetPage();
+    }
+    return m_widgetPage;
 }
 
 
@@ -65,7 +68,26 @@ QPixmap *TestPluginSettingsPage::displayIcon() {
 }
 //------------------------  ISettingsPage  --------------------------------//
 //------------------------   IWidgetPage   --------------------------------//
+TestPluginWidgetPage::TestPluginWidgetPage():
+    m_widget(nullptr)
+{
 
+}
+
+
+QWidget* TestPluginWidgetPage::page() {
+    if (!m_widget) {
+        m_widget = new QWidget();
+        QHBoxLayout *layout = new QHBoxLayout();
+        QLineEdit *line = new QLineEdit("test text");
+        QPushButton *btn = new QPushButton("Press me");
+        layout->addWidget(line);
+        layout->addWidget(btn);
+        m_widget->setLayout(layout);
+    }
+
+    return m_widget;
+}
 
 
 

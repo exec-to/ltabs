@@ -8,11 +8,13 @@ class PluginHelper
 public:
     PluginHelper():
         uuid(0),
-        isActive(false),
         fileName(QString())
     {  }
     QUuid uuid;
-    bool isActive;
     QString fileName;
+
+    bool operator== (PluginHelper helper) {
+        return (uuid == helper.uuid);
+    }
 };
 Q_DECLARE_METATYPE(PluginHelper);

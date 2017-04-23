@@ -20,14 +20,11 @@ public:
     int rowCount(const QModelIndex &parent = QModelIndex()) const;
     bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
     bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex());
-
-public slots:
-    void add(QString &filename);
-    void remove(QModelIndex &index);
+    bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex());
     void load();
     void save();
 
-signals:
-    void rejectChanges();
-    void applyChanges();
+public slots:
+    void add(QString &filename);
+    void remove(QModelIndexList list);
 };

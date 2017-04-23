@@ -57,47 +57,66 @@ QWidget* PluginSettingsPage::page()
     if (!m_page) {
         m_page = new QWidget();
 
-        QFormLayout *formLayout = new QFormLayout;
-        QPushButton *addButton = new QPushButton("Выбрать...");
-        formLayout->addRow(tr("&Загрузка плагинов:"), addButton);
         QListView *plugins = new QListView();
         PluginHelperListModel *model = new PluginHelperListModel();
-        model->load();
         plugins->setModel(model);
-        formLayout->addWidget(plugins);
 
-        connect(addButton, &QPushButton::clicked, [=]() {
-            QString pluginsDirectory = settings.value("Application/PluginsDir").toString();
-            QDir dir;
-            dir.cd(pluginsDirectory);
-            QString filename = QFileDialog::getOpenFileName(m_page,
-                                                    QString("Добавить плагин"),
-                                                    dir.absolutePath());
+        QPushButton* removeItem = new QPushButton("Удалить");
+        connect(removeItem, &QPushButton::clicked, [=]() {
+            model->remove(plugins->selectionModel()->selectedRows());
+        });
+
+        QPushButton* upItem = new QPushButton("Вверх");
+        QPushButton* downItem = new QPushButton("Вниз");
+
+        QLabel *select = new QLabel(tr("Загрузка плагинов:"));
+
+        QPushButton *addItem = new QPushButton("Выбрать...");
+
+        connect(addItem, &QPushButton::clicked, [=]() {
+            QString filename = getPluginFileName();
             model->add(filename);
         });
 
-        QPushButton* removeButton = new QPushButton("Удалить");
-        connect(removeButton, &QPushButton::clicked, [=]() {
-            //model->remove(plugins->selectedIndexes().constFirst());
-        });
+        QTextEdit *description = new QTextEdit("Description");
+        description->setReadOnly(true);
+        description->setFixedHeight(80);
 
-        connect(this, &PluginSettingsPage::modelChanged, model, &PluginHelperListModel::save);
+        QGridLayout *gridLayout = new QGridLayout();
+        gridLayout->addWidget(     upItem, 0,0,1,1);
+        gridLayout->addWidget(   downItem, 1,0,1,1);
+        gridLayout->addWidget( removeItem, 2,0,1,1);
+        gridLayout->addWidget(    plugins, 0,1,5,3);
+        gridLayout->addWidget(     select, 6,0,1,1);
+        gridLayout->addWidget(    addItem, 6,1,1,3);
+        gridLayout->addWidget(description, 7,0,1,4);
 
-        QPushButton* b2 = new QPushButton("Вверх");
-        QPushButton* b3 = new QPushButton("Вниз");
-        QHBoxLayout* hbl = new QHBoxLayout();
-        hbl->addWidget(removeButton);
-        hbl->addWidget(b2);
-        hbl->addWidget(b3);
-        QWidget *wgt = new QWidget();
-        wgt->setLayout(hbl);
-        formLayout->addWidget(wgt);
-        m_page->setLayout(formLayout);
+        m_page->setLayout(gridLayout);
     }
     return m_page;
 }
 
-//model->load();
+QString PluginSettingsPage::getPluginFileName() {
+    QString path = settings
+            .value("Application/PluginsDir")
+            .toString();
+
+    QDir dir;
+    if (!dir.cd(path)) {
+        QMessageBox::critical(0,"Error", "Plugins directory does not exist.\nCheck settings configuration.");
+        return QString();
+    }
+
+    QString filename = QFileDialog::getOpenFileName
+    (
+        m_page,
+        QString("Добавить плагин"),
+        dir.absolutePath()
+    );
+
+    return filename;
+}
+
 
 void PluginSettingsPage::apply()
 {
@@ -108,8 +127,6 @@ void PluginSettingsPage::apply()
 
     settings.sync();
     tempSettings.clear();
-
-    emit modelChanged();
 }
 
 void PluginSettingsPage::reject() {

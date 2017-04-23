@@ -48,28 +48,18 @@ public:
 };
 //------------------------  ISettingsPage  --------------------------------//
 //------------------------   IWidgetPage   --------------------------------//
+class TestPluginWidgetPage: public IWidgetPage {
+Q_OBJECT
 
+private:
+    QWidget *m_widget;
+public:
+    TestPluginWidgetPage();
+    virtual ~TestPluginWidgetPage() {  }
+    virtual QWidget* page();
+};
 
 
 
 //------------------------   IWidgetPage   --------------------------------//
 
-
-
-
-
-
-
-
-/*#ifndef TESTPLUGIN_H
-#define TESTPLUGIN_H
-
-#include <QObject>
-
-class TestPlugin : public IApplicationPlugin
-{
-public:
-    TestPlugin();
-};
-
-#endif // TESTPLUGIN_H*/

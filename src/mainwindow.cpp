@@ -31,13 +31,12 @@ MainWindow::MainWindow(QWidget *parent)
     bottomWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
     m_bottomLayout = new ControlBarLayout(bottomWidget);
 
+    m_tabLayout = new QStackedLayout();
+    QVBoxLayout *topLayout = new QVBoxLayout();
+    topLayout->addLayout(m_tabLayout);
 
     installPluginWidgets(PluginLoader::pluginsList());
     createDefaultButtons();
-
-    QVBoxLayout *topLayout = new QVBoxLayout();
-    m_tabLayout = new QStackedLayout();
-    topLayout->addLayout(m_tabLayout);
 
     //setup main layout
     QVBoxLayout* mainLayout = new QVBoxLayout();
