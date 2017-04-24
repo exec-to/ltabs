@@ -72,12 +72,31 @@ void PluginHelperListModel::add(QString &filename) {
 }
 
 //[remove method]
-void PluginHelperListModel::remove(QModelIndexList list) {
-    for (QModelIndex &index: list) {
-        this->removeRow(index.row());
-        emit dataChanged(index,index);
+void PluginHelperListModel::remove(QModelIndex &index) {
+
+    if (!index.isValid()) {
+        return;
     }
+
+    this->removeRow(index.row());
+    emit dataChanged(index,index);
 }
+
+void PluginHelperListModel::moveUp(QModelIndex &index) {
+    if (!index.isValid()) {
+        return;
+    }
+    //this->moveRow(index,index.row,)
+}
+
+void PluginHelperListModel::moveDown(QModelIndex &index) {
+    if (!index.isValid()) {
+        return;
+    }
+
+}
+
+
 
 bool PluginHelperListModel::removeRows(int row, int count, const QModelIndex &parent) {
     beginRemoveRows(parent,row, row+count - 1);

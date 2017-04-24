@@ -51,19 +51,21 @@ T* createSingleWidget( ISettingsPage* _page, Signal _signal, const char* _prop, 
     return w;
 }
 
+
 QWidget* PluginSettingsPage::page()
 {
 
     if (!m_page) {
         m_page = new QWidget();
 
-        QListView *plugins = new QListView();
+        QListView *pluginsList = new QListView();
         PluginHelperListModel *model = new PluginHelperListModel();
-        plugins->setModel(model);
+        pluginsList->setModel(model);
 
         QPushButton* removeItem = new QPushButton("Удалить");
         connect(removeItem, &QPushButton::clicked, [=]() {
-            model->remove(plugins->selectionModel()->selectedRows());
+            QModelIndex index = pluginsList->selectionModel()->currentIndex();
+            model->remove(index);
         });
 
         QPushButton* upItem = new QPushButton("Вверх");
@@ -82,11 +84,21 @@ QWidget* PluginSettingsPage::page()
         description->setReadOnly(true);
         description->setFixedHeight(80);
 
+        /*connect //Обновление текста описания плагина
+                  //необходимо разработать данный функционал
+        (
+            pluginsList->selectionModel(),
+            &QItemSelectionModel::currentRowChanged,
+            [=](QModelIndex &current) {
+                description->setText(current.data(UserRoles::DescriptionRole).toString());
+            }
+        );*/
+
         QGridLayout *gridLayout = new QGridLayout();
         gridLayout->addWidget(     upItem, 0,0,1,1);
         gridLayout->addWidget(   downItem, 1,0,1,1);
         gridLayout->addWidget( removeItem, 2,0,1,1);
-        gridLayout->addWidget(    plugins, 0,1,5,3);
+        gridLayout->addWidget(pluginsList, 0,1,5,3);
         gridLayout->addWidget(     select, 6,0,1,1);
         gridLayout->addWidget(    addItem, 6,1,1,3);
         gridLayout->addWidget(description, 7,0,1,4);

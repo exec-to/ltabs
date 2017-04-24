@@ -26,5 +26,5 @@ public:
 
 public slots:
     void add(QString &filename);
-    void remove(QModelIndexList list);
+    void remove(QModelIndex &index);
 };
