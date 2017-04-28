@@ -11,6 +11,8 @@ class PluginHelperListModel : public QAbstractListModel
 
 private:
     QList<PluginHelper> m_list;
+    bool moveRows(const QModelIndex &sourceParent, int sourceRow, int count,
+                          const QModelIndex &destinationParent, int destinationChild);
 
 
 public:
@@ -21,6 +23,8 @@ public:
     bool setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole);
     bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex());
     bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex());
+    void moveUp(QModelIndex &index);
+    void moveDown(QModelIndex &index);
     void load();
     void save();
 

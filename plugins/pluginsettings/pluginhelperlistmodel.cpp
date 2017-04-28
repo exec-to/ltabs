@@ -83,19 +83,33 @@ void PluginHelperListModel::remove(QModelIndex &index) {
 }
 
 void PluginHelperListModel::moveUp(QModelIndex &index) {
-    if (!index.isValid()) {
+    if (!index.isValid() || index.row() == 0) {
         return;
     }
-    //this->moveRow(index,index.row,)
+    moveRows(QModelIndex(),index.row(),1,QModelIndex(),index.row()-1);
+    emit dataChanged(index,index);
 }
+
 
 void PluginHelperListModel::moveDown(QModelIndex &index) {
-    if (!index.isValid()) {
+    if (!index.isValid() || index.row() == m_list.size()-1) {
         return;
     }
-
+    QModelIndex next_index = this->index(index.row() + 1);
+    moveUp(next_index);
 }
 
+
+bool PluginHelperListModel::moveRows(const QModelIndex &sourceParent, int sourceRow, int count,
+                      const QModelIndex &destinationParent, int destinationChild)
+{
+    if (beginMoveRows(sourceParent,sourceRow,count,destinationParent,destinationChild)) {
+        m_list.swap(sourceRow,destinationChild);
+        endMoveRows();
+        return true;
+    }
+    return false;
+}
 
 
 bool PluginHelperListModel::removeRows(int row, int count, const QModelIndex &parent) {
@@ -107,11 +121,9 @@ bool PluginHelperListModel::removeRows(int row, int count, const QModelIndex &pa
 
 
 bool PluginHelperListModel::insertRows(int row, int count, const QModelIndex &parent) {
-
     beginInsertRows(parent,row, row+count - 1);
     m_list.append(PluginHelper());
     endInsertRows();
-
     return true;
 }
 

@@ -69,7 +69,16 @@ QWidget* PluginSettingsPage::page()
         });
 
         QPushButton* upItem = new QPushButton("Вверх");
+        connect(upItem, &QPushButton::clicked, [=]() {
+            QModelIndex index = pluginsList->selectionModel()->currentIndex();
+            model->moveUp(index);
+        });
+
         QPushButton* downItem = new QPushButton("Вниз");
+        connect(downItem, &QPushButton::clicked, [=]() {
+            QModelIndex index = pluginsList->selectionModel()->currentIndex();
+            model->moveDown(index);
+        });
 
         QLabel *select = new QLabel(tr("Загрузка плагинов:"));
 
