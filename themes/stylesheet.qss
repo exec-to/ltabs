@@ -1,0 +1,20 @@
+QToolButton:hover {
+	background-color:#777777;
+}
+
+QToolButton:!hover {
+	background-color:#444444;
+}
+
+QWidget {
+	background: #606060;
+	color: white;
+}
+
+QWidget#bottomLayoutWidget {
+	background: #252627;
+}
+
+QWidget#mainWindow {
+	background: #252627;
+}
