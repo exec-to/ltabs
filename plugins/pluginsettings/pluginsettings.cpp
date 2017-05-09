@@ -54,7 +54,6 @@ T* createSingleWidget( ISettingsPage* _page, Signal _signal, const char* _prop, 
 
 QWidget* PluginSettingsPage::page()
 {
-
     if (!m_page) {
         m_page = new QWidget();
 
@@ -103,14 +102,14 @@ QWidget* PluginSettingsPage::page()
             }
         );*/
 
-        QGridLayout *gridLayout = new QGridLayout();
-        gridLayout->addWidget(     upItem, 0,0,1,1);
-        gridLayout->addWidget(   downItem, 1,0,1,1);
-        gridLayout->addWidget( removeItem, 2,0,1,1);
-        gridLayout->addWidget(pluginsList, 0,1,5,3);
-        gridLayout->addWidget(     select, 6,0,1,1);
-        gridLayout->addWidget(    addItem, 6,1,1,3);
-        gridLayout->addWidget(description, 7,0,1,4);
+        QGridLayout *gridLayout =  new QGridLayout();
+         gridLayout->addWidget(     upItem, 0,0,1,1);
+         gridLayout->addWidget(   downItem, 1,0,1,1);
+         gridLayout->addWidget( removeItem, 2,0,1,1);
+         gridLayout->addWidget(pluginsList, 0,1,5,3);
+         gridLayout->addWidget(     select, 6,0,1,1);
+         gridLayout->addWidget(    addItem, 6,1,1,3);
+         gridLayout->addWidget(description, 7,0,1,4);
 
         m_page->setLayout(gridLayout);
     }

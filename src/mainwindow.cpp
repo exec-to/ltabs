@@ -26,33 +26,40 @@ MainWindow::MainWindow(QWidget *parent)
                     m_desktopGeometry.width - appWidth),
                     m_desktopGeometry.y);
 
+    this->setObjectName("mainWindow");
+
     //setup bottom layout
-    QWidget *bottomWidget = new QWidget;
+    QWidget *bottomWidget = new QWidget();
+    bottomWidget->setObjectName("bottomLayoutWidget");
     bottomWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
+
     m_bottomLayout = new ControlBarLayout(bottomWidget);
 
+
     m_tabLayout = new QStackedLayout();
-    QVBoxLayout *topLayout = new QVBoxLayout();
-    topLayout->addLayout(m_tabLayout);
 
     installPluginWidgets(PluginLoader::pluginsList());
     createDefaultButtons();
 
     //setup main layout
     QVBoxLayout* mainLayout = new QVBoxLayout();
-    mainLayout->addLayout(topLayout);
+    mainLayout->addLayout(m_tabLayout);
     mainLayout->addWidget(bottomWidget);
+    mainLayout->setSpacing(0);
+    mainLayout->setContentsMargins(1,0,1,0);
     this->setLayout(mainLayout);
     this->setFixedSize(this->size());
+    //this->layout()->setSpacing(0);
+
 }
 
 void MainWindow::createDefaultButtons() {
-    QToolButton* btn = m_bottomLayout->createControlButton(QPixmap(":settings.png"));
+    QToolButton* btn = m_bottomLayout->createControlButton(QPixmap(":dark.settings.png"));
     connect( btn, &QToolButton::clicked, [=]() {
         SettingsDialog::showDialog();
     });
 
-    btn = m_bottomLayout->createControlButton(QPixmap(":leave.png"));
+    btn = m_bottomLayout->createControlButton(QPixmap(":dark.leave.png"));
     connect( btn, &QToolButton::clicked,
          QApplication::instance(),
          &QCoreApplication::quit

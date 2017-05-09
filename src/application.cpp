@@ -3,11 +3,20 @@
 
 Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 {
+    //load settings
     initializeSettings();
+
     //load plugins
     PluginLoader::load();
 
-    //set application theme
+    //set application style
+    QApplication::setStyle(QStyleFactory::create("Fusion"));
+
+    QFile File("./themes/stylesheet.qss");
+    File.open(QFile::ReadOnly);
+    QString StyleSheet = QLatin1String(File.readAll());
+    qApp->setStyleSheet(StyleSheet);
+
     //get information about OS etc
 }
 

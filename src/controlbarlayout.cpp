@@ -4,8 +4,8 @@ ControlBarLayout::ControlBarLayout(QWidget *parent): QGridLayout(parent)
 {
     QSettings settings;
 
-    setColumnStretch(0,0);
-    setColumnStretch(1,0);
+    //setColumnStretch(0,0);
+    //setColumnStretch(1,0);
     setAlignment(Qt::AlignRight| Qt::AlignTop);
     setSpacing(1);
     setMargin(1);
@@ -32,7 +32,7 @@ QToolButton* ControlBarLayout::createControlButton(const QPixmap icon) {
     btn->setAutoRaise(true);
     btn->setIcon(icon);
     btn->setIconSize(QSize(m_buttonSize-2,m_buttonSize-2));
-    btn->setStyleSheet("QToolButton:hover {background-color:lightblue} QToolButton:!hover {background-color:lightgray}");
+    //btn->setStyleSheet("QToolButton:hover {background-color:lightblue} QToolButton:!hover {background-color:lightgray}");
     this->addWidget(btn);
     return btn;
 }

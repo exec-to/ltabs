@@ -111,8 +111,8 @@ void X11Utils::setStrut(Window winid, int height, int width, unsigned int start_
     Display *display  = QX11Info::display();
     int right_start_y = start_y;
     int right_end_y = height;
-    int right = width + 2;
-    int left = start_x + width + 2;
+    int right = width;
+    int left = start_x + width;
     long int insets[12] = {0, right, 0, 0, 0, 0, right_start_y, right_end_y, 0, 0, 0, 0};
 
     if (dockEdge != "Right") {
