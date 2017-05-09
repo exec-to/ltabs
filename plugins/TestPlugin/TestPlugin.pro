@@ -15,3 +15,6 @@ SOURCES += \
 
 HEADERS  += ../../src/plugins/isettingspage.h ../../src/plugins/iapplicationplugin.h ../../src/plugins/iwidgetpage.h \
     testplugin.h
+
+RESOURCES += \
+    ../../assets/icons.qrc

@@ -1,5 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file alias="plugins.png">icons/light/appbar.tiles.plus.png</file>
-    </qresource>
-</RCC>

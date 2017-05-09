@@ -19,4 +19,4 @@ SOURCES +=\
 HEADERS  += generalsettings.h ../../src/plugins/isettingspage.h ../../src/plugins/iapplicationplugin.h ../../src/plugins/iwidgetpage.h
 
 RESOURCES += \
-    assets/general.qrc
+    ../../assets/icons.qrc

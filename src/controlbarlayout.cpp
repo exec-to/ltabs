@@ -6,7 +6,7 @@ ControlBarLayout::ControlBarLayout(QWidget *parent): QGridLayout(parent)
 
     //setColumnStretch(0,0);
     //setColumnStretch(1,0);
-    setAlignment(Qt::AlignRight| Qt::AlignTop);
+    setAlignment(Qt::AlignRight | Qt::AlignTop);
     setSpacing(1);
     setMargin(1);
 

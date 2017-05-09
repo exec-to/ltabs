@@ -9,14 +9,17 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
     //load plugins
     PluginLoader::load();
 
+    QSettings settings;
     //set application style
     QApplication::setStyle(QStyleFactory::create("Fusion"));
 
-    QFile File("./themes/stylesheet.qss");
-    File.open(QFile::ReadOnly);
-    QString StyleSheet = QLatin1String(File.readAll());
-    qApp->setStyleSheet(StyleSheet);
-
+    QString themeName = "./themes/" + settings.value("Application/theme", "stylesheet.qss").toString();
+    QFile themeFile(themeName);
+    themeFile.open(QFile::ReadOnly);
+    if (themeFile.isOpen()) {
+        QString StyleSheet = QLatin1String(themeFile.readAll());
+        qApp->setStyleSheet(StyleSheet);
+    }
     //get information about OS etc
 }
 
@@ -27,6 +30,13 @@ void Application::initializeSettings() {
     QCoreApplication::setApplicationName("ltabs");
 
     QSettings settings;
+
+    if (!settings.contains("Application/theme"))
+        settings.setValue("Application/theme", "stylesheet.qss");
+
+    if (!settings.contains("Application/icons"))
+        settings.setValue("Application/icons", "Light");
+
     if (!settings.contains("MainWindow/width"))
         settings.setValue("MainWindow/width", 250);
 

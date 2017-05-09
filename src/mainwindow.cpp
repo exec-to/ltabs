@@ -54,12 +54,14 @@ MainWindow::MainWindow(QWidget *parent)
 }
 
 void MainWindow::createDefaultButtons() {
-    QToolButton* btn = m_bottomLayout->createControlButton(QPixmap(":dark.settings.png"));
+    QSettings settings;
+    QString iconTheme = settings.value("Application/icons", "Light").toString();
+    QToolButton* btn = m_bottomLayout->createControlButton(QPixmap(":" + iconTheme + ".settings.png"));
     connect( btn, &QToolButton::clicked, [=]() {
         SettingsDialog::showDialog();
     });
 
-    btn = m_bottomLayout->createControlButton(QPixmap(":dark.leave.png"));
+    btn = m_bottomLayout->createControlButton(QPixmap(":" + iconTheme + ".leave.png"));
     connect( btn, &QToolButton::clicked,
          QApplication::instance(),
          &QCoreApplication::quit
@@ -102,7 +104,7 @@ void MainWindow::installPluginWidgets(QList<IApplicationPlugin*> plugins) {
             QWidget* w = widgetPage->page();
             m_tabLayout->addWidget(w);
 
-            QPixmap icon(":1.png"); //plugin->icon;
+            QPixmap icon(widgetPage->displayIcon());
             QToolButton* btn = m_bottomLayout->createControlButton(icon); //button for plugin widget
             connect(btn, &QPushButton::clicked, [=]() {
                 m_tabLayout->setCurrentWidget(w);

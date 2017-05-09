@@ -53,10 +53,12 @@ Q_OBJECT
 
 private:
     QWidget *m_widget;
+    QPixmap  m_icon;
 public:
     BasePluginWidgetPage();
     virtual ~BasePluginWidgetPage() {  }
     virtual QWidget* page();
+    virtual QPixmap displayIcon();
 };
 
 

@@ -7,8 +7,8 @@ QToolButton:!hover {
 }
 
 QWidget {
-	background: #606060;
-	color: white;
+	background: #707070;
+	color: #DDDDDD;
 }
 
 QWidget#bottomLayoutWidget {
@@ -17,4 +17,8 @@ QWidget#bottomLayoutWidget {
 
 QWidget#mainWindow {
 	background: #252627;
+}
+
+QWidget#settingsListWidget {
+	background: #444444;
 }

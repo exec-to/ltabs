@@ -17,6 +17,7 @@ SettingsDialog::SettingsDialog(QWidget* parent):
     connect(m_settingsList->selectionModel(), &QItemSelectionModel::currentRowChanged,
                 this, &SettingsDialog::currentChanged);
 
+    m_settingsList->setCurrentIndex(m_model->index(0));
 }
 
 

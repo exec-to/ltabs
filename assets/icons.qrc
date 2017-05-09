@@ -1,13 +1,16 @@
 <RCC>
     <qresource prefix="/">
-        <file alias="light.settings.png">icons/light/appbar.settings.png</file>
-        <file alias="light.leave.png">icons/light/appbar.door.leave.png</file>
-        <file alias="1.png">icons/light/appbar.3d.3ds.png</file>
-        <file alias="2.png">icons/light/appbar.3d.collada.png</file>
-        <file alias="3.png">icons/light/appbar.3d.obj.png</file>
-        <file alias="4.png">icons/light/appbar.3d.x.png</file>
-        <file alias="5.png">icons/light/appbar.acorn.png</file>
-        <file alias="dark.leave.png">icons/dark/appbar.door.leave.png</file>
-        <file alias="dark.settings.png">icons/dark/appbar.settings.png</file>
+        <file alias="Light.settings.png">icons/light/appbar.settings.png</file>
+        <file alias="Light.leave.png">icons/light/appbar.door.leave.png</file>
+        <file alias="Dark.leave.png">icons/dark/appbar.door.leave.png</file>
+        <file alias="Dark.settings.png">icons/dark/appbar.settings.png</file>
+        <file alias="Dark.general.png">icons/dark/appbar.list.gear.png</file>
+        <file alias="Light.general.png">icons/light/appbar.list.gear.png</file>
+        <file alias="Dark.plugins.png">icons/dark/appbar.tiles.plus.png</file>
+        <file alias="Light.plugins.png">icons/light/appbar.tiles.plus.png</file>
+        <file alias="Dark.test.png">icons/dark/appbar.archive.png</file>
+        <file alias="Light.test.png">icons/light/appbar.archive.png</file>
+        <file alias="Dark.base.png">icons/dark/appbar.at.png</file>
+        <file alias="Light.base.png">icons/light/appbar.at.png</file>
     </qresource>
 </RCC>

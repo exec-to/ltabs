@@ -51,6 +51,14 @@ T* createSingleWidget( ISettingsPage* _page, Signal _signal, const char* _prop, 
     return w;
 }
 
+
+QStringList themesFromDirectory() {
+    QDir dir;
+    dir.cd("themes");
+    return dir.entryList(QStringList() << "*.qss");
+}
+
+
 QWidget* GeneralSettingsPage::page()
 {
     if (!m_page) {
@@ -122,12 +130,45 @@ QWidget* GeneralSettingsPage::page()
             dsDefaultParam->setEnabled(!state);
         });
 
+
+        QComboBox *appIconsParam = createSingleWidget<QComboBox,QString>
+            (
+                this,
+                &QComboBox::currentTextChanged,
+                "currentText",
+                QString("Application/icons"),
+                QVariant::fromValue<QString>("Light")
+            );
+        appIconsParam->addItems(QStringList() << "Dark" << "Light");
+
+        QComboBox *appThemeParam = createSingleWidget<QComboBox,QString>
+            (
+                this,
+                &QComboBox::currentTextChanged,
+                "currentText",
+                QString("Application/theme"),
+                QVariant::fromValue<QString>("stylesheet.qss")
+            );
+        appThemeParam->addItems(themesFromDirectory());
+
+        connect(appThemeParam, &QComboBox::currentTextChanged, [=](QString val) {
+            QString themeName = "./themes/" + val;
+            QFile themeFile(themeName);
+            themeFile.open(QFile::ReadOnly);
+            if (themeFile.isOpen()) {
+                QString StyleSheet = QLatin1String(themeFile.readAll());
+                qApp->setStyleSheet(StyleSheet);
+            }
+        });
+
         QFormLayout *formLayout = new QFormLayout;
         formLayout->addRow(tr("&Ширина главного окна:"), mwWidthParam);
         formLayout->addRow(tr("&Позиция окна:"), mwPositionParam);
         formLayout->addRow(tr("&Размер кнопок нижней панели:"), bsParam);
         formLayout->addRow(tr("&На всех раб. столах:"), dsEnableParam);
         formLayout->addRow(tr("&Отображать на раб.столе:"), dsDefaultParam);
+        formLayout->addRow(tr("&Тема иконок:"), appIconsParam);
+        formLayout->addRow(tr("&Тема оформления:"), appThemeParam);
 
         m_page->setLayout(formLayout);
     }
@@ -146,18 +187,23 @@ void GeneralSettingsPage::apply()
     tempSettings.clear();
 }
 
+
 void GeneralSettingsPage::reject() {
     emit restoreSettings();
     tempSettings.clear();
 }
 
+
 QString GeneralSettingsPage::displayName() const {
     return m_displayName;
 }
 
+
 QPixmap *GeneralSettingsPage::displayIcon() {
+    QSettings settings;
+    QString iconTheme = settings.value("Application/icons", "Light").toString();
     if (!m_icon) {
-        m_icon = new QPixmap(":general.png");
+        m_icon = new QPixmap(":" + iconTheme + ".general.png");
     }
     return m_icon;
 }

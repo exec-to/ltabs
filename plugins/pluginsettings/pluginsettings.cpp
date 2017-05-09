@@ -159,8 +159,10 @@ QString PluginSettingsPage::displayName() const {
 }
 
 QPixmap *PluginSettingsPage::displayIcon() {
+    QSettings settings;
+    QString iconTheme = settings.value("Application/icons", "Light").toString();
     if (!m_icon) {
-        m_icon = new QPixmap(":plugins.png");
+        m_icon = new QPixmap(":" + iconTheme + ".plugins.png");
     }
     return m_icon;
 }
