@@ -34,6 +34,8 @@ void Application::initializeSettings() {
     if (!settings.contains("Application/theme"))
         settings.setValue("Application/theme", "stylesheet.qss");
 
+    //validate!
+
     if (!settings.contains("Application/icons"))
         settings.setValue("Application/icons", "Light");
 

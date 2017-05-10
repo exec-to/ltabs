@@ -12,15 +12,17 @@ class MainWindow : public QWidget
     Q_OBJECT
 
 private:
-    ControlBarLayout* m_bottomLayout;
-     QStackedLayout *m_tabLayout;
-    _net_workarea m_desktopGeometry;
+    ControlBarLayout     *m_bottomLayout;
+    QStackedLayout       *m_tabLayout;
+    QList<QToolButton *>  m_buttons;
+    QRect                 m_rect;
 
 public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    void installPluginWidgets(QList<IApplicationPlugin *> plugins);
+    void appendPages(QList<IApplicationPlugin *> plugins);
     void createDefaultButtons();
+    QToolButton* createToolButton(const QPixmap icon);
     void show();
 };
 

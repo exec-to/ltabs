@@ -89,7 +89,7 @@ void SettingsDialog::setupLayout() {
 
 void SettingsDialog::accept() {
 
-    plugins_for([](ISettingsPage* settings) { settings->apply(); });
+    this->apply();
     this->hide();
 }
 

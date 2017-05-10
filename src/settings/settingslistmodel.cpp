@@ -20,7 +20,7 @@ QVariant SettingsListModel::data(const QModelIndex &index, int role) const
         }
 
         case Qt::DecorationRole: {
-           QIcon icon = m_list.at(index.row())->icon();
+           QIcon icon = m_list.at(index.row())->displayIcon();
            if (icon.isNull())
                icon = m_emptyIcon;
            return icon;
@@ -38,7 +38,7 @@ int SettingsListModel::rowCount(const QModelIndex &parent) const
 
 QWidget* SettingsListModel::getPageByIndex(const QModelIndex &index) const {
     if (index.isValid()) {
-        return m_list.at(index.row())->widget();
+        return m_list.at(index.row())->page();
     }
     return new QLabel("Ничего не найдено.");
 }
@@ -49,7 +49,6 @@ void SettingsListModel::setPages(QList<IApplicationPlugin*> plugins)
     m_list.clear();
 
     for(auto &plugin : plugins) {
-        SettingsListItem* item = new SettingsListItem(plugin->getSettingsPage());
-        m_list.append(item);
+        m_list.append(plugin->getSettingsPage());
     }
 }

@@ -33,15 +33,15 @@ class GeneralSettingsPage: public ISettingsPage {
 
 private:
     QWidget *m_page;
-    QString m_displayName;
-    QPixmap *m_icon;
+    QString  m_displayName;
+    QPixmap  m_icon;
 
 public:
     GeneralSettingsPage();
     virtual ~GeneralSettingsPage() {  }
     virtual QWidget* page();
     virtual QString displayName() const;
-    virtual QPixmap *displayIcon();
+    virtual QPixmap displayIcon();
     virtual void apply();
     virtual void reject();
 

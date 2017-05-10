@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui x11extras sql
+QT       += core gui x11extras
 LIBS     += -lX11
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -21,13 +21,11 @@ SOURCES +=\
     src/pluginmanager.cpp \
     src/x11utils.cpp \
     src/settings/settingsdialog.cpp \
-    src/settings/settingslistitem.cpp \
     src/settings/settingslistmodel.cpp \
     src/settings/settingslistwidget.cpp
 
 HEADERS  += \
     src/settings/settingsdialog.h \
-    src/settings/settingslistitem.h \
     src/settings/settingslistmodel.h \
     src/settings/settingslistwidget.h \
     src/plugins/iapplicationplugin.h \

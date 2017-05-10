@@ -26,8 +26,7 @@ IWidgetPage* GeneralSettings::getWidgetPage()
 //------------------------  ISettingsPage  --------------------------------//
 GeneralSettingsPage::GeneralSettingsPage():
     m_page(nullptr),
-    m_displayName("General"),
-    m_icon(nullptr)
+    m_displayName("General")\
 {
 
 }
@@ -199,11 +198,11 @@ QString GeneralSettingsPage::displayName() const {
 }
 
 
-QPixmap *GeneralSettingsPage::displayIcon() {
+QPixmap GeneralSettingsPage::displayIcon() {
     QSettings settings;
     QString iconTheme = settings.value("Application/icons", "Light").toString();
     if (!m_icon) {
-        m_icon = new QPixmap(":" + iconTheme + ".general.png");
+        m_icon = QPixmap(":" + iconTheme + ".general.png");
     }
     return m_icon;
 }

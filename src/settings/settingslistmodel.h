@@ -2,16 +2,15 @@
 
 #include <QObject>
 #include <QtWidgets>
-#include "settingslistitem.h"
-#include "settingslistwidget.h"
-#include "../pluginmanager.h"
+//#include "settingslistitem.h"
+#include "../plugins/iapplicationplugin.h"
 
 
 class SettingsListModel : public QAbstractListModel
 {
     Q_OBJECT
 private:
-    QList<SettingsListItem*> m_list;
+    QList<ISettingsPage*> m_list;
 
 public:
     SettingsListModel(QObject *pobj = 0);

@@ -1,14 +1,8 @@
 #include "x11utils.h"
 
-_net_workarea::_net_workarea(unsigned int dx, unsigned int dy, unsigned int w,  unsigned int h):
-    x(dx), y(dy), width(w), height(h) {  }
-
-_net_workarea::_net_workarea():
-    x(0), y(0), width(0), height(0) {  }
-
 X11Utils::X11Utils() {   }
 
-int X11Utils::getDesktopFreeAreaSize(Display* display, int screen, _net_workarea* wa)
+int X11Utils::getDesktopFreeAreaSize(Display* display, int screen, QRect* wa)
 {
   /* _NET_WORKAREA, x, y, width, height CARDINAL[][4]/32 */
   static Atom workarea = 0;
@@ -29,20 +23,21 @@ int X11Utils::getDesktopFreeAreaSize(Display* display, int screen, _net_workarea
     return 0;
   }
 
-  wa->x = data[0];
-  wa->y = data[1];
-  wa->width =  data[2];
-  wa->height = data[3];
+  wa->setX(data[0]);
+  wa->setY(data[1]);
+  wa->setWidth(data[2]);
+  wa->setHeight(data[3]);
 
   XFree(data);
   return 1;
 }
 
-_net_workarea X11Utils::initDesktopFreeAreaSize() {
-    _net_workarea wa;
-    getDesktopFreeAreaSize(QX11Info::display(),0, &wa);
+QRect X11Utils::availableGeometry(int screen) {
+    QRect wa;
+    getDesktopFreeAreaSize(QX11Info::display(),screen, &wa);
     return wa;
 }
+
 
 void* X11Utils::property(Window win, Atom prop, Atom type, int &nitems)
 {
@@ -64,20 +59,20 @@ void* X11Utils::property(Window win, Atom prop, Atom type, int &nitems)
 }
 
 
-unsigned long X11Utils::getDesktopCount() {
+unsigned int X11Utils::desktopCount() {
     Display *display  = QX11Info::display();
     Atom NET_NUMBER_OF_DESKTOPS = XInternAtom(display, "_NET_NUMBER_OF_DESKTOPS", False);
     int nitems = 0;
     property(QX11Info::appRootWindow(),NET_NUMBER_OF_DESKTOPS, XA_CARDINAL, nitems);
 
-    unsigned long count = (nitems) ? nitems : 1;
+    unsigned int count = (nitems) ? nitems : 1;
     return count;
 }
 
 
 void X11Utils::setOnDesktops(Window winid, int all, unsigned int d) {
     Display *display  = QX11Info::display();
-    if (all) { //---->если нужно на всех рабочих столах, то делаем док
+    if (all) { //если нужно на всех рабочих столах, то делаем док
 
         Atom dock = XInternAtom(display, "_NET_WM_WINDOW_TYPE_DOCK", False);
         XChangeProperty
@@ -91,8 +86,7 @@ void X11Utils::setOnDesktops(Window winid, int all, unsigned int d) {
             (unsigned char *)&dock, 1
         );
 
-    } else {  //------>иначе задаём номер рабочего стола
-        unsigned int desktop = d;
+    } else { //иначе задаём номер рабочего стола
         XChangeProperty
        (
             display,
@@ -101,10 +95,11 @@ void X11Utils::setOnDesktops(Window winid, int all, unsigned int d) {
             XA_CARDINAL,
             32,
             PropModeReplace,
-            (unsigned char *)&desktop, 1
+            (unsigned char *)&d, 1
        );
     }
 }
+
 
 void X11Utils::setStrut(Window winid, int height, int width, unsigned int start_x, unsigned int start_y, QString dockEdge) {
 
