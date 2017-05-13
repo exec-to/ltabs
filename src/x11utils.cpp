@@ -4,6 +4,7 @@ X11Utils::X11Utils() {   }
 
 int X11Utils::getDesktopFreeAreaSize(Display* display, int screen, QRect* wa)
 {
+
   /* _NET_WORKAREA, x, y, width, height CARDINAL[][4]/32 */
   static Atom workarea = 0;
   Atom type;
@@ -60,7 +61,11 @@ void* X11Utils::property(Window win, Atom prop, Atom type, int &nitems)
 
 
 unsigned int X11Utils::desktopCount() {
+
     Display *display  = QX11Info::display();
+
+    //qDebug() << XScreenCount(display);
+
     Atom NET_NUMBER_OF_DESKTOPS = XInternAtom(display, "_NET_NUMBER_OF_DESKTOPS", False);
     int nitems = 0;
     property(QX11Info::appRootWindow(),NET_NUMBER_OF_DESKTOPS, XA_CARDINAL, nitems);
@@ -86,7 +91,7 @@ void X11Utils::setOnDesktops(Window winid, int all, unsigned int d) {
             (unsigned char *)&dock, 1
         );
 
-    } else { //иначе задаём номер рабочего стола
+    } else {
         XChangeProperty
        (
             display,

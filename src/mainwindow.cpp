@@ -14,10 +14,9 @@ MainWindow::MainWindow(QWidget *parent)
                           | Qt::FramelessWindowHint;
     setWindowFlags(flags);
 
+    //BUG: Неправильно работает с несколькими физ. мониторами
     //номер экрана для установки виджета
-    int nscreen = (settings.value("Application/showDesktops").toInt())
-                ? (settings.value("Environment/DefaultDesktop").toInt())
-                : 0;
+    int  nscreen =  settings.value("Environment/DefaultScreen", 0).toInt();
     //область экрана, доступная для размещения виджета
           m_rect = X11Utils::availableGeometry(nscreen);
     //ширина виджета

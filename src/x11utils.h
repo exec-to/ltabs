@@ -1,8 +1,9 @@
 #pragma once
 
 #include <QObject>
-#include <QtX11Extras/QtX11Extras>
-#include <QtX11Extras/QX11Info>
+//#include <QtX11Extras/QtX11Extras>
+//#include <QtX11Extras/QX11Info>
+#include <QtCore>
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
 #include <X11/Xutil.h>
