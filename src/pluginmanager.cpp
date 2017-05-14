@@ -8,7 +8,7 @@ QList<IApplicationPlugin *> PluginLoader::pluginsList() {
 
 void PluginLoader::load() {
     QSettings settings;
-    QString pluginsDirectory = settings.value("Application/PluginsDir").toString();
+    QString pluginsDirectory = cfg::Application::plugin_dir();
     QDir dir;
     dir.cd(pluginsDirectory);
 
@@ -26,12 +26,14 @@ void PluginLoader::load() {
     ph2->fileName = "libpluginsettings.so";
     pluginsToLoad.append(ph2);
 
-    int size = settings.beginReadArray("Plugins");
+    int size = settings.beginReadArray(cfg::Plugins());
     for (int i = 0; i < size; ++i) {
         settings.setArrayIndex(i);
         PluginHelper *helper = new PluginHelper();
         helper->uuid = QUuid(settings.value("uuid").toString());
         helper->fileName = settings.value("fileName").toString();
+        //helper->uuid = QUuid(cfg::Plugins::uuid());
+        //helper->fileName = cfg::Plugins::file_name();
         pluginsToLoad.append(helper);
     }
     settings.endArray();

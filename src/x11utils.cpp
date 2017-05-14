@@ -115,7 +115,7 @@ void X11Utils::setStrut(Window winid, int height, int width, unsigned int start_
     int left = start_x + width;
     long int insets[12] = {0, right, 0, 0, 0, 0, right_start_y, right_end_y, 0, 0, 0, 0};
 
-    if (dockEdge != "Right") {
+    if (dockEdge != "right") {
         insets[0] = left;
         insets[1] = 0;
         insets[5] = left;

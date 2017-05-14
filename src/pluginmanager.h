@@ -2,12 +2,13 @@
 
 #include <QObject>
 #include <QtWidgets>
-#include "controlbarlayout.h"
+#include "gridcontrollayout.h"
 #include "plugins/isettingspage.h"
 #include <QPluginLoader>
 #include "plugins/iapplicationplugin.h"
 #include "plugins/iwidgetpage.h"
 #include "plugins/pluginhelper.h"
+#include "settings/config.h"
 
 
 class PluginLoader : public QObject

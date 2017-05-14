@@ -5,6 +5,7 @@
 
 #include "../../src/plugins/iapplicationplugin.h"
 #include "../../src/plugins/pluginhelper.h"
+#include "../../src/settings/config.h"
 #include "pluginhelperlistmodel.h"
 #include <QFileDialog>
 

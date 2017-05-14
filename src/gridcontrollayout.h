@@ -2,8 +2,9 @@
 
 #include <QObject>
 #include <QtWidgets>
+#include "settings/config.h"
 
-class ControlBarLayout : public QGridLayout
+class GridControlLayout : public QGridLayout
 {
     Q_OBJECT
 
@@ -14,6 +15,6 @@ private:
     int m_buttonSize;
 
 public:
-    ControlBarLayout(QWidget* parent = 0);
-    void addWidget(QWidget* pwgt);
+    GridControlLayout(QWidget* parent = 0);
+    void addWidget   (QWidget* wgt       );
 };

@@ -2,17 +2,18 @@
 
 #include <QtWidgets>
 #include "x11utils.h"
-#include "controlbarlayout.h"
+#include "gridcontrollayout.h"
 #include "x11utils.h"
 #include "pluginmanager.h"
 #include "settings/settingsdialog.h"
+#include "settings/config.h"
 
 class MainWindow : public QWidget
 {
     Q_OBJECT
 
 private:
-    ControlBarLayout     *m_bottomLayout;
+    GridControlLayout     *m_bottomLayout;
     QStackedLayout       *m_tabLayout;
     QList<QToolButton *>  m_buttons;
     QRect                 m_rect;

@@ -53,7 +53,7 @@ T* createSingleWidget( ISettingsPage* _page, Signal _signal, const char* _prop, 
 
 QStringList themesFromDirectory() {
     QDir dir;
-    dir.cd("themes");
+    dir.cd(cfg::Application::theme_dir());
     return dir.entryList(QStringList() << "*.qss");
 }
 
@@ -74,8 +74,8 @@ QWidget* GeneralSettingsPage::page()
                 this,
                 static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged),
                 "value",
-                QString("MainWindow/width"),
-                QVariant::fromValue(250)
+                cfg::MainWindow::getKey("width"),
+                QVariant::fromValue(200)
             );
         mwWidthParam->setRange(160, 320);
 
@@ -84,18 +84,18 @@ QWidget* GeneralSettingsPage::page()
                 this,
                 &QComboBox::currentTextChanged,
                 "currentText",
-                QString("MainWindow/DockEdge"),
-                QVariant::fromValue<QString>("Right")
+                cfg::MainWindow::getKey("edge"),
+                QVariant::fromValue<QString>("right")
             );
-        mwPositionParam->addItems(QStringList() << "Left" << "Right");
+        mwPositionParam->addItems(QStringList() << "left" << "right");
 
         QSpinBox *bsParam = createSingleWidget<QSpinBox,int>
             (
                 this,
                 static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged),
                 "value",
-                QString("ControlButtons/Size"),
-                QVariant::fromValue(40)
+                cfg::MainWindow::getKey("button_size"),
+                QVariant::fromValue(36)
             );
         bsParam->setRange(24, 64);
 
@@ -104,7 +104,7 @@ QWidget* GeneralSettingsPage::page()
                 this,
                 &QCheckBox::stateChanged,
                 "checked",
-                QString("Application/showDesktops"),
+                cfg::Environment::getKey("is_dock"),
                 QVariant::fromValue(2)
             );
 
@@ -114,11 +114,11 @@ QWidget* GeneralSettingsPage::page()
                 this,
                 &QComboBox::currentTextChanged,
                 "currentText",
-                QString("Environment/DefaultDesktop"),
+                cfg::Environment::getKey("def_dt"),
                 QVariant::fromValue<QString>("0")
             );
 
-        int ndesktops = settings.value("Environment/Desktops").toInt();
+        int ndesktops = cfg::Environment::dt_num();
         QStringList nitems;
         for (int i = 0; i < ndesktops; i++) {
             nitems << QString::number(i);
@@ -135,23 +135,23 @@ QWidget* GeneralSettingsPage::page()
                 this,
                 &QComboBox::currentTextChanged,
                 "currentText",
-                QString("Application/icons"),
-                QVariant::fromValue<QString>("Light")
+                cfg::Application::getKey("icons_set"),
+                QVariant::fromValue<QString>("dark")
             );
-        appIconsParam->addItems(QStringList() << "Dark" << "Light");
+        appIconsParam->addItems(QStringList() << "dark" << "light");
 
         QComboBox *appThemeParam = createSingleWidget<QComboBox,QString>
             (
                 this,
                 &QComboBox::currentTextChanged,
                 "currentText",
-                QString("Application/theme"),
-                QVariant::fromValue<QString>("stylesheet.qss")
+                cfg::Application::getKey("theme"),
+                QVariant::fromValue<QString>("default.qss")
             );
         appThemeParam->addItems(themesFromDirectory());
 
         connect(appThemeParam, &QComboBox::currentTextChanged, [=](QString val) {
-            QString themeName = "./themes/" + val;
+            QString themeName = cfg::Application::theme_dir() + "/" + val;
             QFile themeFile(themeName);
             themeFile.open(QFile::ReadOnly);
             if (themeFile.isOpen()) {
@@ -199,8 +199,7 @@ QString GeneralSettingsPage::displayName() const {
 
 
 QPixmap GeneralSettingsPage::displayIcon() {
-    QSettings settings;
-    QString iconTheme = settings.value("Application/icons", "Light").toString();
+    QString iconTheme = cfg::Application::icons_set();
     if (!m_icon) {
         m_icon = QPixmap(":" + iconTheme + ".general.png");
     }

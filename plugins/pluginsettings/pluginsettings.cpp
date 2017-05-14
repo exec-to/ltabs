@@ -116,9 +116,7 @@ QWidget* PluginSettingsPage::page()
 }
 
 QString PluginSettingsPage::getPluginFileName() {
-    QString path = settings
-            .value("Application/PluginsDir")
-            .toString();
+    QString path = cfg::Application::plugin_dir();
 
     QDir dir;
     if (!dir.cd(path)) {
@@ -158,8 +156,8 @@ QString PluginSettingsPage::displayName() const {
 }
 
 QPixmap PluginSettingsPage::displayIcon() {
-    QSettings settings;
-    QString iconTheme = settings.value("Application/icons", "Light").toString();
+
+    QString iconTheme = cfg::Application::icons_set();
     if (!m_icon) {
         m_icon = QPixmap(":" + iconTheme + ".plugins.png");
     }

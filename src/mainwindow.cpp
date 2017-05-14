@@ -5,8 +5,9 @@
 MainWindow::MainWindow(QWidget *parent)
     : QWidget(parent)
 {
-    QSettings settings;
-    settings.setValue("Environment/Desktops", X11Utils::desktopCount());
+
+    cfg::Environment::dt_num(X11Utils::desktopCount());
+
     setObjectName("mainWindow");
 
     Qt::WindowFlags flags = Qt::Window
@@ -14,22 +15,22 @@ MainWindow::MainWindow(QWidget *parent)
                           | Qt::FramelessWindowHint;
     setWindowFlags(flags);
 
-    //BUG: Неправильно работает с несколькими физ. мониторами
+    //2FIX: Неправильно работает с несколькими физ. мониторами
     //номер экрана для установки виджета
-    int  nscreen =  settings.value("Environment/DefaultScreen", 0).toInt();
+    int  nscreen = cfg::Environment::screen();
     //область экрана, доступная для размещения виджета
           m_rect = X11Utils::availableGeometry(nscreen);
     //ширина виджета
-    int    width = settings.value("MainWindow/width").toInt();
+    int    width = cfg::MainWindow::width();
     //доступная высота виджета
     int   height = m_rect.height();
     //полный размер рабочего стола
     QRect screen = QApplication::desktop()->geometry();
     //сторона, к которой нужно прикрепить виджет
-    QString edge = settings.value("MainWindow/DockEdge").toString();
+    QString edge = cfg::MainWindow::edge();
     //позиция для перемещения
     int      top = m_rect.y();
-    int     left = ( edge == "Left") ? screen.left() + m_rect.x()
+    int     left = ( edge == "left") ? screen.left() + m_rect.x()
                                      : m_rect.width() - width;
     resize(width, height);
     setFixedSize(size());
@@ -45,7 +46,7 @@ MainWindow::MainWindow(QWidget *parent)
              bottomWidget->setSizePolicy(QSizePolicy::Expanding,
                                          QSizePolicy::Minimum);
 
-    m_bottomLayout = new ControlBarLayout(bottomWidget);
+    m_bottomLayout = new GridControlLayout(bottomWidget);
 
     createDefaultButtons();
     for (auto &b: m_buttons) {
@@ -63,8 +64,8 @@ MainWindow::MainWindow(QWidget *parent)
 
 //статические кнопки для области управления
 void MainWindow::createDefaultButtons() {
-    QSettings settings;
-    QString iconTheme = settings.value("Application/icons", "Light").toString();
+
+    QString iconTheme = cfg::Application::icons_set();
     QToolButton* btn;
 
     //диалоговое окно настроек
@@ -85,21 +86,19 @@ void MainWindow::createDefaultButtons() {
 
 //задаём настройки WM перед отображением
 void MainWindow::show() {
-    QSettings settings;
-
     //выделяем STRUT на рабочем столе для главного виджета
     X11Utils::setStrut
     (
         winId(),height(),width(),m_rect.x(),m_rect.y(),
-        settings.value("MainWindow/DockEdge").toString()
+        cfg::MainWindow::edge()
     );
 
     //устанавливаем на нужном рабочем столе
     X11Utils::setOnDesktops
     (
         this->winId(),
-        settings.value("Application/showDesktops").toInt(),
-        settings.value("Environment/DefaultDesktop").toInt()
+        cfg::Environment::is_dock(),
+        cfg::Environment::def_dt()
     );
 
     QWidget::show();
@@ -123,8 +122,7 @@ void MainWindow::appendPages(QList<IApplicationPlugin*> plugins) {
 
 //создаём кнопку для области управления
 QToolButton* MainWindow::createToolButton(const QPixmap icon) {
-    QSettings        settings;
-    int buttonSize = settings.value("ControlButtons/Size").toInt();
+    int buttonSize   = cfg::MainWindow::button_size();
 
     QToolButton* btn = new QToolButton();
     btn->setFixedHeight    (buttonSize);

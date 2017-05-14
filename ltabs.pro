@@ -15,14 +15,15 @@ TEMPLATE = app
 
 SOURCES +=\
     src/application.cpp \
-    src/controlbarlayout.cpp \
     src/main.cpp \
     src/mainwindow.cpp \
     src/pluginmanager.cpp \
     src/x11utils.cpp \
     src/settings/settingsdialog.cpp \
     src/settings/settingslistmodel.cpp \
-    src/settings/settingslistwidget.cpp
+    src/settings/settingslistwidget.cpp \
+    src/gridcontrollayout.cpp \
+    src/settings/config.cpp
 
 HEADERS  += \
     src/settings/settingsdialog.h \
@@ -32,11 +33,12 @@ HEADERS  += \
     src/plugins/iwidgetpage.h \
     src/plugins/pluginhelper.h \
     src/application.h \
-    src/controlbarlayout.h \
     src/mainwindow.h \
     src/pluginmanager.h \
     src/x11utils.h \
-    src/plugins/isettingspage.h
+    src/plugins/isettingspage.h \
+    src/gridcontrollayout.h \
+    src/settings/config.h
 
 RESOURCES += \
     assets/icons.qrc

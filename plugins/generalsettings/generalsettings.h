@@ -4,6 +4,7 @@
 #include <QtWidgets>
 
 #include "../../src/plugins/iapplicationplugin.h"
+#include "../../src/settings/config.h"
 
 class QString;
 class QWidget;

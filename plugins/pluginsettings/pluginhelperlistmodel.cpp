@@ -150,6 +150,8 @@ void PluginHelperListModel::load() {
         PluginHelper plugin;
         plugin.uuid = QUuid(settings.value("uuid").toString());
         plugin.fileName = settings.value("fileName").toString();
+        //plugin.uuid = QUuid(cfg::Plugins::uuid());
+        //plugin.fileName = cfg::Plugins::file_name();
         m_list.append(plugin);
     }
     settings.endArray();
@@ -164,6 +166,8 @@ void PluginHelperListModel::save() {
         settings.setArrayIndex(i);
         settings.setValue("uuid", m_list.at(i).uuid.toString());
         settings.setValue("fileName", m_list.at(i).fileName);
+        //cfg::Plugins::uuid(m_list.at(i).uuid.toString());
+        //cfg::Plugins::file_name(m_list.at(i).fileName);
     }
     settings.endArray();
     settings.sync();
