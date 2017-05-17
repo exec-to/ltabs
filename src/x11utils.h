@@ -13,13 +13,20 @@ class X11Utils
 {
 
 private:
-    X11Utils();
-    static int getDesktopFreeAreaSize(Display* display, int screen, QRect *wa);
-    static void* property(Window win, Atom prop, Atom type, int &nitems);
+    X11Utils() {  }
+    //static void* property(int &nitems);
+    static Atom NET_WORKAREA;
+    static Atom NET_NUMBER_OF_DESKTOPS;
+    static Atom NET_WM_WINDOW_TYPE_DOCK;
+    static Atom NET_WM_WINDOW_TYPE;
+    static Atom NET_WM_DESKTOP;
+    static Atom NET_WM_STRUT_PARTIAL;
 
 public:
-    static QRect availableGeometry(int screen = 0);
+    static int getWindowProperty(Atom property, long &buffer);
+    static QRect availableGeometry();
     static void setStrut(Window winid, int height, int width, unsigned int start_x, unsigned int start_y, QString dockEdge);
     static unsigned int desktopCount();
     static void setOnDesktops(Window winid, int all, unsigned int d);
+    static void Init();
 };

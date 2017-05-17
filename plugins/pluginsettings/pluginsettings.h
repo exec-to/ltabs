@@ -20,14 +20,14 @@ class PluginSettings : public QObject, public IApplicationPlugin
     Q_PLUGIN_METADATA(IID "ru.ltabs.plugins.IApplicationPlugin" FILE "plugin.json")
 
 protected:
-    ISettingsPage* m_settingPage;
-    IWidgetPage* m_widgetPage;
+    ISettingsPage *m_settingPage;
+    IWidgetPage   *m_widgetPage;
 
 public:
     PluginSettings(); // !important! initialize class members
-    virtual ~PluginSettings() {  }
-    virtual ISettingsPage *getSettingsPage();
-    virtual IWidgetPage *getWidgetPage();
+    ~PluginSettings() {  }
+    ISettingsPage *getSettingsPage();
+    IWidgetPage *getWidgetPage();
 
 };
 //------------------------ GeneralSettings --------------------------------//
@@ -39,17 +39,17 @@ private:
     QWidget *m_page;
     QString  m_displayName;
     QPixmap  m_icon;
-    QString getPluginFileName();
-    void currentChanged(const QModelIndex &current);
+    QString  getPluginFileName();
+    void     currentChanged(const QModelIndex &current);
 
 public:
     PluginSettingsPage();
-    virtual ~PluginSettingsPage() {  }
-    virtual QWidget* page();
-    virtual QString displayName() const;
-    virtual QPixmap displayIcon();
-    virtual void apply();
-    virtual void reject();
+    ~PluginSettingsPage() {  }
+    QWidget* page();
+    QString displayName() const;
+    QPixmap displayIcon();
+    void apply();
+    void reject();
 
 };
 //------------------------  ISettingsPage  --------------------------------//

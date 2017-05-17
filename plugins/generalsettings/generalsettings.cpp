@@ -35,7 +35,7 @@ GeneralSettingsPage::GeneralSettingsPage():
 }
 
 QMap<QString, QVariant> tempSettings;
-QSettings settings;
+
 
 //create widget for settings with single values
 template<typename T, typename ParamType, typename Signal>
@@ -47,7 +47,7 @@ T* createSingleWidget( ISettingsPage* _page, Signal _signal, const char* _prop, 
     } );
 
     QObject::connect(_page, &ISettingsPage::restoreSettings, [=]() {
-        w->setProperty(_prop, settings.value(_param, _default));
+        w->setProperty(_prop, cfg::master()->value(_param, _default));
     });
 
     return w;
@@ -182,10 +182,10 @@ void GeneralSettingsPage::apply()
 {
     for(auto &item: tempSettings.toStdMap()) {
         qDebug() << item.first << " : " << item.second;
-        settings.setValue(item.first , item.second);
+        cfg::master()->setValue(item.first , item.second);
     }
 
-    settings.sync();
+    cfg::master()->sync();
     tempSettings.clear();
 }
 

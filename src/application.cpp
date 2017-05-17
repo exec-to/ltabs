@@ -21,4 +21,6 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
         QString style = QLatin1String(themeFile.readAll());
         setStyleSheet(style);
     }
+
+    X11Utils::Init();
 }

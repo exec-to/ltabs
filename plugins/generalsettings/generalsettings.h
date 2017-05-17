@@ -17,14 +17,14 @@ class GeneralSettings : public QObject, public IApplicationPlugin
     Q_PLUGIN_METADATA(IID "ru.ltabs.plugins.IApplicationPlugin" FILE "general.json")
 
 protected:
-    ISettingsPage* m_settingPage;
-    IWidgetPage* m_widgetPage;
+    ISettingsPage *m_settingPage;
+    IWidgetPage   *m_widgetPage;
 
 public:
     GeneralSettings(); // !important! initialize class members
-    virtual ~GeneralSettings() {  }
-    virtual ISettingsPage *getSettingsPage();
-    virtual IWidgetPage *getWidgetPage();
+    ~GeneralSettings() {  }
+    ISettingsPage *getSettingsPage();
+    IWidgetPage *getWidgetPage();
 
 };
 //------------------------ GeneralSettings --------------------------------//
@@ -39,12 +39,12 @@ private:
 
 public:
     GeneralSettingsPage();
-    virtual ~GeneralSettingsPage() {  }
-    virtual QWidget* page();
-    virtual QString displayName() const;
-    virtual QPixmap displayIcon();
-    virtual void apply();
-    virtual void reject();
+    ~GeneralSettingsPage() {  }
+    QWidget* page();
+    QString displayName() const;
+    QPixmap displayIcon();
+    void apply();
+    void reject();
 
 };
 //------------------------  ISettingsPage  --------------------------------//

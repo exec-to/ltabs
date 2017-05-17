@@ -15,11 +15,9 @@ MainWindow::MainWindow(QWidget *parent)
                           | Qt::FramelessWindowHint;
     setWindowFlags(flags);
 
-    //2FIX: Неправильно работает с несколькими физ. мониторами
-    //номер экрана для установки виджета
-    int  nscreen = cfg::Environment::screen();
+
     //область экрана, доступная для размещения виджета
-          m_rect = X11Utils::availableGeometry(nscreen);
+          m_rect = X11Utils::availableGeometry();
     //ширина виджета
     int    width = cfg::MainWindow::width();
     //доступная высота виджета
