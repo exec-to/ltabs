@@ -6,10 +6,9 @@
 class PluginHelper
 {
 public:
-    PluginHelper():
-        uuid(0),
-        fileName(QString())
-    {  }
+    PluginHelper( ): PluginHelper(0,QString()) {  }
+    PluginHelper(QString u, QString f): uuid(u), fileName(f) {  }
+
     QUuid uuid;
     QString fileName;
 

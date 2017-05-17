@@ -22,11 +22,6 @@ QVariant PluginHelperListModel::data(const QModelIndex &index, int nRole) const 
     return QVariant();
 }
 
-
-QList<PluginHelper> PluginHelperListModel::getPlugins() const {
-    return m_list;
-}
-
 //[add method]
 void PluginHelperListModel::add(QString &filename) {
     if (filename.isNull() || filename.isEmpty()) {
@@ -53,9 +48,7 @@ void PluginHelperListModel::add(QString &filename) {
         return;
     }
 
-    PluginHelper helper;
-    helper.fileName = QFileInfo(filename).fileName();
-    helper.uuid = plugin->getUuid();
+    PluginHelper helper(plugin->getUuid().toString(), QFileInfo(filename).fileName());
 
     if (m_list.contains(helper)) {
         QMessageBox::critical(0,"Error", "plugin are exist");
@@ -81,6 +74,7 @@ void PluginHelperListModel::remove(QModelIndex &index) {
     this->removeRow(index.row());
     emit dataChanged(index,index);
 }
+
 
 void PluginHelperListModel::moveUp(QModelIndex &index) {
     if (!index.isValid() || index.row() == 0) {
@@ -142,35 +136,26 @@ bool PluginHelperListModel::setData(const QModelIndex &index, const QVariant &va
 
 
 void PluginHelperListModel::load() {
-    QSettings settings;
-    int size = settings.beginReadArray("Plugins");
+    int size = cfg::master()->beginReadArray(cfg::Plugins());
     m_list.clear();
     for (int i = 0; i < size; ++i) {
-        settings.setArrayIndex(i);
-        PluginHelper plugin;
-        plugin.uuid = QUuid(settings.value("uuid").toString());
-        plugin.fileName = settings.value("fileName").toString();
-        //plugin.uuid = QUuid(cfg::Plugins::uuid());
-        //plugin.fileName = cfg::Plugins::file_name();
-        m_list.append(plugin);
+        cfg::master()->setArrayIndex(i);
+        m_list.append(PluginHelper(cfg::Plugins::uuid(), cfg::Plugins::file_name()));
     }
-    settings.endArray();
+    cfg::master()->endArray();
 }
 
 
 void PluginHelperListModel::save() {
-    QSettings settings;
-    settings.remove("Plugins");
-    settings.beginWriteArray("Plugins");
+    cfg::master()->remove(cfg::Plugins());
+    cfg::master()->beginWriteArray(cfg::Plugins());
     for (int i = 0; i < m_list.size(); ++i) {
-        settings.setArrayIndex(i);
-        settings.setValue("uuid", m_list.at(i).uuid.toString());
-        settings.setValue("fileName", m_list.at(i).fileName);
-        //cfg::Plugins::uuid(m_list.at(i).uuid.toString());
-        //cfg::Plugins::file_name(m_list.at(i).fileName);
+        cfg::master()->setArrayIndex(i);
+        cfg::Plugins::uuid(m_list.at(i).uuid.toString());
+        cfg::Plugins::file_name(m_list.at(i).fileName);
     }
-    settings.endArray();
-    settings.sync();
+    cfg::master()->endArray();
+    cfg::master()->sync();
 }
 
 

@@ -1,11 +1,14 @@
 #include "generalsettings.h"
 
+QSettings *cfg::settings = 0;
+
 //------------------------ GeneralSettings --------------------------------//
 GeneralSettings::GeneralSettings():
     m_settingPage(nullptr),
     m_widgetPage(nullptr)
 {
     setUuid(QUuid("db507711-94ad-4f54-bffd-1a7789882839"));
+    cfg::Init();
 }
 
 ISettingsPage* GeneralSettings::getSettingsPage()

@@ -37,7 +37,7 @@ MainWindow::MainWindow(QWidget *parent)
     move(left, top);
 
     //рабочая область
-    m_tabLayout    = new QStackedLayout();
+    m_tabLayout       = new QStackedLayout();
     appendPages(PluginLoader::pluginsList());
 
     //область управления программой
@@ -69,14 +69,16 @@ void MainWindow::createDefaultButtons() {
     QToolButton* btn;
 
     //диалоговое окно настроек
-    btn = createToolButton(QPixmap(":" + iconTheme + ".settings.png"));
+    QString res = ":" + iconTheme + ".settings.png";
+    btn = createToolButton(QPixmap(res));
     connect( btn, &QToolButton::clicked, [=]() {
              SettingsDialog::showDialog();
     });
     m_buttons.append(btn);
 
     //завершение работы программы
-    btn = createToolButton(QPixmap(":" + iconTheme + ".leave.png"));
+    res = ":" + iconTheme + ".leave.png";
+    btn = createToolButton(QPixmap(res));
     connect( btn, &QToolButton::clicked,
              QApplication::instance(),
              &QCoreApplication::quit

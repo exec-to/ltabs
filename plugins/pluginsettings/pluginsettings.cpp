@@ -1,11 +1,14 @@
 ﻿#include "pluginsettings.h"
 
+QSettings *cfg::settings = 0;
+
 //------------------------ PluginSettings --------------------------------//
 PluginSettings::PluginSettings():
     m_settingPage(nullptr),
     m_widgetPage(nullptr)
 {
     setUuid(QUuid("5dc916d6-fa0f-4ee6-bae9-065b393a6a69"));
+    cfg::Init();
 }
 
 ISettingsPage* PluginSettings::getSettingsPage()

@@ -8,11 +8,10 @@ class cfg {
 
     public:
 
-        static     void  Init( )                               { cfg::settings = new QSettings();             }
-
-        static QVariant  read( QString key, QVariant def_val ) { return cfg::settings->value( key, def_val ); }
-
-        static     void write( QString key, QVariant val )     { cfg::settings->setValue( key, val );         }
+        static        void        Init( )                               { cfg::settings = new QSettings();             }
+        static    QVariant        read( QString key, QVariant def_val ) { return cfg::settings->value( key, def_val ); }
+        static        void       write( QString key, QVariant val )     { cfg::settings->setValue( key, val );         }
+        static   QSettings     *master( )                               { return settings;                             }
 
 
     class  MainWindow {
