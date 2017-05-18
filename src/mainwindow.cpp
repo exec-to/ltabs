@@ -28,8 +28,8 @@ MainWindow::MainWindow(QWidget *parent)
     QString edge = cfg::MainWindow::edge();
     //позиция для перемещения
     int      top = m_rect.y();
-    int     left = ( edge == "left") ? screen.left() + m_rect.x()
-                                     : m_rect.width() - width;
+    int     left = ( edge == "left") ? screen.left()  + m_rect.x()
+                                     : m_rect.width() + m_rect.x() - width;
     resize(width, height);
     setFixedSize(size());
     move(left, top);
@@ -87,9 +87,16 @@ void MainWindow::createDefaultButtons() {
 //задаём настройки WM перед отображением
 void MainWindow::show() {
 
-    QRect app_rect(m_rect.x(), m_rect.y(), width(), height());
+    //QRect app_rect(m_rect.x(), m_rect.y(), width(), height());
+    QRect screen_rect = QApplication::desktop()->geometry();
+
+    int strut_width = (cfg::MainWindow::edge() == "right")
+            ?  screen_rect.width() - (m_rect.x()  + m_rect.width()) + width()
+            : width();
+
+    QRect strut_rect(m_rect.x(), m_rect.y(), strut_width, height());
     //выделяем STRUT на рабочем столе для главного виджета
-    X11Utils::setStrut( winId(), app_rect, cfg::MainWindow::edge() );
+    X11Utils::setStrut( winId(), strut_rect, cfg::MainWindow::edge() );
 
     //устанавливаем на заданном рабочем столе
     X11Utils::defineDesktop

@@ -34,7 +34,7 @@ int X11Utils::getWindowProperty(Atom property, long len, long *buffer) {
                             &items_ret, &after_ret, (unsigned char **)&prop_data );
 
     if (e == Success) {
-        for (int i =0; i < items_ret; ++i) {
+        for (unsigned int i = 0; i < items_ret; ++i) {
             buffer[i] = prop_data[i];
         }
     }
@@ -45,7 +45,7 @@ int X11Utils::getWindowProperty(Atom property, long len, long *buffer) {
 
 
 QRect X11Utils::defineWorkarea() {
-    const int RECT_SIZE = 4;
+    const int RECT_SIZE = 12;
     long buffer[RECT_SIZE];
     QRect wa;
     if (getWindowProperty(NET_WORKAREA, RECT_SIZE, buffer) == Success) {
@@ -100,6 +100,15 @@ void X11Utils::setStrut(Window winid, QRect app_rect, QString orient) {
         struts[STRUT_LEFT       ] = app_rect.left() + app_rect.width();
         struts[STRUT_LEFT_END   ] = app_rect.left() + app_rect.width();
     }
+
+    long buffer[PARTIAL_STRUT_SIZE];
+
+    getWindowProperty(NET_WORKAREA, PARTIAL_STRUT_SIZE, buffer);
+    for (int i = 0; i < PARTIAL_STRUT_SIZE; i++) {
+        qDebug() << buffer[i];
+    }
+
+
 
     XChangeProperty(QX11Info::display(), winid, NET_WM_STRUT, XA_CARDINAL ,
                  32, PropModeReplace, (unsigned char *)&struts, STRUT_SIZE);

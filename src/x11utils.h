@@ -26,7 +26,7 @@ private:
 public:
     static int getWindowProperty(Atom property, long len, long *buffer);
     static QRect defineWorkarea();
-    static void setStrut(Window winid, QRect app_rect, QString app_edge);
+    static void setStrut(Window winid, QRect app_rect, QString orient);
     static unsigned int numberOfDesktops();
     static void defineDesktop(Window winid, int all, unsigned int def_desktop);
     static void Init();
