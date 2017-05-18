@@ -86,13 +86,11 @@ void MainWindow::createDefaultButtons() {
 
 //задаём настройки WM перед отображением
 void MainWindow::show() {
-
-    //QRect app_rect(m_rect.x(), m_rect.y(), width(), height());
-    QRect screen_rect = QApplication::desktop()->geometry();
+    QRect screen = QApplication::desktop()->geometry();
 
     int strut_width = (cfg::MainWindow::edge() == "right")
-            ?  screen_rect.width() - (m_rect.x()  + m_rect.width()) + width()
-            : width();
+            ?  screen.width() - (m_rect.x()  + m_rect.width()) + width()
+            : m_rect.x() + width();
 
     QRect strut_rect(m_rect.x(), m_rect.y(), strut_width, height());
     //выделяем STRUT на рабочем столе для главного виджета

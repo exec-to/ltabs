@@ -81,7 +81,6 @@ void X11Utils::defineDesktop(Window winid, int is_dock_window, unsigned int def_
 
     XChangeProperty(QX11Info::display(), winid, property, type,
                 32, PropModeReplace, data, 1 );
-
 }
 
 
@@ -97,18 +96,9 @@ void X11Utils::setStrut(Window winid, QRect app_rect, QString orient) {
     }
 
     else if (orient == "left") {
-        struts[STRUT_LEFT       ] = app_rect.left() + app_rect.width();
-        struts[STRUT_LEFT_END   ] = app_rect.left() + app_rect.width();
+        struts[STRUT_LEFT       ] = app_rect.width ();
+        struts[STRUT_LEFT_END   ] = app_rect.width ();
     }
-
-    long buffer[PARTIAL_STRUT_SIZE];
-
-    getWindowProperty(NET_WORKAREA, PARTIAL_STRUT_SIZE, buffer);
-    for (int i = 0; i < PARTIAL_STRUT_SIZE; i++) {
-        qDebug() << buffer[i];
-    }
-
-
 
     XChangeProperty(QX11Info::display(), winid, NET_WM_STRUT, XA_CARDINAL ,
                  32, PropModeReplace, (unsigned char *)&struts, STRUT_SIZE);
