@@ -6,7 +6,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QWidget(parent)
 {
 
-    cfg::Environment::dt_num(X11Utils::desktopCount());
+    cfg::Environment::dt_num(X11Utils::numberOfDesktops());
 
     setObjectName("mainWindow");
 
@@ -17,7 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     //область экрана, доступная для размещения виджета
-          m_rect = X11Utils::availableGeometry();
+          m_rect = X11Utils::defineWorkarea();
     //ширина виджета
     int    width = cfg::MainWindow::width();
     //доступная высота виджета
@@ -86,15 +86,13 @@ void MainWindow::createDefaultButtons() {
 
 //задаём настройки WM перед отображением
 void MainWindow::show() {
-    //выделяем STRUT на рабочем столе для главного виджета
-    X11Utils::setStrut
-    (
-        winId(),height(),width(),m_rect.x(),m_rect.y(),
-        cfg::MainWindow::edge()
-    );
 
-    //устанавливаем на нужном рабочем столе
-    X11Utils::setOnDesktops
+    QRect app_rect(m_rect.x(), m_rect.y(), width(), height());
+    //выделяем STRUT на рабочем столе для главного виджета
+    X11Utils::setStrut( winId(), app_rect, cfg::MainWindow::edge() );
+
+    //устанавливаем на заданном рабочем столе
+    X11Utils::defineDesktop
     (
         this->winId(),
         cfg::Environment::is_dock(),

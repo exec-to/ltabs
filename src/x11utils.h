@@ -21,12 +21,28 @@ private:
     static Atom NET_WM_WINDOW_TYPE;
     static Atom NET_WM_DESKTOP;
     static Atom NET_WM_STRUT_PARTIAL;
+    static Atom NET_WM_STRUT;
 
 public:
-    static int getWindowProperty(Atom property, long &buffer);
-    static QRect availableGeometry();
-    static void setStrut(Window winid, int height, int width, unsigned int start_x, unsigned int start_y, QString dockEdge);
-    static unsigned int desktopCount();
-    static void setOnDesktops(Window winid, int all, unsigned int d);
+    static int getWindowProperty(Atom property, long len, long *buffer);
+    static QRect defineWorkarea();
+    static void setStrut(Window winid, QRect app_rect, QString app_edge);
+    static unsigned int numberOfDesktops();
+    static void defineDesktop(Window winid, int all, unsigned int def_desktop);
     static void Init();
+};
+
+enum {
+    STRUT_LEFT = 0,
+    STRUT_RIGHT = 1,
+    STRUT_TOP = 2,
+    STRUT_BOTTOM = 3,
+    STRUT_LEFT_START = 4,
+    STRUT_LEFT_END = 5,
+    STRUT_RIGHT_START = 6,
+    STRUT_RIGHT_END = 7,
+    STRUT_TOP_START = 8,
+    STRUT_TOP_END = 9,
+    STRUT_BOTTOM_START = 10,
+    STRUT_BOTTOM_END = 11
 };
