@@ -82,6 +82,7 @@ QWidget* BasePluginWidgetPage::page() {
         QHBoxLayout *layout = new QHBoxLayout();
         QLineEdit *line = new QLineEdit("base plugin");
         QPushButton *btn = new QPushButton("Fix me");
+        btn->setToolTip("FIX");
         layout->addWidget(line);
         layout->addWidget(btn);
         m_widget->setLayout(layout);

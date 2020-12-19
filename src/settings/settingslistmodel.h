@@ -2,7 +2,6 @@
 
 #include <QObject>
 #include <QtWidgets>
-//#include "settingslistitem.h"
 #include "../plugins/iapplicationplugin.h"
 
 

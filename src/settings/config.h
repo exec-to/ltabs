@@ -21,10 +21,14 @@ class cfg {
 
             static QString        edge( ) { return read( getKey( "edge"        ), "right"       ).toString(); }
             static     int       width( ) { return read( getKey( "width"       ), 200           ).toInt   (); }
+            static     int   min_width( ) { return read( getKey( "min_width"   ), 160           ).toInt   (); }
+            static     int   max_width( ) { return read( getKey( "max_width"   ), 400           ).toInt   (); }
             static     int button_size( ) { return read( getKey( "button_size" ), 36            ).toInt   (); }
 
             static    void        edge( const QVariant &val ) { write( getKey(    "edge"        ), val     ); }
             static    void       width( const QVariant &val ) { write( getKey(    "width"       ), val     ); }
+            static    void   min_width( const QVariant &val ) { write( getKey(    "min_width"   ), val     ); }
+            static    void   max_width( const QVariant &val ) { write( getKey(    "max_width"   ), val     ); }
             static    void button_size( const QVariant &val ) { write( getKey(    "button_size" ), val     ); }
     };
 

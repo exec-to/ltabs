@@ -15,6 +15,8 @@ GridControlLayout::GridControlLayout(QWidget *parent): QGridLayout(parent)
 
 //calculate button position before added
 void GridControlLayout::addWidget(QWidget* wgt) {
+    m_buttons.append(static_cast<QToolButton *>(wgt));
+
     int pos = ++m_btnCount % m_ncolls;
     int row = !pos ? m_nrows++ : m_nrows;
     int col = !pos ? m_ncolls  : pos - 1;

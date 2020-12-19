@@ -13,6 +13,7 @@ private:
     int m_ncolls;
     int m_btnCount;
     int m_buttonSize;
+    QList<QToolButton *>  m_buttons;
 
 public:
     GridControlLayout(QWidget* parent = 0);

@@ -21,7 +21,7 @@ private:
 public:
                           MainWindow(QWidget *parent = 0);
                           ~MainWindow();
-    void                  appendPages(QList<IApplicationPlugin *> plugins);
+    void                  appendPages(QStackedLayout *layout, QList<IApplicationPlugin *> plugins);
     void                  createDefaultButtons();
     QToolButton*          createToolButton(const QPixmap icon);
     void                  show();

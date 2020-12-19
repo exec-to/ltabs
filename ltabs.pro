@@ -4,8 +4,9 @@
 #
 #-------------------------------------------------
 
-QT       += core gui x11extras
-LIBS     += -lX11
+QT       += core gui KWindowSystem
+#QT       += core gui x11extras KWindowSystem
+#LIBS     += -lX11
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 

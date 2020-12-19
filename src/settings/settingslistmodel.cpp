@@ -32,6 +32,7 @@ QVariant SettingsListModel::data(const QModelIndex &index, int role) const
 
 int SettingsListModel::rowCount(const QModelIndex &parent) const
 {
+    parent.isValid();
     return m_list.size();
 }
 
@@ -40,7 +41,7 @@ QWidget* SettingsListModel::getPageByIndex(const QModelIndex &index) const {
     if (index.isValid()) {
         return m_list.at(index.row())->page();
     }
-    return new QLabel("Ничего не найдено.");
+    return new QLabel(tr("Страница не найдена."));
 }
 
 

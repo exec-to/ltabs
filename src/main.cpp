@@ -9,6 +9,10 @@ int main(int argc, char *argv[])
     //https://evileg.com/ru/post/154/
     //app logger
 
+    //TODO:
+    //Выбор действия при нажатии на кнопку
+    //убрать ненужные заголовки
+
     Application app(argc, argv);
     MainWindow w;
     w.show();

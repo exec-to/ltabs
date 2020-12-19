@@ -80,7 +80,7 @@ QWidget* GeneralSettingsPage::page()
                 cfg::MainWindow::getKey("width"),
                 QVariant::fromValue(200)
             );
-        mwWidthParam->setRange(160, 320);
+        mwWidthParam->setRange(cfg::MainWindow::min_width(), cfg::MainWindow::max_width());
 
         QComboBox *mwPositionParam = createSingleWidget<QComboBox,QString>
             (

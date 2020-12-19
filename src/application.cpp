@@ -2,8 +2,8 @@
 
 Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 {
-    QCoreApplication::setOrganizationName   ("hprog.ru");
-    QCoreApplication::setOrganizationDomain ("hprog.ru");
+    QCoreApplication::setOrganizationName   ("2cfg.su");
+    QCoreApplication::setOrganizationDomain ("2cfg.su");
     QCoreApplication::setApplicationName    ("ltabs"   );
 
     cfg::Init();
@@ -15,6 +15,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
     QApplication::setStyle(QStyleFactory::create("Fusion"));
 
     QString themeName = cfg::Application::theme_dir() + "/" + cfg::Application::theme();
+//    qDebug() << themeName;
     QFile   themeFile(themeName);
     themeFile.open(QFile::ReadOnly);
     if (themeFile.isOpen()) {
@@ -22,5 +23,5 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
         setStyleSheet(style);
     }
 
-    X11Utils::Init();
+    cfg::Environment::dt_num(X11Utils::numberOfDesktops());
 }
