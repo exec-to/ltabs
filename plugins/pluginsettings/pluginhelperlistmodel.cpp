@@ -1,3 +1,7 @@
+/*
+Setting page for manage plugins
+*/
+
 #include "pluginhelperlistmodel.h"
 
 

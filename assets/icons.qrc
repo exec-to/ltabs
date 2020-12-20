@@ -12,10 +12,10 @@
         <file alias="light.test.png">icons/light/appbar.archive.png</file>
         <file>icons/dark/appbar.at.png</file>
         <file alias="light.base.png">icons/light/appbar.at.png</file>
-        <file>icons/svg/system-log-out.svg</file>
+        <file alias="dark.base.png">icons/svg/system-log-out.svg</file>
         <file>icons/svg/preferences-desktop.svg</file>
         <file alias="default.settings.svg">icons/svg/app-settings.svg</file>
-        <file alias="plugin.clipboard.svg">icons/svg/editpaste.svg</file>
+        <file alias="dark.test.png">icons/svg/editpaste.svg</file>
         <file>icons/svg/exit.svg</file>
         <file>icons/svg/error.svg</file>
         <file alias="default.exit.svg">icons/svg/app-exit.svg</file>

@@ -8,7 +8,7 @@ QT       += core gui widgets
 
 #greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = ../build/plugins/generalsetting
+TARGET = ~/local/ltabs/plugins/generalsetting
 TEMPLATE = lib
 CONFIG += plugin
 

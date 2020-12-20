@@ -5,12 +5,11 @@
 #-------------------------------------------------
 
 QT       += core gui KWindowSystem
-#QT       += core gui x11extras KWindowSystem
-#LIBS     += -lX11
+
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = ../build/ltabs
+TARGET = /home/roman/local/ltabs/ltabs
 TEMPLATE = app
 
 

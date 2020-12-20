@@ -61,7 +61,7 @@ QString TestPluginSettingsPage::displayName() const {
 
 QPixmap TestPluginSettingsPage::displayIcon() {
     QSettings settings;
-    QString iconTheme = settings.value("Application/icons", "Light").toString();
+    QString iconTheme = settings.value("Application/icons", "light").toString().toLower();
     if (!m_icon) {
         m_icon = QPixmap(":" + iconTheme + ".test.png");
     }
@@ -92,7 +92,7 @@ QWidget* TestPluginWidgetPage::page() {
 
 QPixmap TestPluginWidgetPage::displayIcon() {
     QSettings settings;
-    QString iconTheme = settings.value("Application/icons", "Light").toString();
+    QString iconTheme = settings.value("Application/icons", "light").toString().toLower();
     if (!m_icon) {
         m_icon = QPixmap(":" + iconTheme + ".test.png");
     }
