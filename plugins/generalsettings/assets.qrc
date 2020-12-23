@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/gen">
+        <file alias="default.main.svg">assets/main.svg</file>
+    </qresource>
+</RCC>

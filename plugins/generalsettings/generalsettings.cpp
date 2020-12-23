@@ -202,11 +202,7 @@ QString GeneralSettingsPage::displayName() const {
 
 
 QPixmap GeneralSettingsPage::displayIcon() {
-    QString iconTheme = cfg::Application::icons_set();
-    if (!m_icon) {
-        m_icon = QPixmap(":" + iconTheme + ".general.png");
-    }
-    return m_icon;
+    return QPixmap(":/gen/default.main.svg");
 }
 //------------------------  ISettingsPage  --------------------------------//
 //------------------------   IWidgetPage   --------------------------------//

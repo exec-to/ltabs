@@ -17,5 +17,5 @@ HEADERS  += ../../src/plugins/isettingspage.h ../../src/plugins/iapplicationplug
     baseplugin.h
 
 RESOURCES += \
-    ../../assets/icons.qrc
+    assets.qrc
 

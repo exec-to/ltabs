@@ -60,15 +60,7 @@ QString BasePluginSettingsPage::displayName() const {
 }
 
 QPixmap BasePluginSettingsPage::displayIcon() {
-    QSettings settings;
-    QString iconTheme = settings.value("Application/icons", "light").toString().toLower();
-//    qDebug() << "BasePlugin.iconTheme: " << iconTheme;
-    qDebug() << "Test settings: " << settings.value("Application/icons");
-    if (!m_icon) {
-        qDebug() << "BasePlugin.icon: " << ":" + iconTheme + ".base.png";
-        m_icon = QPixmap(":" + iconTheme + ".base.png");
-    }
-    return m_icon;
+    return QPixmap(":/baseplugin/default.main.svg");
 }
 //------------------------  ISettingsPage  --------------------------------//
 //------------------------   IWidgetPage   --------------------------------//
@@ -95,12 +87,7 @@ QWidget* BasePluginWidgetPage::page() {
 }
 
 QPixmap BasePluginWidgetPage::displayIcon() {
-    QSettings settings;
-    QString iconTheme = settings.value("Application/icons", "light").toString().toLower();
-    if (!m_icon) {
-        m_icon = QPixmap(":" + iconTheme + ".test.png");
-    }
-    return m_icon;
+    return QPixmap(":/baseplugin/default.main.svg");
 }
 
 //------------------------   IWidgetPage   --------------------------------//

@@ -38,7 +38,6 @@ class PluginSettingsPage: public ISettingsPage {
 private:
     QWidget *m_page;
     QString  m_displayName;
-    QPixmap  m_icon;
     QString  getPluginFileName();
     void     currentChanged(const QModelIndex &current);
 

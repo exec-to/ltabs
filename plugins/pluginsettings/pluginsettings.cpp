@@ -158,12 +158,7 @@ QString PluginSettingsPage::displayName() const {
 }
 
 QPixmap PluginSettingsPage::displayIcon() {
-
-    QString iconTheme = cfg::Application::icons_set();
-    if (!m_icon) {
-        m_icon = QPixmap(":" + iconTheme + ".plugins.png");
-    }
-    return m_icon;
+    return QPixmap(":/settings/default.main.svg");
 }
 //------------------------  ISettingsPage  --------------------------------//
 //------------------------   IWidgetPage   --------------------------------//

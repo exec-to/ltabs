@@ -34,7 +34,6 @@ class TestPluginSettingsPage: public ISettingsPage {
 private:
     QWidget *m_page;
     QString  m_displayName;
-    QPixmap  m_icon;
 
 public:
     TestPluginSettingsPage();

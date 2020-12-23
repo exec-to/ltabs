@@ -34,7 +34,6 @@ class BasePluginSettingsPage: public ISettingsPage {
 private:
     QWidget *m_page;
     QString  m_displayName;
-    QPixmap  m_icon;
 
 public:
     BasePluginSettingsPage();
@@ -53,7 +52,6 @@ Q_OBJECT
 
 private:
     QWidget *m_widget;
-    QPixmap  m_icon;
 public:
     BasePluginWidgetPage();
     virtual ~BasePluginWidgetPage() {  }

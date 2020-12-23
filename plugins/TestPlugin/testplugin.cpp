@@ -60,12 +60,7 @@ QString TestPluginSettingsPage::displayName() const {
 }
 
 QPixmap TestPluginSettingsPage::displayIcon() {
-    QSettings settings;
-    QString iconTheme = settings.value("Application/icons", "light").toString().toLower();
-    if (!m_icon) {
-        m_icon = QPixmap(":" + iconTheme + ".test.png");
-    }
-    return m_icon;
+    return QPixmap(":/testplugin/default.main.svg");
 }
 //------------------------  ISettingsPage  --------------------------------//
 //------------------------   IWidgetPage   --------------------------------//
@@ -91,12 +86,7 @@ QWidget* TestPluginWidgetPage::page() {
 }
 
 QPixmap TestPluginWidgetPage::displayIcon() {
-    QSettings settings;
-    QString iconTheme = settings.value("Application/icons", "light").toString().toLower();
-    if (!m_icon) {
-        m_icon = QPixmap(":" + iconTheme + ".test.png");
-    }
-    return m_icon;
+    return QPixmap(":/testplugin/default.main.svg");
 }
 
 //------------------------   IWidgetPage   --------------------------------//

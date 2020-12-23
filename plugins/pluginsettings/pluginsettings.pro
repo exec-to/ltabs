@@ -32,4 +32,4 @@ HEADERS  += ../../src/plugins/isettingspage.h ../../src/plugins/iapplicationplug
     pluginhelperlistmodel.h
 
 RESOURCES += \
-    ../../assets/icons.qrc
+    assets.qrc
