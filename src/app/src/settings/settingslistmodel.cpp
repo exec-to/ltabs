@@ -20,7 +20,7 @@ QVariant SettingsListModel::data(const QModelIndex &index, int role) const
         }
 
         case Qt::DecorationRole: {
-           QIcon icon = m_list.at(index.row())->displayIcon();
+           QIcon icon = m_list.at(index.row())->getIcon();
            if (icon.isNull())
                icon = m_emptyIcon;
            return icon;

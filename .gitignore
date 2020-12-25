@@ -1,1 +1,4 @@
 *.pro.user*
+dev_docs/
+build/
+bin/

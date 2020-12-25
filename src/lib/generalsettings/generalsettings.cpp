@@ -133,7 +133,7 @@ QWidget* GeneralSettingsPage::page()
         });
 
 
-        QComboBox *appIconsParam = createSingleWidget<QComboBox,QString>
+/*        QComboBox *appIconsParam = createSingleWidget<QComboBox,QString>
             (
                 this,
                 &QComboBox::currentTextChanged,
@@ -141,7 +141,17 @@ QWidget* GeneralSettingsPage::page()
                 cfg::Application::getKey("icons_set"),
                 QVariant::fromValue<QString>("dark")
             );
-        appIconsParam->addItems(QStringList() << "dark" << "light");
+        appIconsParam->addItems(QStringList() << "dark" << "light");*/
+
+        QSpinBox *appOpacityParam = createSingleWidget<QSpinBox,int>
+            (
+                this,
+                static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged),
+                "value",
+                cfg::MainWindow::getKey("opacity"),
+                QVariant::fromValue(100)
+            );
+        appOpacityParam->setRange(0, 100);
 
         QComboBox *appThemeParam = createSingleWidget<QComboBox,QString>
             (
@@ -169,8 +179,9 @@ QWidget* GeneralSettingsPage::page()
         formLayout->addRow(tr("&Размер кнопок нижней панели:"), bsParam);
         formLayout->addRow(tr("&На всех раб. столах:"), dsEnableParam);
         formLayout->addRow(tr("&Отображать на раб.столе:"), dsDefaultParam);
-        formLayout->addRow(tr("&Тема иконок:"), appIconsParam);
+//        formLayout->addRow(tr("&Тема иконок:"), appIconsParam);
         formLayout->addRow(tr("&Тема оформления:"), appThemeParam);
+        formLayout->addRow(tr("&Прозрачность окна:"), appOpacityParam);
 
         m_page->setLayout(formLayout);
     }
@@ -201,7 +212,7 @@ QString GeneralSettingsPage::displayName() const {
 }
 
 
-QPixmap GeneralSettingsPage::displayIcon() {
+QPixmap GeneralSettingsPage::getIcon() {
     return QPixmap(":/gen/default.main.svg");
 }
 //------------------------  ISettingsPage  --------------------------------//

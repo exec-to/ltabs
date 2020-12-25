@@ -157,7 +157,7 @@ QString PluginSettingsPage::displayName() const {
     return m_displayName;
 }
 
-QPixmap PluginSettingsPage::displayIcon() {
+QPixmap PluginSettingsPage::getIcon() {
     return QPixmap(":/settings/default.main.svg");
 }
 //------------------------  ISettingsPage  --------------------------------//

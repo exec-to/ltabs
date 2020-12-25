@@ -10,5 +10,5 @@ class IWidgetPage : public QObject
 public:
     virtual ~IWidgetPage() {  }
     virtual QWidget* page() = 0;
-    virtual QPixmap displayIcon() = 0;
+    virtual QPixmap getIcon() = 0;
 };

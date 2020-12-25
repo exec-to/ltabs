@@ -3,32 +3,32 @@
 #include <QObject>
 #include <QtWidgets>
 
-#include "../../src/plugins/iapplicationplugin.h"
+#include "../../include/iapplicationplugin.h"
 
 class QString;
 class QWidget;
 
 //------------------------ GeneralSettings --------------------------------//
-class BasePlugin : public QObject, public IApplicationPlugin
+class TestPlugin : public QObject, public IApplicationPlugin
 {
     Q_OBJECT
     Q_INTERFACES(IApplicationPlugin)
-    Q_PLUGIN_METADATA(IID "ru.ltabs.plugins.IApplicationPlugin" FILE "baseplugin.json")
+    Q_PLUGIN_METADATA(IID "ru.ltabs.plugins.IApplicationPlugin" FILE "testplugin.json")
 
 protected:
     ISettingsPage* m_settingPage;
     IWidgetPage* m_widgetPage;
 
 public:
-    BasePlugin(); // !important! initialize class members
-    virtual ~BasePlugin() {  }
+    TestPlugin(); // !important! initialize class members
+    virtual ~TestPlugin() {  }
     virtual ISettingsPage *getSettingsPage();
     virtual IWidgetPage *getWidgetPage();
 
 };
 //------------------------ GeneralSettings --------------------------------//
 //------------------------  ISettingsPage  --------------------------------//
-class BasePluginSettingsPage: public ISettingsPage {
+class TestPluginSettingsPage: public ISettingsPage {
     Q_OBJECT
 
 private:
@@ -36,44 +36,32 @@ private:
     QString  m_displayName;
 
 public:
-    BasePluginSettingsPage();
-    virtual ~BasePluginSettingsPage() {  }
+    TestPluginSettingsPage();
+    virtual ~TestPluginSettingsPage() {  }
     virtual QWidget* page();
     virtual QString displayName() const;
-    virtual QPixmap displayIcon();
+    virtual QPixmap getIcon();
     virtual void apply();
     virtual void reject();
 
 };
 //------------------------  ISettingsPage  --------------------------------//
 //------------------------   IWidgetPage   --------------------------------//
-class BasePluginWidgetPage: public IWidgetPage {
+class TestPluginWidgetPage: public IWidgetPage {
 Q_OBJECT
 
 private:
     QWidget *m_widget;
+    QPixmap  m_icon;
+
 public:
-    BasePluginWidgetPage();
-    virtual ~BasePluginWidgetPage() {  }
+    TestPluginWidgetPage();
+    virtual ~TestPluginWidgetPage() {  }
     virtual QWidget* page();
-    virtual QPixmap displayIcon();
+    virtual QPixmap getIcon();
 };
 
 
 
 //------------------------   IWidgetPage   --------------------------------//
 
-
-
-
-/*#ifndef BASEPLUGIN_H
-#define BASEPLUGIN_H
-
-
-class BasePlugin : public IApplicationPlugin
-{
-public:
-    BasePlugin();
-};
-
-#endif // BASEPLUGIN_H*/

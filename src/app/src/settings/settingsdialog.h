@@ -2,7 +2,7 @@
 
 #include <QObject>
 #include <QtWidgets>
-#include "../plugins/isettingspage.h"
+#include "../../../include/isettingspage.h"
 #include "settingslistmodel.h"
 #include "settingslistwidget.h"
 

@@ -1,8 +1,8 @@
 #pragma once
 
 #include <QPluginLoader>
-#include "plugins/iapplicationplugin.h"
-#include "plugins/pluginhelper.h"
+#include "../../include/iapplicationplugin.h"
+#include "../../include/pluginhelper.h"
 #include "settings/config.h"
 
 

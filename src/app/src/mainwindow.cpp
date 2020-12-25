@@ -10,8 +10,10 @@ MainWindow::MainWindow(QWidget *parent)
     Qt::WindowFlags flags = Qt::Window
                           | Qt::WindowStaysOnTopHint
                           | Qt::FramelessWindowHint;
+
     setWindowFlags(flags);
-    setWindowOpacity( 0.8 );
+    setWindowOpacity( cfg::MainWindow::opacity() / 100.0 );
+
     //рабочая область
     m_tabLayout = new QStackedLayout();
     appendPages(m_tabLayout, PluginLoader::pluginsList());
@@ -113,7 +115,7 @@ void MainWindow::appendPages(QStackedLayout *layout, QList<IApplicationPlugin*> 
         if (widgetPage) {
             QWidget*  w = widgetPage->page();
             layout->addWidget(w);
-            QToolButton* btn = createToolButton(widgetPage->displayIcon());
+            QToolButton* btn = createToolButton(widgetPage->getIcon());
             connect(btn, &QPushButton::clicked, [=]() {
                 layout->setCurrentWidget(w);
             });

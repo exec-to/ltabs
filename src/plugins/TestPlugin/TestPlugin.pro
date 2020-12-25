@@ -13,7 +13,7 @@ CONFIG += plugin
 SOURCES += \
     testplugin.cpp
 
-HEADERS  += ../../src/plugins/isettingspage.h ../../src/plugins/iapplicationplugin.h ../../src/plugins/iwidgetpage.h \
+HEADERS  += ../../include/isettingspage.h ../../include/iapplicationplugin.h ../../include/iwidgetpage.h \
     testplugin.h
 
 RESOURCES += \

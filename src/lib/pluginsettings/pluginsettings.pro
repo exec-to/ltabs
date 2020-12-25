@@ -26,9 +26,9 @@ SOURCES += \
     pluginsettings.cpp \
     pluginhelperlistmodel.cpp
 
-HEADERS  += ../../src/plugins/isettingspage.h ../../src/plugins/iapplicationplugin.h ../../src/plugins/iwidgetpage.h \
+HEADERS  += ../../include/isettingspage.h ../../include/iapplicationplugin.h ../../include/iwidgetpage.h \
+    ../../include/pluginhelper.h \
     pluginsettings.h \
-    ../../src/plugins/pluginhelper.h \
     pluginhelperlistmodel.h
 
 RESOURCES += \

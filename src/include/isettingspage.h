@@ -11,7 +11,7 @@ public:
     virtual ~ISettingsPage() { }
     virtual QWidget* page() = 0;
     virtual QString displayName() const = 0;
-    virtual QPixmap displayIcon() = 0;
+    virtual QPixmap getIcon() = 0;
     virtual void apply() = 0;
     virtual void reject() = 0;
 

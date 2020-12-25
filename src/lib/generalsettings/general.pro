@@ -16,7 +16,8 @@ CONFIG += plugin
 SOURCES +=\
         generalsettings.cpp
 
-HEADERS  += generalsettings.h ../../src/plugins/isettingspage.h ../../src/plugins/iapplicationplugin.h ../../src/plugins/iwidgetpage.h
+HEADERS  += ../../include/isettingspage.h ../../include/iapplicationplugin.h ../../include/iwidgetpage.h \
+            generalsettings.h
 
 RESOURCES += \
     assets.qrc

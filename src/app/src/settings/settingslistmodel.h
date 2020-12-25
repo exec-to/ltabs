@@ -2,7 +2,7 @@
 
 #include <QObject>
 #include <QtWidgets>
-#include "../plugins/iapplicationplugin.h"
+#include "../../../include/iapplicationplugin.h"
 
 
 class SettingsListModel : public QAbstractListModel

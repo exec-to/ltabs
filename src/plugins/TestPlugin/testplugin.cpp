@@ -59,7 +59,7 @@ QString TestPluginSettingsPage::displayName() const {
     return m_displayName;
 }
 
-QPixmap TestPluginSettingsPage::displayIcon() {
+QPixmap TestPluginSettingsPage::getIcon() {
     return QPixmap(":/testplugin/default.main.svg");
 }
 //------------------------  ISettingsPage  --------------------------------//
@@ -85,7 +85,7 @@ QWidget* TestPluginWidgetPage::page() {
     return m_widget;
 }
 
-QPixmap TestPluginWidgetPage::displayIcon() {
+QPixmap TestPluginWidgetPage::getIcon() {
     return QPixmap(":/testplugin/default.main.svg");
 }
 

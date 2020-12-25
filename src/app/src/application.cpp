@@ -15,7 +15,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
     QApplication::setStyle(QStyleFactory::create("Fusion"));
 
     QString themeName = cfg::Application::theme_dir() + "/" + cfg::Application::theme();
-//    qDebug() << themeName;
+
     QFile   themeFile(themeName);
     themeFile.open(QFile::ReadOnly);
     if (themeFile.isOpen()) {

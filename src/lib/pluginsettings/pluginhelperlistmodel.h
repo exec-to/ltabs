@@ -2,9 +2,9 @@
 #include <QObject>
 #include <QAbstractListModel>
 #include <QSettings>
-#include "../../src/plugins/pluginhelper.h"
-#include "../../src/plugins/iapplicationplugin.h"
-#include "../../src/settings/config.h"
+#include "../../include/pluginhelper.h"
+#include "../../include/iapplicationplugin.h"
+#include "../../app/src/settings/config.h"
 
 class PluginHelperListModel : public QAbstractListModel
 {
