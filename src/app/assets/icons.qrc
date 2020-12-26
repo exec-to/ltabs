@@ -1,21 +1,9 @@
 <RCC>
     <qresource prefix="/">
-        <file alias="light.settings.png">icons/light/appbar.settings.png</file>
-        <file alias="light.leave.png">icons/light/appbar.door.leave.png</file>
-        <file alias="dark.leave.png">icons/dark/appbar.door.leave.png</file>
-        <file alias="dark.settings.png">icons/dark/appbar.settings.png</file>
-        <file alias="dark.general.png">icons/dark/appbar.list.gear.png</file>
-        <file alias="light.general.png">icons/light/appbar.list.gear.png</file>
-        <file alias="dark.plugins.png">icons/dark/appbar.tiles.plus.png</file>
-        <file alias="light.plugins.png">icons/light/appbar.tiles.plus.png</file>
-        <file alias="dark.test.png">icons/dark/appbar.archive.png</file>
-        <file alias="light.test.png">icons/light/appbar.archive.png</file>
-        <file>icons/dark/appbar.at.png</file>
-        <file alias="light.base.png">icons/light/appbar.at.png</file>
         <file alias="dark.base.png">icons/svg/system-log-out.svg</file>
         <file>icons/svg/preferences-desktop.svg</file>
         <file alias="default.settings.svg">icons/svg/app-settings.svg</file>
-        <file alias="dark.test.png">icons/svg/editpaste.svg</file>
+        <file>icons/svg/editpaste.svg</file>
         <file>icons/svg/exit.svg</file>
         <file>icons/svg/error.svg</file>
         <file alias="default.exit.svg">icons/svg/app-exit.svg</file>

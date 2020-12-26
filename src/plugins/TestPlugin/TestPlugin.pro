@@ -10,11 +10,17 @@ TARGET = ../../../bin/plugins/testplugin
 TEMPLATE = lib
 CONFIG += plugin
 
-SOURCES += \
-    testplugin.cpp
+INCLUDEPATH += $$PWD/include $$PWD/../../include
 
-HEADERS  += ../../include/isettingspage.h ../../include/iapplicationplugin.h ../../include/iwidgetpage.h \
-    testplugin.h
+SOURCES += \
+    src/testplugin.cpp
+
+HEADERS  +=\
+    ../../include/isettingspage.h \
+    ../../include/iapplicationplugin.h \
+    ../../include/iwidgetpage.h \
+    ../../include/pluginhelper.h \
+    include/testplugin.h
 
 RESOURCES += \
     assets.qrc

@@ -12,12 +12,16 @@ TARGET = ../../../bin/plugins/generalsetting
 TEMPLATE = lib
 CONFIG += plugin
 
+INCLUDEPATH += $$PWD/include $$PWD/../../include
 
 SOURCES +=\
-        generalsettings.cpp
+    src/generalsettings.cpp
 
-HEADERS  += ../../include/isettingspage.h ../../include/iapplicationplugin.h ../../include/iwidgetpage.h \
-            generalsettings.h
+HEADERS  +=\
+    ../../include/isettingspage.h \
+    ../../include/iapplicationplugin.h \
+    ../../include/iwidgetpage.h \
+    include/generalsettings.h
 
 RESOURCES += \
     assets.qrc

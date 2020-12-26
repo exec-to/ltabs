@@ -12,33 +12,34 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = ../../bin/ltabs
 TEMPLATE = app
 
+INCLUDEPATH += $$PWD/include $$PWD/../include
 
 SOURCES +=\
     src/application.cpp \
+    src/configuration.cpp \
     src/main.cpp \
     src/mainwindow.cpp \
     src/pluginmanager.cpp \
     src/x11utils.cpp \
-    src/settings/settingsdialog.cpp \
-    src/settings/settingslistmodel.cpp \
-    src/settings/settingslistwidget.cpp \
-    src/gridcontrollayout.cpp \
-    src/settings/config.cpp
+    src/settingsdialog.cpp \
+    src/settingslistmodel.cpp \
+    src/settingslistwidget.cpp \
+    src/gridcontrollayout.cpp
 
 HEADERS  += \
-    src/settings/settingsdialog.h \
-    src/settings/settingslistmodel.h \
-    src/settings/settingslistwidget.h \
     ../include/iapplicationplugin.h \
     ../include/iwidgetpage.h \
     ../include/pluginhelper.h \
-    src/application.h \
-    src/mainwindow.h \
-    src/pluginmanager.h \
-    src/x11utils.h \
     ../include/isettingspage.h \
-    src/gridcontrollayout.h \
-    src/settings/config.h
+    include/configuration.h \
+    include/settingsdialog.h \
+    include/settingslistmodel.h \
+    include/settingslistwidget.h \
+    include/application.h \
+    include/mainwindow.h \
+    include/pluginmanager.h \
+    include/x11utils.h \
+    include/gridcontrollayout.h
 
 RESOURCES += \
     assets/icons.qrc
