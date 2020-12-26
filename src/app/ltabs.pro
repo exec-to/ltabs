@@ -9,7 +9,7 @@ QT       += core gui KWindowSystem
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = /home/roman/local/ltabs/ltabs
+TARGET = ../../bin/ltabs
 TEMPLATE = app
 
 

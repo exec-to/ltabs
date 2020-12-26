@@ -6,7 +6,7 @@
 
 QT       += core gui widgets
 
-TARGET = ~/local/ltabs/plugins/pluginsettings
+TARGET = ../../../bin/plugins/pluginsettings
 TEMPLATE = lib
 CONFIG += plugin
 

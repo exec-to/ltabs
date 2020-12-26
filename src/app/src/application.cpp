@@ -4,7 +4,7 @@ Application::Application(int &argc, char **argv) : QApplication(argc, argv)
 {
     QCoreApplication::setOrganizationName   ("2cfg.su");
     QCoreApplication::setOrganizationDomain ("2cfg.su");
-    QCoreApplication::setApplicationName    ("ltabs"   );
+    QCoreApplication::setApplicationName    ("ltabs"  );
 
     cfg::Init();
 
