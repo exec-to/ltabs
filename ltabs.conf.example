@@ -17,3 +17,5 @@ opacity=90
 width=320
 min_width=100
 max_width=420
+min_control_buttons_width=24
+max_control_buttons_width=64

@@ -32,7 +32,7 @@ QVariant SettingsListModel::data(const QModelIndex &index, int role) const
 
 int SettingsListModel::rowCount(const QModelIndex &parent) const
 {
-    parent.isValid();
+    Q_UNUSED(parent)
     return m_list.size();
 }
 

@@ -4,11 +4,11 @@
 #
 #-------------------------------------------------
 
-QT       += core gui widgets
+QT       += core gui widgets quickwidgets
 
 TARGET = ../../../bin/plugins/baseplugin
 TEMPLATE = lib
-CONFIG += plugin
+CONFIG += plugin qmltypes
 
 INCLUDEPATH += $$PWD/include $$PWD/../../include
 
@@ -23,5 +23,6 @@ HEADERS  += \
     include/baseplugin.h
 
 RESOURCES += \
-    assets.qrc
+    assets.qrc \
+    qml.qrc
 

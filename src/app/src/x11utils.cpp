@@ -27,9 +27,7 @@ void X11Utils::setStrut(Window winid, QRect app_rect, QString orient) {
 
     if      (orient == "right") {
         KWindowSystem::setExtendedStrut	(winid, 0,0,0,
-                                         app_rect.width(),
-                                         app_rect.top(),
-                                         app_rect.height(),
+                                         app_rect.width(), app_rect.top(), app_rect.height(),
                                          0,0,0,0,0,0 );
 
     } else if (orient == "left" ) {

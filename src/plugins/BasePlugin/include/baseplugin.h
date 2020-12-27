@@ -2,6 +2,7 @@
 
 #include <QObject>
 #include <QtWidgets>
+#include <QQuickWidget>
 
 #include "iapplicationplugin.h"
 
@@ -52,6 +53,7 @@ Q_OBJECT
 
 private:
     QWidget *m_widget;
+    QQuickWidget* m_quickWidget;
 public:
     BasePluginWidgetPage();
     virtual ~BasePluginWidgetPage() {  }

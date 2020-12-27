@@ -80,7 +80,10 @@ QWidget* GeneralSettingsPage::page()
                 configuration::UI::getKey("width"),
                 QVariant::fromValue(200)
             );
-        mwWidthParam->setRange(configuration::UI::min_width(), configuration::UI::max_width());
+        mwWidthParam->setRange(
+                    configuration::UI::min_width(),
+                    configuration::UI::max_width()
+        );
 
         QComboBox *mwPositionParam = createSingleWidget<QComboBox,QString>
             (
@@ -100,7 +103,10 @@ QWidget* GeneralSettingsPage::page()
                 configuration::UI::getKey("control_buttons_size"),
                 QVariant::fromValue(36)
             );
-        bsParam->setRange(24, 64);
+        bsParam->setRange(
+                    configuration::UI::min_control_buttons_width(),
+                    configuration::UI::max_control_buttons_width()
+        );
 
         QComboBox *dsDefaultParam = createSingleWidget<QComboBox,QString>
             (

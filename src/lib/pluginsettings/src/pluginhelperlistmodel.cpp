@@ -164,5 +164,6 @@ void PluginHelperListModel::save() {
 
 
 int PluginHelperListModel::rowCount(const QModelIndex &parent) const {
+    Q_UNUSED(parent)
     return m_list.size();
 }

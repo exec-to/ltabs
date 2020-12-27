@@ -90,12 +90,11 @@ void MainWindow::show() {
 
     //геометрия выделенной области
     int strut_width = (position == "right")
-            ?  screen.width() - (m_rect.x()  + m_rect.width()) + width()
+            ? screen.width() - (m_rect.x()  + m_rect.width()) + width()
             : m_rect.x() + width();
 
-    QRect strut_rect(m_rect.x(), m_rect.y(), strut_width, height());
     //выделяем STRUT на рабочем столе для главного виджета
-    X11Utils::setStrut( winId(), strut_rect, position );
+    X11Utils::setStrut( winId(), QRect(m_rect.x(), m_rect.y(), strut_width, height()), position );
 
     //устанавливаем на заданном рабочем столе
     X11Utils::setOnDesktop ( this->winId(), configuration::Application::virtual_desktop() );
