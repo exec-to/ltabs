@@ -6,11 +6,11 @@
 #include "configuration.h"
 
 
-class PluginLoader : public QObject
+class PluginManager : public QObject
 {
     Q_OBJECT
 private:
-    explicit PluginLoader();
+    explicit PluginManager();
     static   QList<IApplicationPlugin *> plugins;
 
 

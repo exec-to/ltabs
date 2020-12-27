@@ -1,6 +1,6 @@
 #include "x11utils.h"
 
-QRect X11Utils::defineWorkarea() {
+QRect X11Utils::workarea() {
     return KWindowSystem::workArea();
 }
 
@@ -10,17 +10,15 @@ unsigned int X11Utils::numberOfDesktops() {
 }
 
 
-void X11Utils::defineDesktop(Window winid, int is_dock_window, unsigned int def_desktop) {
+void X11Utils::setOnDesktop(Window winid, unsigned int virtual_desktop) {
 
-    if (is_dock_window) {
-        KWindowSystem::setType(winid, NET::Dock);
-        KWindowSystem::setOnAllDesktops(winid, true);
+    bool all_desktops = (virtual_desktop == 0);
 
-    } else {
-        KWindowSystem::setType(winid, NET::Dock);
-        KWindowSystem::setOnAllDesktops(winid, false);
-        KWindowSystem::setOnDesktop(winid, def_desktop+1);
+    KWindowSystem::setType(winid, NET::Dock);
+    KWindowSystem::setOnAllDesktops(winid, all_desktops);
 
+    if (!all_desktops) {
+        KWindowSystem::setOnDesktop(winid, virtual_desktop);
     }
 }
 

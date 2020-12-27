@@ -2,6 +2,8 @@
 
 #include <QObject>
 #include <QtWidgets>
+#include <X11/Xutil.h>
+#include <kwindowsystem.h>
 
 #include "iapplicationplugin.h"
 #include "../../app/include/configuration.h"

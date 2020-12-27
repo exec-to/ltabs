@@ -1,6 +1,6 @@
 ﻿#include "pluginsettings.h"
 
-QSettings *cfg::settings = 0;
+QSettings *configuration::settings = 0;
 
 //------------------------ PluginSettings --------------------------------//
 PluginSettings::PluginSettings():
@@ -8,7 +8,7 @@ PluginSettings::PluginSettings():
     m_widgetPage(nullptr)
 {
     setUuid(QUuid("5dc916d6-fa0f-4ee6-bae9-065b393a6a69"));
-    cfg::Init();
+    configuration::Init();
 }
 
 ISettingsPage* PluginSettings::getSettingsPage()
@@ -46,7 +46,7 @@ T* createSingleWidget( ISettingsPage* _page, Signal _signal, const char* _prop, 
     } );
 
     QObject::connect(_page, &ISettingsPage::restoreSettings, [=]() {
-        w->setProperty(_prop, cfg::master()->value(_param, _default));
+        w->setProperty(_prop, configuration::master()->value(_param, _default));
     });
 
     return w;
@@ -118,7 +118,7 @@ QWidget* PluginSettingsPage::page()
 }
 
 QString PluginSettingsPage::getPluginFileName() {
-    QString path = cfg::Application::plugin_dir();
+    QString path = configuration::Application::plugins_directory();
 
     QDir dir;
     if (!dir.cd(path)) {
@@ -141,10 +141,10 @@ void PluginSettingsPage::apply()
 {
     for(auto &item: tempSettings.toStdMap()) {
         qDebug() << item.first << " : " << item.second;
-        cfg::master()->setValue(item.first , item.second);
+        configuration::master()->setValue(item.first , item.second);
     }
 
-    cfg::master()->sync();
+    configuration::master()->sync();
     tempSettings.clear();
 }
 

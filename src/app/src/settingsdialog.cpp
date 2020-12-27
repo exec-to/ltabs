@@ -10,7 +10,7 @@ SettingsDialog::SettingsDialog(QWidget* parent):
     m_stackedLayout(new QStackedLayout())
 {
     setupLayout();
-    m_model->setPages(PluginLoader::pluginsList());
+    m_model->setPages(PluginManager::pluginsList());
     m_settingsList->setModel(m_model);
 
     connect(m_settingsList->selectionModel(),
@@ -40,7 +40,7 @@ void SettingsDialog::currentChanged(const QModelIndex &current)
 
 template<typename Fnct>
 void plugins_for(Fnct doAction) {
-    for (auto &plugin: PluginLoader::pluginsList()) {
+    for (auto &plugin: PluginManager::pluginsList()) {
         ISettingsPage* settings = plugin->getSettingsPage();
         if (settings)
             doAction(settings);

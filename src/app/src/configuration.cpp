@@ -1,3 +1,3 @@
 #include "configuration.h"
 
-QSettings *cfg::settings = 0;
+QSettings *configuration::settings = 0;

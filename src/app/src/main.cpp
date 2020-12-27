@@ -11,7 +11,6 @@ int main(int argc, char *argv[])
 
     //TODO:
     //Выбор действия при нажатии на кнопку
-    //убрать ненужные заголовки
 
     Application app(argc, argv);
     MainWindow w;

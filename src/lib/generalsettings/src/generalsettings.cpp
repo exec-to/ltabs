@@ -1,6 +1,6 @@
 #include "generalsettings.h"
 
-QSettings *cfg::settings = 0;
+QSettings *configuration::settings = 0;
 
 //------------------------ GeneralSettings --------------------------------//
 GeneralSettings::GeneralSettings():
@@ -8,7 +8,7 @@ GeneralSettings::GeneralSettings():
     m_widgetPage(nullptr)
 {
     setUuid(QUuid("db507711-94ad-4f54-bffd-1a7789882839"));
-    cfg::Init();
+    configuration::Init();
 }
 
 ISettingsPage* GeneralSettings::getSettingsPage()
@@ -47,7 +47,7 @@ T* createSingleWidget( ISettingsPage* _page, Signal _signal, const char* _prop, 
     } );
 
     QObject::connect(_page, &ISettingsPage::restoreSettings, [=]() {
-        w->setProperty(_prop, cfg::master()->value(_param, _default));
+        w->setProperty(_prop, configuration::master()->value(_param, _default));
     });
 
     return w;
@@ -56,7 +56,7 @@ T* createSingleWidget( ISettingsPage* _page, Signal _signal, const char* _prop, 
 
 QStringList themesFromDirectory() {
     QDir dir;
-    dir.cd(cfg::Application::theme_dir());
+    dir.cd(configuration::Application::themes_directory());
     return dir.entryList(QStringList() << "*.qss");
 }
 
@@ -77,17 +77,17 @@ QWidget* GeneralSettingsPage::page()
                 this,
                 static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged),
                 "value",
-                cfg::MainWindow::getKey("width"),
+                configuration::UI::getKey("width"),
                 QVariant::fromValue(200)
             );
-        mwWidthParam->setRange(cfg::MainWindow::min_width(), cfg::MainWindow::max_width());
+        mwWidthParam->setRange(configuration::UI::min_width(), configuration::UI::max_width());
 
         QComboBox *mwPositionParam = createSingleWidget<QComboBox,QString>
             (
                 this,
                 &QComboBox::currentTextChanged,
                 "currentText",
-                cfg::MainWindow::getKey("edge"),
+                configuration::Application::getKey("position_on_screen"),
                 QVariant::fromValue<QString>("right")
             );
         mwPositionParam->addItems(QStringList() << "left" << "right");
@@ -97,58 +97,34 @@ QWidget* GeneralSettingsPage::page()
                 this,
                 static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged),
                 "value",
-                cfg::MainWindow::getKey("button_size"),
+                configuration::UI::getKey("control_buttons_size"),
                 QVariant::fromValue(36)
             );
         bsParam->setRange(24, 64);
-
-        QCheckBox* dsEnableParam = createSingleWidget<QCheckBox,int>
-            (
-                this,
-                &QCheckBox::stateChanged,
-                "checked",
-                cfg::Environment::getKey("is_dock"),
-                QVariant::fromValue(2)
-            );
-
 
         QComboBox *dsDefaultParam = createSingleWidget<QComboBox,QString>
             (
                 this,
                 &QComboBox::currentTextChanged,
                 "currentText",
-                cfg::Environment::getKey("def_dt"),
+                configuration::Application::getKey("virtual_desktop"),
                 QVariant::fromValue<QString>("0")
             );
 
-        int ndesktops = cfg::Environment::dt_num();
+        int ndesktops = KWindowSystem::numberOfDesktops();
         QStringList nitems;
-        for (int i = 0; i < ndesktops; i++) {
+        for (int i = 0; i < ndesktops + 1; i++) {
             nitems << QString::number(i);
         }
         dsDefaultParam->addItems(nitems);
 
-        connect(dsEnableParam, &QCheckBox::stateChanged, [=](int state) {
-            dsDefaultParam->setEnabled(!state);
-        });
-
-
-/*        QComboBox *appIconsParam = createSingleWidget<QComboBox,QString>
-            (
-                this,
-                &QComboBox::currentTextChanged,
-                "currentText",
-                cfg::Application::getKey("icons_set"),
-                QVariant::fromValue<QString>("dark")
-            );
-        appIconsParam->addItems(QStringList() << "dark" << "light");*/
 
         QSpinBox *appOpacityParam = createSingleWidget<QSpinBox,int>
             (
                 this,
                 static_cast<void(QSpinBox::*)(int)>(&QSpinBox::valueChanged),
                 "value",
-                cfg::MainWindow::getKey("opacity"),
+                configuration::UI::getKey("opacity"),
                 QVariant::fromValue(100)
             );
         appOpacityParam->setRange(0, 100);
@@ -158,13 +134,13 @@ QWidget* GeneralSettingsPage::page()
                 this,
                 &QComboBox::currentTextChanged,
                 "currentText",
-                cfg::Application::getKey("theme"),
+                configuration::Application::getKey("theme_name"),
                 QVariant::fromValue<QString>("default.qss")
             );
         appThemeParam->addItems(themesFromDirectory());
 
         connect(appThemeParam, &QComboBox::currentTextChanged, [=](QString val) {
-            QString themeName = cfg::Application::theme_dir() + "/" + val;
+            QString themeName = configuration::Application::themes_directory() + "/" + val;
             QFile themeFile(themeName);
             themeFile.open(QFile::ReadOnly);
             if (themeFile.isOpen()) {
@@ -176,10 +152,9 @@ QWidget* GeneralSettingsPage::page()
         QFormLayout *formLayout = new QFormLayout;
         formLayout->addRow(tr("&Ширина главного окна:"), mwWidthParam);
         formLayout->addRow(tr("&Позиция окна:"), mwPositionParam);
-        formLayout->addRow(tr("&Размер кнопок нижней панели:"), bsParam);
-        formLayout->addRow(tr("&На всех раб. столах:"), dsEnableParam);
-        formLayout->addRow(tr("&Отображать на раб.столе:"), dsDefaultParam);
-//        formLayout->addRow(tr("&Тема иконок:"), appIconsParam);
+        formLayout->addRow(tr("&Размер кнопок панели управления:"), bsParam);
+//        formLayout->addRow(tr("&На всех раб. столах:"), dsEnableParam);
+        formLayout->addRow(tr("&Отображать на раб.столе (0 - на всех):"), dsDefaultParam);
         formLayout->addRow(tr("&Тема оформления:"), appThemeParam);
         formLayout->addRow(tr("&Прозрачность окна:"), appOpacityParam);
 
@@ -193,10 +168,10 @@ void GeneralSettingsPage::apply()
 {
     for(auto &item: tempSettings.toStdMap()) {
         qDebug() << item.first << " : " << item.second;
-        cfg::master()->setValue(item.first , item.second);
+        configuration::master()->setValue(item.first , item.second);
     }
 
-    cfg::master()->sync();
+    configuration::master()->sync();
     tempSettings.clear();
 }
 

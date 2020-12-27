@@ -1,12 +1,12 @@
 #include "pluginmanager.h"
 
-QList<IApplicationPlugin *> PluginLoader::plugins;
+QList<IApplicationPlugin *> PluginManager::plugins;
 
 
-void PluginLoader::load() {
+void PluginManager::load() {
 
     QDir dir;
-    dir.cd(cfg::Application::plugin_dir());
+    dir.cd(configuration::Application::plugins_directory());
 
     QList<PluginHelper *> loadList;
 
@@ -20,12 +20,12 @@ void PluginLoader::load() {
         ("5dc916d6-fa0f-4ee6-bae9-065b393a6a69", "libpluginsettings.so");
     loadList.append(pluginSettingsTab);
 
-    int size = cfg::master()->beginReadArray(cfg::Plugins());
+    int size = configuration::master()->beginReadArray(configuration::Plugins());
     for (int i = 0; i < size; ++i) {
-        cfg::master()->setArrayIndex(i);
-        loadList.append(new PluginHelper(cfg::Plugins::uuid(), cfg::Plugins::file_name()));
+        configuration::master()->setArrayIndex(i);
+        loadList.append(new PluginHelper(configuration::Plugins::uuid(), configuration::Plugins::file_name()));
     }
-    cfg::master()->endArray();
+    configuration::master()->endArray();
 
     for (auto &p: loadList) {
         QPluginLoader loader(dir.absoluteFilePath(p->fileName));
@@ -43,9 +43,9 @@ void PluginLoader::load() {
 }
 
 
-QList<IApplicationPlugin *> &PluginLoader::pluginsList() {
-    return PluginLoader::plugins;
+QList<IApplicationPlugin *> &PluginManager::pluginsList() {
+    return PluginManager::plugins;
 }
 
 
-PluginLoader::PluginLoader() {  }
+PluginManager::PluginManager() {  }

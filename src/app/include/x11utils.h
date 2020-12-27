@@ -7,12 +7,9 @@
 
 class X11Utils
 {
-    private:
-    //    X11Utils() {  }
-
     public:
-        static QRect defineWorkarea();
+        static QRect workarea();
         static void setStrut(Window winid, QRect app_rect, QString orient);
         static unsigned int numberOfDesktops();
-        static void defineDesktop(Window winid, int all, unsigned int def_desktop);
+        static void setOnDesktop(Window winid, unsigned int def_desktop);
 };

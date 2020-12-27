@@ -1,0 +1,19 @@
+[Application]
+position_on_screen=right
+theme_name=mytheme.qss
+virtual_desktop=0
+
+# No edit from this file
+[Plugins]
+1\file_name=libbaseplugin.so
+1\uuid={c89088f1-ab51-47a8-beb8-e178e1b176d3}
+2\file_name=libtestplugin.so
+2\uuid={46668af6-7ba6-4661-9ce0-a505937d0ffa}
+size=2
+
+[UI]
+control_buttons_size=48
+opacity=90
+width=320
+min_width=100
+max_width=420

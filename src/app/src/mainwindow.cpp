@@ -12,11 +12,11 @@ MainWindow::MainWindow(QWidget *parent)
                           | Qt::FramelessWindowHint;
 
     setWindowFlags(flags);
-    setWindowOpacity( cfg::MainWindow::opacity() / 100.0 );
+    setWindowOpacity( configuration::UI::opacity() / 100.0 );
 
     //рабочая область
     m_tabLayout = new QStackedLayout();
-    appendPages(m_tabLayout, PluginLoader::pluginsList());
+    appendPages(m_tabLayout, PluginManager::pluginsList());
 
     //область управления программой
     QWidget *bottomWidget = new QWidget();
@@ -47,7 +47,7 @@ void MainWindow::createDefaultButtons() {
 
     QString res = ":default.settings.svg";
     btn = createToolButton(QPixmap(res));
-    btn->setToolTip("Настройки");
+    btn->setToolTip(tr("Настройки"));
     connect( btn, &QToolButton::clicked, [=]() {
              SettingsDialog::showDialog();
     });
@@ -55,7 +55,7 @@ void MainWindow::createDefaultButtons() {
 
     res = ":default.exit.svg";
     btn = createToolButton(QPixmap(res));
-    btn->setToolTip("Выход");
+    btn->setToolTip(tr("Выход"));
     connect( btn, &QToolButton::clicked,
              QApplication::instance(),
              &QCoreApplication::quit
@@ -69,19 +69,19 @@ void MainWindow::show() {
     //полный размер рабочего стола
     QRect screen = QApplication::desktop()->geometry();
     //сторона, к которой нужно прикрепить виджет
-    QString edge = cfg::MainWindow::edge();
+    QString position = configuration::Application::position_on_screen();
 
     //область экрана, доступная для размещения виджета
-    m_rect = X11Utils::defineWorkarea();
+    m_rect = X11Utils::workarea();
 
     //ширина виджета
-    int    mw_width = cfg::MainWindow::width();
+    int  mw_width = configuration::UI::width();
     //доступная высота виджета
-    int   mw_height = m_rect.height();
+    int mw_height = m_rect.height();
 
     //позиция для размещения
     int      top = m_rect.y();
-    int     left = ( edge == "left") ? screen.left()  + m_rect.left()
+    int     left = ( position == "left") ? screen.left()  + m_rect.left()
                                      : m_rect.width() + m_rect.left() - mw_width;
 
     resize(mw_width, mw_height);
@@ -89,22 +89,16 @@ void MainWindow::show() {
     move(left, top);
 
     //геометрия выделенной области
-    int strut_width = (edge == "right")
+    int strut_width = (position == "right")
             ?  screen.width() - (m_rect.x()  + m_rect.width()) + width()
             : m_rect.x() + width();
 
     QRect strut_rect(m_rect.x(), m_rect.y(), strut_width, height());
     //выделяем STRUT на рабочем столе для главного виджета
-    X11Utils::setStrut( winId(), strut_rect, edge );
+    X11Utils::setStrut( winId(), strut_rect, position );
 
     //устанавливаем на заданном рабочем столе
-    X11Utils::defineDesktop
-    (
-        this->winId(),
-        cfg::Environment::is_dock(),
-        cfg::Environment::def_dt()
-    );
-
+    X11Utils::setOnDesktop ( this->winId(), configuration::Application::virtual_desktop() );
     QWidget::show();
 }
 
@@ -126,7 +120,7 @@ void MainWindow::appendPages(QStackedLayout *layout, QList<IApplicationPlugin*> 
 
 //создаём кнопку для области управления
 QToolButton* MainWindow::createToolButton(const QPixmap icon) {
-    int buttonSize   = cfg::MainWindow::button_size();
+    int buttonSize   = configuration::UI::control_buttons_size();
 
     QToolButton* btn = new QToolButton();
     btn->setFixedHeight    (buttonSize);
