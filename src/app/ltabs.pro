@@ -43,3 +43,6 @@ HEADERS  += \
 
 RESOURCES += \
     assets/icons.qrc
+
+DISTFILES += \
+    notes.txt

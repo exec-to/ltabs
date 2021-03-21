@@ -74,6 +74,7 @@ TestPluginWidgetPage::TestPluginWidgetPage():
 QWidget* TestPluginWidgetPage::page() {
     if (!m_widget) {
         m_widget = new QWidget();
+//        m_widget->setStyleSheet("background-color:yellow;");
         QHBoxLayout *layout = new QHBoxLayout();
         QLineEdit *line = new QLineEdit("test text");
         QPushButton *btn = new QPushButton("Press me");

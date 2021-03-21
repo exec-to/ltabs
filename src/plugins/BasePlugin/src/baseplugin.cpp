@@ -1,4 +1,5 @@
 #include "baseplugin.h"
+#include "clipboard.h"
 
 //------------------------ GeneralSettings --------------------------------//
 BasePlugin::BasePlugin():
@@ -70,26 +71,31 @@ BasePluginWidgetPage::BasePluginWidgetPage():
 
 }
 
-
+/*
+Example: Using QML widgets
+*/
 QWidget* BasePluginWidgetPage::page() {
     if (!m_widget) {
-        m_widget = new QWidget();
-        QHBoxLayout *layout = new QHBoxLayout();
+//        m_widget = new QWidget();
+//        QHBoxLayout *layout = new QHBoxLayout();
 //        QLineEdit *line = new QLineEdit("base plugin");
 //        QPushButton *btn = new QPushButton("Fix me");
 
 //        layout->addWidget(line);
 //        layout->addWidget(btn);
 
+        ClipboardModel model;
+        qmlRegisterType<ClipboardModel>("ClipboardModel", 1, 0, "ClipboardModel");
+
         m_quickWidget = new QQuickWidget();
         m_quickWidget->setSource(QUrl("qrc:/main.qml"));
         m_quickWidget->setResizeMode(QQuickWidget::SizeRootObjectToView);
 
-        layout->addWidget(m_quickWidget);
-        m_widget->setLayout(layout);
+//        layout->addWidget(m_quickWidget);
+//        m_widget->setLayout(layout);
     }
 
-    return m_widget;
+    return m_quickWidget;
 }
 
 QPixmap BasePluginWidgetPage::getIcon() {

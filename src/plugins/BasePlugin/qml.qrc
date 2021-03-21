@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
+        <file>ClipboardItem.qml</file>
+        <file>ClipBoard.qml</file>
     </qresource>
 </RCC>

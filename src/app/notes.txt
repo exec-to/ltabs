@@ -1,0 +1,20 @@
+Разбить по строкам
+Удаление по DEL
+Свои команды
+Словарь из pdf
+Циклическая вставка
+Интерфейс IPage (плагины)
+Открывать страницу переводчика по ссылке с текстом из буфера обмена
+Кнопка "Добавить текст" в список буфера
+
+
+Алгоритм работы словаря
+1. pdftotext Sample.pdf Sample.txt
+http://www.howtogeek.com/228531/how-to-convert-a-pdf-file-to-editable-text-using-the-command-line-in-linux/
+2. uniq testfile
+http://www.tldp.org/LDP/abs/html/textproc.html
+3. grep -viFf english.txt text.txt
+http://stackoverflow.com/questions/21804360/using-grep-cat-as-a-dictionary-in-unix
+4. Грузим txt-файл в IPage-плагин
+----
+
