@@ -2,6 +2,9 @@
 #define CLIPBOARD_H
 #include <QAbstractListModel>
 #include <vector>
+#include <QClipboard>
+#include <QObject>
+#include <QtWidgets>
 
 struct ClipboardItem {
     QString text;
@@ -20,14 +23,17 @@ public:
 
     int rowCount(const QModelIndex &parent = QModelIndex {}) const override;
     QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+    void clipboardChanged();
 
     size_t clipboardHistorySize() const;
 
     Q_INVOKABLE bool selectItem(int index);
 
 private:
+    QClipboard *clipboard;
     std::vector<ClipboardItem> m_clipboard;
     const size_t m_clipboardHistorySize;
+    bool from_selected;
 };
 
 Q_DECLARE_METATYPE(ClipboardItem);

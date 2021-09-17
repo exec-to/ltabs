@@ -6,12 +6,35 @@ ClipboardModel::ClipboardModel(const size_t clipboardHistorySize, QObject *paren
     m_clipboardHistorySize {clipboardHistorySize}
 {
     m_clipboard.resize(m_clipboardHistorySize);
-    ClipboardItem i1, i2;
-    i1.text = "Hello 1";
-    i2.text = "Hello 2";
-    m_clipboard.push_back(i1);
-    m_clipboard.push_back(i2);
+//    ClipboardItem i1, i2;
+//    i1.text = "Hello 1";
+//    i2.text = "Hello 2";
+//    m_clipboard.push_back(i1);
+//    m_clipboard.push_back(i2);
+
+    from_selected = false;
+
+    clipboard = QGuiApplication::clipboard();
+
+    connect(clipboard, &QClipboard::dataChanged,
+            this, &ClipboardModel::clipboardChanged);
+
+//    ClipboardModel::clipboardChanged();
 }
+
+void ClipboardModel::clipboardChanged()
+{
+    if (!from_selected) {
+        ClipboardItem item;
+
+        item.text = clipboard->text();
+        m_clipboard.insert(m_clipboard.begin(), item);
+
+        emit dataChanged(createIndex(0,0),
+             createIndex(m_clipboardHistorySize, 0));
+    }
+}
+
 
 int ClipboardModel::rowCount(const QModelIndex &parent) const
 {
@@ -39,9 +62,12 @@ size_t ClipboardModel::clipboardHistorySize() const
 bool ClipboardModel::selectItem(int index)
 {
 
-    m_clipboard.at(index).text = QString::number(index);
+//    m_clipboard.at(index).text = QString::number(index);
+      from_selected = true;
+      clipboard->setText(m_clipboard.at(index).text);
+      from_selected = false;
 //    set to clipboard
     // will be replaced to emit rowUpdated ?
-    emit dataChanged(createIndex(0,0), createIndex(m_clipboardHistorySize, 0));
+//    emit dataChanged(createIndex(0,0), createIndex(m_clipboardHistorySize, 0));
     return !!index;
 }
