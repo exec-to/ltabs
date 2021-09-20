@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/baseplugin">
+    <qresource prefix="/clipboardplugin">
         <file alias="default.main.svg">assets/main.svg</file>
     </qresource>
 </RCC>

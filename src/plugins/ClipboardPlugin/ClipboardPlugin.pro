@@ -6,7 +6,7 @@
 
 QT       += core gui widgets quickwidgets #quick
 
-TARGET = ../../../bin/plugins/baseplugin
+TARGET = ../../../bin/plugins/clipboardplugin
 TEMPLATE = lib
 CONFIG += plugin qmltypes
 
@@ -14,7 +14,7 @@ INCLUDEPATH += $$PWD/include $$PWD/../../include
 
 SOURCES += \
     src/clipboard.cpp \
-    src/baseplugin.cpp
+    src/clipboardplugin.cpp
 
 HEADERS  += \
     ../../include/isettingspage.h \
@@ -22,7 +22,7 @@ HEADERS  += \
     ../../include/iwidgetpage.h \
     ../../include/pluginhelper.h \
     include/clipboard.h \
-    include/baseplugin.h
+    include/clipboardplugin.h
 
 RESOURCES += \
     assets.qrc \

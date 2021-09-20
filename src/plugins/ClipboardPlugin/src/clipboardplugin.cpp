@@ -1,26 +1,26 @@
-#include "baseplugin.h"
+#include "clipboardplugin.h"
 #include "clipboard.h"
 
 //------------------------ GeneralSettings --------------------------------//
-BasePlugin::BasePlugin():
+ClipboardPlugin::ClipboardPlugin():
     m_settingPage(nullptr),
     m_widgetPage(nullptr)
 {
     setUuid(QUuid("c89088f1-ab51-47a8-beb8-e178e1b176d3"));
 }
 
-ISettingsPage* BasePlugin::getSettingsPage()
+ISettingsPage* ClipboardPlugin::getSettingsPage()
 {
     if (!m_settingPage) {
-        m_settingPage = new BasePluginSettingsPage();
+        m_settingPage = new ClipboardPluginSettingsPage();
     }
     return m_settingPage;
 }
 
-IWidgetPage* BasePlugin::getWidgetPage()
+IWidgetPage* ClipboardPlugin::getWidgetPage()
 {
     if (!m_widgetPage) {
-        m_widgetPage = new BasePluginWidgetPage();
+        m_widgetPage = new ClipboardPluginWidgetPage();
     }
     return m_widgetPage;
 }
@@ -28,44 +28,44 @@ IWidgetPage* BasePlugin::getWidgetPage()
 
 //------------------------ GeneralSettings --------------------------------//
 //------------------------  ISettingsPage  --------------------------------//
-BasePluginSettingsPage::BasePluginSettingsPage():
+ClipboardPluginSettingsPage::ClipboardPluginSettingsPage():
     m_page(nullptr),
-    m_displayName("BasePlugin")
+    m_displayName("ClipboardPlugin")
 {
 
 }
 
-QWidget* BasePluginSettingsPage::page()
+QWidget* ClipboardPluginSettingsPage::page()
 {
     if (!m_page) {
         m_page = new QWidget();
         QFormLayout *formLayout = new QFormLayout;
-        formLayout->addRow(tr("&Базовые настройки:"), new QLineEdit("Hello base"));
+        formLayout->addRow(tr("&Базовые настройки:"), new QLineEdit("Hello clipboard"));
         m_page->setLayout(formLayout);
     }
     return m_page;
 }
 
 
-void BasePluginSettingsPage::apply()
+void ClipboardPluginSettingsPage::apply()
 {
 
 }
 
-void BasePluginSettingsPage::reject() {
+void ClipboardPluginSettingsPage::reject() {
 
 }
 
-QString BasePluginSettingsPage::displayName() const {
+QString ClipboardPluginSettingsPage::displayName() const {
     return m_displayName;
 }
 
-QPixmap BasePluginSettingsPage::getIcon() {
-    return QPixmap(":/baseplugin/default.main.svg");
+QPixmap ClipboardPluginSettingsPage::getIcon() {
+    return QPixmap(":/clipboardplugin/default.main.svg");
 }
 //------------------------  ISettingsPage  --------------------------------//
 //------------------------   IWidgetPage   --------------------------------//
-BasePluginWidgetPage::BasePluginWidgetPage():
+ClipboardPluginWidgetPage::ClipboardPluginWidgetPage():
     m_widget(nullptr)
 {
 
@@ -74,11 +74,11 @@ BasePluginWidgetPage::BasePluginWidgetPage():
 /*
 Example: Using QML widgets
 */
-QWidget* BasePluginWidgetPage::page() {
+QWidget* ClipboardPluginWidgetPage::page() {
     if (!m_widget) {
 //        m_widget = new QWidget();
 //        QHBoxLayout *layout = new QHBoxLayout();
-//        QLineEdit *line = new QLineEdit("base plugin");
+//        QLineEdit *line = new QLineEdit("clipboard plugin");
 //        QPushButton *btn = new QPushButton("Fix me");
 
 //        layout->addWidget(line);
@@ -98,8 +98,8 @@ QWidget* BasePluginWidgetPage::page() {
     return m_quickWidget;
 }
 
-QPixmap BasePluginWidgetPage::getIcon() {
-    return QPixmap(":/baseplugin/default.main.svg");
+QPixmap ClipboardPluginWidgetPage::getIcon() {
+    return QPixmap(":/clipboardplugin/default.main.svg");
 }
 
 //------------------------   IWidgetPage   --------------------------------//
