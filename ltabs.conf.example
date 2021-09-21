@@ -5,7 +5,7 @@ virtual_desktop=0
 
 # No edit from this file
 [Plugins]
-1\file_name=libbaseplugin.so
+1\file_name=libclipboardplugin.so
 1\uuid={c89088f1-ab51-47a8-beb8-e178e1b176d3}
 2\file_name=libtestplugin.so
 2\uuid={46668af6-7ba6-4661-9ce0-a505937d0ffa}
