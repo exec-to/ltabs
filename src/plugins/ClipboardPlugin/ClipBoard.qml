@@ -15,16 +15,33 @@ ListView {
         height: 100
         ClipboardItem {
             displayText: display
-    //        displayText: index
-    //        internalText.text: display
             anchors.fill: parent
             anchors.margins: 1
 
             MouseArea {
+                id: mouseArea
                 anchors.fill: parent
+                hoverEnabled: true
+                acceptedButtons: Qt.LeftButton | Qt.RightButton
                 onClicked: {
                     root.model.selectItem(index);
                 }
+
+                onEntered: {
+//                    if (mouse.button == Qt.RightButton) {
+//                                     parent.color = 'yellow';
+//                    }
+//                    else {
+//                        parent.color = 'green';
+//                    }
+                       parent.color = 'grey';
+
+                }
+
+                onExited: {
+                        parent.color = 'steelblue';
+                }
+
             }
         }
     }

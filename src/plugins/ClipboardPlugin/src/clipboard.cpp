@@ -27,7 +27,17 @@ void ClipboardModel::clipboardChanged()
     if (!from_selected) {
         ClipboardItem item;
 
+        if (m_clipboard.begin()->text == clipboard->text()) {
+            return;
+        }
+
+
         item.text = clipboard->text();
+
+        if (QString(item.text).isEmpty()) {
+            return;
+        }
+
         m_clipboard.insert(m_clipboard.begin(), item);
 
         emit dataChanged(createIndex(0,0),

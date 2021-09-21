@@ -4,11 +4,11 @@ TEMPLATE = subdirs
 
 #greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-#HEADERS  += \
-#    include/iapplicationplugin.h \
-#    include/iwidgetpage.h \
-#    include/pluginhelper.h \
-#    include/isettingspage.h \
+HEADERS  += \
+    include/iapplicationplugin.h \
+    include/iwidgetpage.h \
+    include/pluginhelper.h \
+    include/isettingspage.h \
 
 
 SUBDIRS += \

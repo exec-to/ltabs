@@ -12,14 +12,23 @@ Rectangle {
     border.color: "black"
     border.width: 1
 
+
+
+
     Text {
         id: _firstText
-        anchors.centerIn: root
+
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.left: parent.left
+        anchors.fill: parent
+        anchors.margins: 5
         text: root.displayText
-        font.pointSize: 16
+        clip: true
+        font.pointSize: 12
         font {
-            bold: true
+            bold: false
         }
+
     }
 }
 
