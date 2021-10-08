@@ -17,7 +17,8 @@ class ClipboardModel: public QAbstractListModel
     // use it in QML root.model.historySize
 
 public:
-    static constexpr size_t defaultClipboardHistorySize {15};
+    static constexpr size_t defaultClipboardHistorySize {20};
+    static constexpr size_t defaultPinnedClipboardSize {5};
     ClipboardModel(const size_t clipboardHistorySize = defaultClipboardHistorySize,
                    QObject *parent = nullptr);
 
@@ -28,10 +29,12 @@ public:
     size_t clipboardHistorySize() const;
 
     Q_INVOKABLE bool selectItem(int index);
+    Q_INVOKABLE bool PinItem(int index);
 
 private:
     QClipboard *clipboard;
     std::vector<ClipboardItem> m_clipboard;
+    std::vector<ClipboardItem> m_pinned_clipboard;
     const size_t m_clipboardHistorySize;
     bool from_selected;
 };

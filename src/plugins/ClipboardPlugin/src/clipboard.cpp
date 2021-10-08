@@ -6,20 +6,14 @@ ClipboardModel::ClipboardModel(const size_t clipboardHistorySize, QObject *paren
     m_clipboardHistorySize {clipboardHistorySize}
 {
     m_clipboard.resize(m_clipboardHistorySize);
-//    ClipboardItem i1, i2;
-//    i1.text = "Hello 1";
-//    i2.text = "Hello 2";
-//    m_clipboard.push_back(i1);
-//    m_clipboard.push_back(i2);
+    m_pinned_clipboard.resize(defaultPinnedClipboardSize);
 
     from_selected = false;
-
     clipboard = QGuiApplication::clipboard();
 
     connect(clipboard, &QClipboard::dataChanged,
             this, &ClipboardModel::clipboardChanged);
 
-//    ClipboardModel::clipboardChanged();
 }
 
 void ClipboardModel::clipboardChanged()
@@ -76,6 +70,32 @@ bool ClipboardModel::selectItem(int index)
       from_selected = true;
       clipboard->setText(m_clipboard.at(index).text);
       from_selected = false;
+//    set to clipboard
+    // will be replaced to emit rowUpdated ?
+//    emit dataChanged(createIndex(0,0), createIndex(m_clipboardHistorySize, 0));
+    return !!index;
+}
+
+
+
+bool ClipboardModel::pinItem(int index)
+{
+          ClipboardItem item = m_clipboard.at(index);
+          ClipboardItem new_item;
+
+          new_item.text = item->text();
+
+          if (QString(new_item.text).isEmpty()) {
+              return;
+          }
+
+          m_pinned_clipboard.insert(m_pinned_clipboard.begin(), item);
+
+          //vector delete, возможно нужно хранить индекс в ClipboardItem
+          m_clipboard.erase(item);
+
+          emit dataChanged(createIndex(0,0),
+               createIndex(m_clipboardHistorySize, 0));
 //    set to clipboard
     // will be replaced to emit rowUpdated ?
 //    emit dataChanged(createIndex(0,0), createIndex(m_clipboardHistorySize, 0));

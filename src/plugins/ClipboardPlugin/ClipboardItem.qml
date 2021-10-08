@@ -4,14 +4,11 @@ Rectangle {
     id: root
 
     property string displayText: ""
-//    alias nore recommended
-//    readonly property alias internalText: _firstText
 
     color: "steelblue"
 
     border.color: "black"
     border.width: 1
-
 
 
 
