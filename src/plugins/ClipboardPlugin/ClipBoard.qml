@@ -3,24 +3,43 @@ import ClipboardModel 1.0
 import QtQuick.Window 2.2
 import QtQuick.Controls 2.12
 
+
 ListView {
     id: root
     orientation: ListView.Vertical
     anchors.fill: parent
+    clip: true
     model: ClipboardModel {
 
     }
 
+    Component {
+        id: highlight
+        Rectangle {
+            width: root.width - 2
+            height: root.height - 2
+            color: "darkgray";
+            y: root.currentItem.y
+            Behavior on y { SpringAnimation { spring: 5; damping: 1; velocity: 10000 } }
+        }
+    }
 
+    highlight: highlight
+    highlightFollowsCurrentItem: true
 
     delegate: Item {
-        id: _backgroundDelegate
-        width: root.width
+        width: root.width - 2
         height: 100
+
         ClipboardItem {
-            displayText: display
+            id: currentItem
+//            color: root.model.itemColor(index)
+            color: "#404142"
+            displayText: display ? display : ""
+            textColorStyle: textcolor ? textcolor : "white"
             anchors.fill: parent
-            anchors.margins: 1
+            anchors.margins: 2
+
 
             Popup {
                 id: contextMenu
@@ -40,29 +59,24 @@ ListView {
                                 width: 148
                                 anchors.left: contextMenu.left
                                 text: "Закрепить"
-                                highlighted: contextMenu.index === 0 ? true : false
                                 onClicked: {
-                                    //root.model.pin_to pin_array(index);
+                                    root.model.pinItem(index)
+//                                    currentItem.color = root.model.itemColor(index)
                                     contextMenu.close()
-                                    contextMenu.index = 0
                                 }
                             }
                             Button {
                                 id: but_del
                                 width: 148
                                 text: "Удалить"
-                                highlighted: contextMenu.index === 1 ? true : false
                                 onClicked: {
-                                    contextMenu.index = 1
                                 }
                             }
                             Button {
                                 id: but_ssh
                                 width: 148
                                 text: "SSH ROOT"
-                                highlighted: contextMenu.index === 2 ? true : false
                                 onClicked: {
-                                    contextMenu.index = 2
                                 }
                             }
 
@@ -70,9 +84,7 @@ ListView {
                                 id: but_open
                                 width: 148
                                 text: "Открыть в браузере"
-                                highlighted: contextMenu.index === 2 ? true : false
                                 onClicked: {
-                                    contextMenu.index = 3
                                 }
                             }
 
@@ -80,9 +92,7 @@ ListView {
                                 id: but_host
                                 width: 148
                                 text: "Получить host"
-                                highlighted: contextMenu.index === 2 ? true : false
                                 onClicked: {
-                                    contextMenu.index = 4
                                 }
                             }
                 }
@@ -98,23 +108,18 @@ ListView {
                         contextMenu.open()
                     }
                     else if (mouse.button === Qt.LeftButton) {
-                        root.model.selectItem(index);
+                        root.model.selectItem(index)
+                        root.currentIndex = index
+                        currentItem.color = root.model.itemColor(index)
                     }
                 }
 
                 onEntered: {
-//                    if (mouse.button == Qt.RightButton) {
-//                                     parent.color = 'yellow';
-//                    }
-//                    else {
-//                        parent.color = 'green';
-//                    }
-                       parent.color = 'grey';
-
+                       currentItem.color = 'slategray';
                 }
 
                 onExited: {
-                        parent.color = 'steelblue';
+                        currentItem.color = root.model.itemColor(index)
                 }
 
             }

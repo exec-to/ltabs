@@ -4,13 +4,9 @@ Rectangle {
     id: root
 
     property string displayText: ""
-
-    color: "steelblue"
-
-    border.color: "black"
+    property string textColorStyle: ""
+    border.color: "slategray"
     border.width: 1
-
-
 
     Text {
         id: _firstText
@@ -21,11 +17,12 @@ Rectangle {
         anchors.margins: 5
         text: root.displayText
         clip: true
-        font.pointSize: 12
+        color: root.textColorStyle
+        font.pointSize: 14
         font {
-            bold: false
+            family: "Courier"
+//            bold: true
         }
-
     }
 }
 
