@@ -15,15 +15,7 @@ ClipboardModel::ClipboardModel(const size_t clipboardHistorySize,
     from_selected = false;
     clipboard = QGuiApplication::clipboard();
 
-//    for (int i = 0; i < defaultPinnedClipboardSize+m_clipboardHistorySize; i++) {
-//        ClipboardItem item;
-//        item.text = "";
-//        item.pinned = false;
-//        item.selected = false;
-
-//        m_clipboard.insert(m_clipboard.begin(), item);
-//    }
-
+    clipboardChanged();
 
     connect(clipboard, &QClipboard::dataChanged,
             this, &ClipboardModel::clipboardChanged);
