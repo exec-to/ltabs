@@ -90,10 +90,10 @@ QVariant ClipboardModel::data(const QModelIndex &index, int role) const
 
     if (role == ClipboardItemRoles::TextColorRole) {
 
-        QString color = "white";
+        QString color = "whitesmoke";
 
         if (m_clipboard.at(rowIndex).pinned) {
-            color = "#0055ff";
+            color = "lightskyblue";
         }
 
 //        qDebug() << "text color: " << color;
@@ -127,7 +127,7 @@ bool ClipboardModel::selectItem(int index)
 }
 
 QString ClipboardModel::itemColor(int index) {
-    QString color = "#404142";
+    QString color = "#323232";
     ClipboardItem item = m_clipboard.at(index);
     if (item.pinned == true) {
 //        color = "#67686a";
@@ -144,10 +144,10 @@ QString ClipboardModel::itemColor(int index) {
 
 QString ClipboardModel::textColor(int index) {
     QString color = "white";
-    ClipboardItem item = m_clipboard.at(index);
-    if (item.pinned == true) {
-        color = "#0055ff";
-    }
+//    ClipboardItem item = m_clipboard.at(index);
+//    if (item.pinned == true) {
+//        color = "#0055ff";
+//    }
 
     //qDebug() << "Pinned: " << item.pinned << " Selected: " << item.selected << " Color: " << color;
 

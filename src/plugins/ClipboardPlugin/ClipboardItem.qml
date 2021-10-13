@@ -5,8 +5,9 @@ Rectangle {
 
     property string displayText: ""
     property string textColorStyle: ""
-    border.color: "slategray"
+    border.color: "white"
     border.width: 1
+    radius: 1
 
     Text {
         id: _firstText

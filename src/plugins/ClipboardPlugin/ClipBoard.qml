@@ -34,9 +34,9 @@ ListView {
         ClipboardItem {
             id: currentItem
 //            color: root.model.itemColor(index)
-            color: "#404142"
+            color: "#323232"
             displayText: display ? display : ""
-            textColorStyle: textcolor ? textcolor : "white"
+            textColorStyle: textcolor ? textcolor : "whitesmoke"
             anchors.fill: parent
             anchors.margins: 2
 
