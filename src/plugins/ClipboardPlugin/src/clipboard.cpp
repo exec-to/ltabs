@@ -176,6 +176,10 @@ bool ClipboardModel::pinItem(int index)
         return false;
     }
 
+    while (m_pinned_clipboard.size() > defaultPinnedClipboardSize - 1) {
+        m_pinned_clipboard.erase(m_pinned_clipboard.end());
+    }
+
     m_pinned_clipboard.insert(m_pinned_clipboard.begin(), new_item);
     m_clipboard.clear();
     m_clipboard.resize(defaultPinnedClipboardSize+m_clipboardHistorySize);
