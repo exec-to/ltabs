@@ -24,6 +24,7 @@ Rectangle {
             family: "Courier"
 //            bold: true
         }
+        wrapMode: Text.Wrap
     }
 }
 

@@ -19,6 +19,7 @@ class ClipboardModel: public QAbstractListModel
     // use it in QML root.model.historySize
 
 public:
+// TODO: Limit clipboard size
     static constexpr size_t defaultClipboardHistorySize {20};
     static constexpr size_t defaultPinnedClipboardSize {5};
     ClipboardModel(const size_t clipboardHistorySize = defaultClipboardHistorySize,

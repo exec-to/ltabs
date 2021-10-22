@@ -2,7 +2,7 @@ import QtQuick 2.0
 import ClipboardModel 1.0
 import QtQuick.Window 2.2
 import QtQuick.Controls 2.12
-
+import QtQuick.Layouts 1.12
 
 ListView {
     id: root
@@ -39,7 +39,6 @@ ListView {
             textColorStyle: textcolor ? textcolor : "whitesmoke"
             anchors.fill: parent
             anchors.margins: 2
-
 
             Popup {
                 id: contextMenu
@@ -102,6 +101,7 @@ ListView {
                 id: mouseArea
                 anchors.fill: parent
                 hoverEnabled: true
+                property bool hovered: false
                 acceptedButtons: Qt.LeftButton | Qt.RightButton
                 onClicked: {
                     if (mouse.button === Qt.RightButton) {
@@ -115,13 +115,110 @@ ListView {
                 }
 
                 onEntered: {
+                       hovered = true
                        currentItem.color = 'slategray';
                 }
 
                 onExited: {
+                        hovered = false
                         currentItem.color = root.model.itemColor(index)
                 }
 
+            }
+
+            RowLayout {
+                id: widgets
+
+                width: 72
+                height: 24
+                spacing: 2
+                anchors.rightMargin: 8
+                anchors.topMargin: 4
+                visible: mouseArea.hovered
+
+                anchors.right: parent.right
+                anchors.top: parent.top
+
+                MouseArea {
+                    hoverEnabled: true
+
+                    onEntered: {
+                            mouseArea.hovered = true
+                            currentItem.color = 'slategray';
+                    }
+
+                    onExited: {
+                            mouseArea.hovered = false
+                    }
+                }
+
+                Button {
+                    Layout.fillWidth: false
+                    Layout.maximumWidth: 24
+                    height: 24
+                    text: "!!"
+
+                    MouseArea {
+                        anchors.fill: parent
+                        hoverEnabled: true
+
+
+                        onEntered: {
+                            mouseArea.hovered = true
+                            currentItem.color = 'slategray';
+                        }
+
+                        onExited: {
+                            mouseArea.hovered = false
+                        }
+
+                    }
+                }
+                Button {
+                    Layout.fillWidth: false
+                    Layout.maximumWidth: 24
+                    height: 24
+                    text: "+!"
+
+                    MouseArea {
+                        anchors.fill: parent
+                        hoverEnabled: true
+
+
+                        onEntered: {
+                                mouseArea.hovered = true
+                                currentItem.color = 'slategray';
+                        }
+
+                        onExited: {
+                                mouseArea.hovered = false
+                                currentItem.color = 'slategray';
+                        }
+
+                    }
+                }
+                Button {
+                    Layout.fillWidth: false
+                    Layout.maximumWidth: 24
+                    height: 24
+                    text: "?!"
+
+                    MouseArea {
+                        anchors.fill: parent
+                        hoverEnabled: true
+
+
+                        onEntered: {
+                            mouseArea.hovered = true
+                            currentItem.color = 'slategray';
+                        }
+
+                        onExited: {
+                                mouseArea.hovered = false
+                        }
+
+                    }
+                }
             }
         }
     }
